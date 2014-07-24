@@ -1,0 +1,3 @@
+.gitignore
+.Rprofile
+makePkg.R
