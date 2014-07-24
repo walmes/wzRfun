@@ -1,0 +1,17 @@
+Package: wzRfun
+Type: Package
+Title: Walmes Zeviani functions
+Version: 0.1
+Author: Walmes Zeviani
+Maintainer: Walmes Zeviani <walmes@ufpr.br>
+Description: An R package with functions writen for general
+    propose. Most of these are related to the analisys of experments and
+    graphical representation with trellis based plots.
+Depends:
+    R (>= 3.1.1)
+Imports:
+    doBy,
+    multcomp
+License: GPL-2
+URL: https://github.com/walmes/wzRfun
+BugReports: https://github.com/walmes/wzRfun/issues
