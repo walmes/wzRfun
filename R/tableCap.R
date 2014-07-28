@@ -18,7 +18,8 @@
 #' and \code{caption}. Each call increments its number.
 #'
 #' @seealso \code{\link{tableFormat}}, \code{\link{matrix2html}}.
-#' 
+#'
+#' @export
 #' @examples
 #' \donttest{
 #' tableCap("First table label.")

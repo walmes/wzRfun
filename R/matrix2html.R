@@ -29,7 +29,8 @@
 #' browser as an html table.
 #'
 #' @seealso \code{\link{tableFormat}}, \code{\link{tableCap}}.
-#' 
+#'
+#' @export
 #' @examples
 #' \donttest{
 #' x <- head(rock)

@@ -14,6 +14,7 @@
 #' squares and residual sum of squares. The second named \code{R2} is
 #' the coefficient of determination.
 #'
+#' @export
 #' @examples
 #' \donttest{
 #' da <- subset(DNase, Run==4)

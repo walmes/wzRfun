@@ -24,7 +24,8 @@
 #' 
 #' @seealso \code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
 #' \code{\link[multcomp]{glht}}.
-#' 
+#'
+#' @export
 #' @examples
 #' \donttest{
 #' require(doBy)

@@ -13,6 +13,7 @@
 #'
 #' @return the restructred data frame.
 #'
+#' @export
 #' @examples
 #' \donttest{
 #' a <- data.frame(Species=as.character(

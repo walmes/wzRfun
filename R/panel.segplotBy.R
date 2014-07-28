@@ -1,5 +1,5 @@
 #' @title Lattice panel to non overlapping segments in \code{segplot()}
-#' @name segplotBy
+#' @name panel.segplotBy
 #'
 #' @description This panel allows no overlapping of segments in
 #' \code{latticeExtra::segplot()}.
@@ -20,6 +20,7 @@
 #'
 #' @seealso \code{\link[latticeExtra]{segplot}}
 #'
+#' @export
 #' @examples
 #' \donttest{
 #' require(doBy)
@@ -45,9 +46,9 @@
 #' segplot(wool~lwr+upr, centers=estimate, data=L, draw=FALSE)
 #' 
 #' segplot(tension~lwr+upr, centers=estimate, data=L, draw=FALSE,
-#'         panel=segplotBy, groups=L$wool, f=0.05)
+#'         panel=panel.segplotBy, groups=L$wool, f=0.05)
 #' }
-segplotBy <- function(x, y, z, centers, subscripts, groups, f, ...){
+panel.segplotBy <- function(x, y, z, centers, subscripts, groups, f, ...){
     d <- 2*((as.numeric(groups)-1)/(nlevels(groups)-1))-1
     z <- as.numeric(z)+f*d
     panel.segplot(x, y, z, centers=centers,

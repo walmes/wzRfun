@@ -19,7 +19,8 @@
 #' used \code{table} argument.
 #'
 #' @seealso \code{\link{tableCap}}, \code{\link{matrix2html}}.
-#' 
+#'
+#' @export
 #' @examples
 #' \donttest{
 #' x <- tableFormat(head(rock), c(1,2,3,4)); x

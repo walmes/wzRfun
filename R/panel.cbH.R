@@ -30,6 +30,7 @@
 #'
 #' @return None is returned.
 #'
+#' @export
 #' @examples
 #' \donttest{
 #' require(lattice)

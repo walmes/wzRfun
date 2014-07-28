@@ -64,7 +64,16 @@ styIndex[9,] <- 9L
 styIndex[,3] <- 3L
 styIndex[1,] <- 1L
 
-## These table class are assumed to be defined in a css file.
+## These table class are assumed to be defined in a css file as
+## follow.
+
+## td.red { color: #CC0000; }
+## td.blue { color: #0000CC; }
+## td.shade { background-color: #CCCCCC; }
+## td.line { border-bottom: 1px solid #000000; }
+## td.bold { font-weight: bold; }
+## td.italic { font-style: italic; }
+
 styDef <- c("<th align=\\"center\\">\%s</th>", "<tr>\\n\%s\\n</tr>\\n",
             "<td align=\\"center\\">\%s</td>",
             "<td align=\\"center\\" class=\\"red\\">\%s</td>",

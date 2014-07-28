@@ -22,7 +22,8 @@
 #' define all pairwise contrasts. \eqn{K} is \eqn{\binom{k}{2}}.
 #'
 #' @seealso \code{\link{apmc}}, \code{\link[doBy]{LSmatrix}}.
-#' 
+#'
+#' @export
 #' @examples
 #' \donttest{
 #' X <- diag(3)
