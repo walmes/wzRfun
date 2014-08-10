@@ -1,6 +1,5 @@
 #' @title Lattice panels for error bars and envelop bands
 #' @name panel.cbH
-#' @aliases prepanel.cbH
 #'
 #' @description Used to do or add error bars or envelop bands in plots.
 #' 
@@ -29,6 +28,8 @@
 #' whiskers. Default is 0.05. Not used when \code{cty="bands"}.
 #'
 #' @return None is returned.
+#'
+#' @seealso \code{\link{prepanel.cbH}}
 #'
 #' @export
 #' @examples

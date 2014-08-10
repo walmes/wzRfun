@@ -91,4 +91,7 @@ xyplot(y~x, groups=trt, data=da)+
                     panel.groups=panel.cbH))
 }
 }
+\seealso{
+\code{\link{prepanel.cbH}}
+}
 
