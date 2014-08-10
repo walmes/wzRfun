@@ -85,13 +85,6 @@
 #'                     panel=panel.superpose,
 #'                     panel.groups=panel.cbH))
 #' }
-prepanel.cbH <- function(y, ly, uy, subscripts, ...){
-    ly <- as.numeric(ly[subscripts])
-    uy <- as.numeric(uy[subscripts])
-    y <- as.numeric(y[subscripts])
-    list(ylim=range(y, uy, ly, finite=TRUE))
-}
-
 panel.cbH <- function(x, y, ly, uy, subscripts, cty,
                       col.line=plot.line$col, lwd=plot.line$lwd,
                       desloc=NULL, fill=1, alpha=0.1, length=0.05,
