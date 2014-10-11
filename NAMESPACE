@@ -3,6 +3,7 @@
 export(R2nls)
 export(apc)
 export(apmc)
+export(cld2)
 export(equallevels)
 export(matrix2html)
 export(panel.cbH)
