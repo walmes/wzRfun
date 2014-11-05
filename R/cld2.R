@@ -65,7 +65,7 @@ cld2 <- function(object, level=0.05){
     signif <- (object$test$pvalues < level)
     ret <- list()
     ret$signif <- signif
-    ret$comps <- do.call(rbind, strsplit(rownames(Xc), "-"))
+    ret$comps <- do.call(rbind, strsplit(rownames(object$linfct), "-"))
     ret$mcletters <- multcomp:::insert_absorb(
         x=signif, decreasing=TRUE,
         comps=ret$comps, lvl_order=lvl_order)
