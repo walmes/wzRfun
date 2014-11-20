@@ -3,4 +3,4 @@
 *.out
 .Rhistory
 NAMESPACE
-./man/*
+man/
