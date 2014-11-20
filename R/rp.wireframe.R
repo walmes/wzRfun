@@ -1,5 +1,5 @@
 #' @title A panel to rotate and choose the better view angle of a wireframe
-#' @name panel.3d.contour
+#' @name rp.wireframe
 #'
 #' @description A panel rotate a wireframe plot and choose the best view
 #' angle.
