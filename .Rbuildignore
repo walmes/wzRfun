@@ -1,3 +1,5 @@
 .gitignore
 .Rprofile
 makePkg.R
+^.*\.Rproj$
+^\.Rproj\.user$
