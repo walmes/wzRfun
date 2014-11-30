@@ -12,6 +12,7 @@ Depends:
 Imports:
     doBy,
     multcomp,
+    lattice,
     latticeExtra
 License: GPL
 URL: https://github.com/walmes/wzRfun

@@ -2,7 +2,7 @@
 #'
 #' @name wzRfun
 #' @docType package
-#' @import latticeExtra doBy multcomp
+#' @import lattice latticeExtra doBy multcomp
 NULL
 
 #' @title Factorial experiment to evaluate the effect of potassium and
