@@ -1,5 +1,5 @@
 #' @title A panel to rotate and choose the better view angle of a wireframe
-#' @name rp.wireframe
+#' @name rp.wire
 #'
 #' @description A panel rotate a wireframe plot and choose the best view
 #' angle.
