@@ -16,19 +16,19 @@ NULL
 #' carried out in a greenhouse, in pots with two plants, containing 5
 #' dm$^3$ of soil. The experimental design was completely randomized
 #' block with treatments in a 5 x 3 factorial arrangement. The K doses
-#' (\code{potassium}) were 0; 30; 60, 120 and 180 mg dm$^{-3}$ , and the
-#' soil humidity (\code{water}) ranged from 35 to 40; 47.5 to 52.5; and
-#' 60 to 65\% of the total porosity (represented as the midpoint). The
-#' characteristics appraised were: grain yield (\code{yield}, grams per
-#' plot), weight of a hundred grains (\code{w100}, grams), total number
-#' of grains per plot (\code{tg}), K concetration in the grain
-#' (\code{Kgrain}, g kg$^{-1}$), number of viable and inviable pods
-#' (\code{nvp, nip}). Observation number 74 can be considered atipical
-#' and removed to do statistical analisys. although the experiment had
-#' been installed in blocks, the greenhouse had constant conditions for
-#' all plots and the management, like irrigation, during the
-#' experimental cicle was carried out with much care, so, the block
-#' effect can be considered null.
+#' (\code{potassium}) were 0; 30; 60, 120 and 180 mg dm\eqn{^{-3}} , and
+#' the soil humidity (\code{water}) ranged from 35 to 40; 47.5 to 52.5;
+#' and 60 to 65\% of the total porosity (represented as the
+#' midpoint). The characteristics appraised were: grain yield
+#' (\code{yield}, grams per plot), weight of a hundred grains
+#' (\code{w100}, grams), total number of grains per plot (\code{tg}), K
+#' concetration in the grain (\code{Kgrain}, g kg\eqn{^{-1}}), number of
+#' viable and inviable pods (\code{nvp, nip}). Observation number 74 can
+#' be considered atipical and removed to do statistical
+#' analisys. although the experiment had been installed in blocks, the
+#' greenhouse had constant conditions for all plots and the management,
+#' like irrigation, during the experimental cicle was carried out with
+#' much care, so, the block effect can be considered null.
 #'
 #' @details This experiment was done at Universidade Federal da Grande
 #' Dourados in Dourados, Mato Grosso do Sul, Brazil. The article based
