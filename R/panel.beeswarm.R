@@ -1,4 +1,5 @@
 #' @title Lattice panel for scatter plots with a beeswarm flavor
+#' 
 #' @name panel.beeswarm
 #'
 #' @description Used to make scatter plot of discrete variables with no
@@ -13,11 +14,15 @@
 #' @param ... arguments passed to panel.xyplot, the core function of
 #' xyplot.
 #'
+#' @param x,y,subscripts arguments passed to panel.xyplot, the core
+#' function of xyplot.
+#'
 #' @return None is returned.
 #'
 #' @seealso \code{\link[lattice]{xyplot}}.
 #'
 #' @export
+#' 
 #' @examples
 #' \donttest{
 #' ##-----------------------------------------------------------------------------
@@ -80,4 +85,3 @@ panel.beeswarm <- function(x, y, subscripts, spread, ...){
     aux <- do.call(rbind, aux)
     panel.xyplot(aux[,1], aux[,2], subscripts=aux[,3], ...)
 }
-
