@@ -15,6 +15,7 @@ Imports:
     lattice,
     latticeExtra
 Suggests:
+    plyr,
     rpanel,
     RColorBrewer
 License: GPL
