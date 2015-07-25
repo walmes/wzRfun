@@ -15,7 +15,11 @@
 #' 
 #' @param col.contour color of the contour line.
 #' 
-#' @param ... arguments passed to panel.3dwire, the core function of wireframe.
+#' @param ... arguments passed to panel.3dwire, the core function of
+#' wireframe.
+#'
+#' @param x,y,z,rot.mat,distance,zlim.scaled,zlim arguments passed to
+#' panel.3dwire, the core function of wireframe.
 #'
 #' @return None is returned.
 #'
@@ -24,14 +28,14 @@
 #' @export
 #' @examples
 #' \donttest{
-#' ##-----------------------------------------------------------------------------
+#' ##----------------------------------------------------------------------
 #' ## Examples of use.
 #' 
 #' require(lattice)
 #' require(latticeExtra)
 #' require(RColorBrewer)
 #'
-#' ##-----------------------------------------------------------------------------
+#' ##----------------------------------------------------------------------
 #' ## Example 1.
 #' 
 #' ## display.brewer.all()
@@ -48,7 +52,7 @@
 #'           levels=seq(0.5,1.5, by=0.1), type="on",
 #'           col.regions=colr(101),  drape=TRUE)
 #' 
-#' ##-----------------------------------------------------------------------------
+#' ##----------------------------------------------------------------------
 #' ## Example 2.
 #' 
 #' colr <- brewer.pal(11, "Spectral")
