@@ -20,8 +20,30 @@ You can install this package from GitHub runnig the code below in a R session.
 ## install.packages("devtools", dep=TRUE, repos=repos, lib=lib)
 install.packages("devtools")
 require(devtools)
-install_github("wzRfun", "walmes")
+install_github("walmes/wzRfun")
 
+```
+
+You can also install from a compressed file (`zip` or `tar.gz`). This
+files are available for download at
+http://www.leg.ufpr.br/~walmes/wzRfun/. Choose the proper file for your
+operational system and prefer the last version.
+
+RStudio users can install by menu:
+  1. Tools > Install Packages...
+  2. Install from: Package Archive File
+  3. Locate the file already downloaded to complete installation.
+
+You can also install by
+```{r}
+install.packages("/home/Downloads/wzRfun_0.6.tar.gz", repos=NULL)
+```
+Obviously, you must replace for the current path, version and extension
+of the file that you downloaded.
+
+For linux users, it is possible install by terminal by
+```{sh}
+R CMD INSTALL /home/Downloads/wzRfun_0.6.tar.gz
 ```
 
 ## Bug report
