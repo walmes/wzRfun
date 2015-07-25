@@ -15,7 +15,8 @@ Imports:
     lattice,
     latticeExtra
 Suggests:
-    rpanel
+    rpanel,
+    RColorBrewer
 License: GPL
 URL: https://github.com/walmes/wzRfun
 BugReports: https://github.com/walmes/wzRfun/issues
