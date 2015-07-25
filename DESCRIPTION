@@ -1,7 +1,7 @@
 Package: wzRfun
 Type: Package
 Title: Walmes Zeviani functions
-Version: 0.5
+Version: 0.6
 Author: Walmes Zeviani
 Maintainer: Walmes Zeviani <walmes@ufpr.br>
 Description: An R package with functions writen for general
