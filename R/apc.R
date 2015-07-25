@@ -19,7 +19,7 @@
 #' incremental integer values are used to identify the comparisons.
 #' 
 #' @return a \eqn{K\times p} matrix with the linear functions that
-#' define all pairwise contrasts. \eqn{K} is \eqn{\binom{k}{2}}.
+#' define all pairwise contrasts. \eqn{K} is \eqn{{k}\choose{2}}.
 #'
 #' @seealso \code{\link{apmc}}, \code{\link[doBy]{LSmatrix}}.
 #'
