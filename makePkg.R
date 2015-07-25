@@ -15,6 +15,7 @@ setwd("/home/walmes/GitHub/wzRfun/")
 file.remove(".#makePkg.R")
 check()
 build()
+build_win()
 
 ## require(wzRfun)
 ## packageVersion("wzRfun")
