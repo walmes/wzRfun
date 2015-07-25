@@ -5,7 +5,7 @@
 #' @description This panel allows no overlapping of segments in
 #' \code{latticeExtra::segplot()}.
 #'
-#' @param x,y,centers,subscripts,... see \code{\link[latticeExtra]{segplot}}.
+#' @param x,y,z,centers,subscripts,... see \code{\link[latticeExtra]{segplot}}.
 #' 
 #' @param groups the grouping variable. Must be a factor.
 #' 
