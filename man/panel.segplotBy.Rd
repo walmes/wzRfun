@@ -7,7 +7,7 @@
 panel.segplotBy(x, y, z, centers, subscripts, groups, f, ...)
 }
 \arguments{
-\item{x,y,centers,subscripts,...}{see \code{\link[latticeExtra]{segplot}}.}
+\item{x,y,z,centers,subscripts,...}{see \code{\link[latticeExtra]{segplot}}.}
 
 \item{groups}{the grouping variable. Must be a factor.}
 

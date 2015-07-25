@@ -9,7 +9,7 @@ panel.cbH(x, y, ly, uy, subscripts, cty, col.line = plot.line$col,
   length = 0.05, ...)
 }
 \arguments{
-\item{x,subscripts,col.line,lwd,length,...}{arguments passed to
+\item{x,subscripts,col.line,lwd,...}{arguments passed to
 \code{\link[lattice]{xyplot}}}
 
 \item{y}{central value (point estimate).}
