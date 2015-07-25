@@ -110,8 +110,16 @@ rp.nls <- function(model, data, start,
                    extraplot=NULL,
                    finalplot=NULL,
                    xlab=NULL, ylab=NULL, ...){
-    ##-----------------------------------------------------------------------------
-    ## Function protections. ------------------------------------------------------
+    
+    ##----------------------------------------------------------------------
+    ## Test the presence of rpanel package.
+    if (!requireNamespace("rpanel", quietly=TRUE)) {
+        stop("rpanel needed for this function to work. Please install it.",
+             call.=FALSE)
+    }
+
+    ##----------------------------------------------------------------------
+    ## Function protections. -----------------------------------------------
     ## 
     ## Dependent variable name (y).
     vardep <- all.vars(model[[2]])
@@ -147,8 +155,8 @@ rp.nls <- function(model, data, start,
         }
     }
     
-    ##-----------------------------------------------------------------------------
-    ## Creating auxiliary objects. ------------------------------------------------
+    ##----------------------------------------------------------------------
+    ## Creating auxiliary objects. -----------------------------------------
     ## 
     ## If susbset non null, creates a list for each level, if not, a
     ## single element list.
@@ -162,8 +170,8 @@ rp.nls <- function(model, data, start,
     assign(".rpnls", aju, env=.GlobalEnv)
     ## assign(assignTo, aju, env=.GlobalEnv)
 
-    ##-----------------------------------------------------------------------------
-    ## Internal functions. --------------------------------------------------------
+    ##----------------------------------------------------------------------
+    ## Internal functions. -------------------------------------------------
     ## 
     ## Built a function from a model formula.
     form2func <- function(formu){
@@ -255,8 +263,8 @@ rp.nls <- function(model, data, start,
         panel
     }
     
-    ##-----------------------------------------------------------------------------
-    ## Building the controls. -----------------------------------------------------
+    ##----------------------------------------------------------------------
+    ## Building the controls. ----------------------------------------------
     ## 
     if(!require(rpanel)){
         stop("Package `rpanel` is not installed. Please install it.")
