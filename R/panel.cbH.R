@@ -1,4 +1,5 @@
 #' @title Lattice panels for error bars and envelop bands
+#' 
 #' @name panel.cbH
 #'
 #' @description Used to do or add error bars or envelop bands in plots.
@@ -13,7 +14,7 @@
 #' are \code{"bars"} for error bars and \code{"bands"} for envelop
 #' bands.
 #'
-#' @param desloc a numeric vetor with lenght equal to \code{y} used to
+#' @param desloc a numeric vetor with length equal to \code{y} used to
 #' desloc vertically the values to avoid overlapping with points or
 #' others factor levels intervals.
 #'
@@ -24,16 +25,19 @@
 #' @param alpha transparecy level for the polygon defined by the envelop
 #' bands. Default is 0.1. Not used when \code{cty="bars"}
 #'
-#' @param lenght is the lenght of the upper/lower error bars
+#' @param length is the length of the upper/lower error bars
 #' whiskers. Default is 0.05. Not used when \code{cty="bands"}.
+#'
+#' @param x,subscripts,col.line,lwd,length,... arguments passed to
+#' \code{\link[lattice]{xyplot}}
 #'
 #' @return None is returned.
 #'
 #' @seealso \code{\link{prepanel.cbH}}
 #'
 #' @export
+#' 
 #' @examples
-#' \donttest{
 #' require(lattice)
 #' require(latticeExtra)
 #' 
@@ -84,7 +88,6 @@
 #'                     prepanel=prepanel.cbH,
 #'                     panel=panel.superpose,
 #'                     panel.groups=panel.cbH))
-#' }
 panel.cbH <- function(x, y, ly, uy, subscripts, cty,
                       col.line=plot.line$col, lwd=plot.line$lwd,
                       desloc=NULL, fill=1, alpha=0.1, length=0.05,
