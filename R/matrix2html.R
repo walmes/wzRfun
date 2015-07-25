@@ -136,8 +136,8 @@ matrix2html <- function(x, caption=NULL, styDef=NULL, styIndex=NULL,
         cat("Row names and column names must be the first column and row of this matrix.")
     }
     if(!is.null(caption)){
-        cap <- c("<figcaption>\n",
-                 caption, "\n<figcaption>\n")
+        cap <- c("<figcaption class=\"tab\">",
+                 caption, "\n</figcaption>\n")
         A <- c(cap, A)
     }
     if(length(tableClass)==1){
