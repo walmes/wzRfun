@@ -167,8 +167,8 @@ rp.nls <- function(model, data, start,
         aju <- vector(mode="list", length=1)
     }
     ## Assign to the Global Environment.
-    assign(".rpnls", aju, env=.GlobalEnv)
-    ## assign(assignTo, aju, env=.GlobalEnv)
+    assign(".rpnls", aju, envir=.GlobalEnv)
+    ## assign(assignTo, aju, envir=.GlobalEnv)
 
     ##----------------------------------------------------------------------
     ## Internal functions. -------------------------------------------------
@@ -258,7 +258,7 @@ rp.nls <- function(model, data, start,
             if(!is.null(panel$sbst)){
                 .rpnls[[panel$sbst]] <<- n0
             }
-            assign(assignTo, .rpnls, env=.GlobalEnv)
+            assign(assignTo, .rpnls, envir=.GlobalEnv)
         }
         panel
     }
