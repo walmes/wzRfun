@@ -1,4 +1,5 @@
 #' @title Modified compact letter dysplay
+#' 
 #' @name cld2
 #'
 #' @description This functions get the compact letter display for
@@ -19,9 +20,10 @@
 #' @seealso \code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
 #' \code{\link[multcomp]{glht}}.
 #'
+#' @import multcomp
+#' 
 #' @export
 #' @examples
-#' \donttest{
 #' ## Toy data 1: experiment with cultivars in several locations.
 #' td1 <- expand.grid(loc=gl(5,1), block=gl(3,1), cult=LETTERS[1:6])
 #' td1 <- subset(td1, !(loc==1 & cult=="A"))
@@ -59,7 +61,6 @@
 #' cld2(g)
 #' 
 #' confint(glht(m1, linfct=Xs), calpha=univariate_calpha())
-#' }
 cld2 <- function(object, level=0.05){
     lvl_order <- unique(unlist(strsplit(rownames(object$linfct), "-")))
     signif <- (object$test$pvalues < level)
