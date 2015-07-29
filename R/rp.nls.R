@@ -1,4 +1,5 @@
 #' @title Interactive panel to estimate non linear regression models
+#' 
 #' @name rp.nls
 #'
 #' @description This function opens a interface, builted with
@@ -266,9 +267,6 @@ rp.nls <- function(model, data, start,
     ##----------------------------------------------------------------------
     ## Building the controls. ----------------------------------------------
     ## 
-    if(!require(rpanel)){
-        stop("Package `rpanel` is not installed. Please install it.")
-    }
     action <- nlr.draw
     ## Open empty window, if there is subset, creates the list box.
     if(is.null(subset)){
