@@ -13,6 +13,7 @@ require(devtools)
 
 setwd("/home/walmes/GitHub/wzRfun/")
 file.remove(".#makePkg.R")
+document()
 check()
 build()
 build_win()
