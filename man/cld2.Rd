@@ -25,7 +25,6 @@ factorial designs and nested factorial designs. It is assumed that
 Tukey contrasts was used.
 }
 \examples{
-\donttest{
 ## Toy data 1: experiment with cultivars in several locations.
 td1 <- expand.grid(loc=gl(5,1), block=gl(3,1), cult=LETTERS[1:6])
 td1 <- subset(td1, !(loc==1 & cult=="A"))
@@ -63,7 +62,6 @@ g <- summary(glht(m1, linfct=Xc), test=adjusted(type="fdr"))
 cld2(g)
 
 confint(glht(m1, linfct=Xs), calpha=univariate_calpha())
-}
 }
 \seealso{
 \code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
