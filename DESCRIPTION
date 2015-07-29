@@ -17,8 +17,7 @@ Imports:
 Suggests:
     plyr,
     rpanel,
-    RColorBrewer,
-    lme4
+    RColorBrewer
 License: GPL
 URL: https://github.com/walmes/wzRfun
 BugReports: https://github.com/walmes/wzRfun/issues
