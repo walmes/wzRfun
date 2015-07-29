@@ -2,7 +2,8 @@
 % Please edit documentation in R/rp.wire.R
 \name{rp.wire}
 \alias{rp.wire}
-\title{A panel to rotate and choose the better view angle of a wireframe}
+\title{A panel to rotate and choose the better view angle of a
+wireframe}
 \usage{
 rp.wire(wire)
 }
