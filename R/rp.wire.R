@@ -1,4 +1,6 @@
-#' @title A panel to rotate and choose the better view angle of a wireframe
+#' @title A panel to rotate and choose the better view angle of a
+#' wireframe
+#' 
 #' @name rp.wire
 #'
 #' @description A panel rotate a wireframe plot and choose the best view
@@ -45,8 +47,9 @@
 #'
 #' }
 rp.wire <- function(wire){
-    if(!require(rpanel)){
-        stop("Package `rpanel` is not installed. Please install it.")
+    if (!requireNamespace("rpanel", quietly=TRUE)) {
+        stop("rpanel needed for this function to work. Please install it.",
+             call.=FALSE)
     }
     draw.wire <- function(panel){
         sc <- list(x=panel$x, z=panel$z, y=panel$y)
