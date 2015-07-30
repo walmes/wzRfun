@@ -1,8 +1,12 @@
 Package: wzRfun
 Type: Package
 Title: Walmes Zeviani functions
-Version: 0.6
-Author: Walmes Zeviani
+Version: 0.61
+Date: 2015-07-30
+Author: Walmes Zeviani [aut, cre]
+Authors@R: person("Walmes", "Zeviani",
+                  email="walmeszeviani@gmail.com",
+                  role=c("aut", "cre"))
 Maintainer: Walmes Zeviani <walmes@ufpr.br>
 Description: An R package with functions writen for general
     propose. Most of these are related to the analisys of experments and
