@@ -1,18 +1,19 @@
 Package: wzRfun
-Type: Package
 Title: Walmes Zeviani functions
 Version: 0.61
-Date: 2015-07-30
-Author: Walmes Zeviani [aut, cre]
-Authors@R: person("Walmes", "Zeviani",
-                  email="walmeszeviani@gmail.com",
-                  role=c("aut", "cre"))
-Maintainer: Walmes Zeviani <walmes@ufpr.br>
+Date: 2016-06-06
+Authors@R: as.person(c(
+    "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
 Description: An R package with functions writen for general
-    propose. Most of these are related to the analisys of experments and
-    graphical representation with trellis based plots.
+    purpose. Most of these are related to the analisys of experiments
+    and graphical representation with trellis based plots.
+License: GPL-3
+LazyData: true
+Encoding: UTF-8
+URL: https://github.com/walmes/wzRfun
+BugReports: https://github.com/walmes/wzRfun/issues
 Depends:
-    R (>= 3.1.1)
+    R (>= 3.2.3)
 Imports:
     doBy,
     multcomp,
@@ -23,6 +24,5 @@ Suggests:
     rpanel,
     RColorBrewer,
     lme4
-License: GPL
-URL: https://github.com/walmes/wzRfun
-BugReports: https://github.com/walmes/wzRfun/issues
+RoxygenNote: 5.0.1
+VignetteBuilder: knitr
