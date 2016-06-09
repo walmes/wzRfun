@@ -5,6 +5,9 @@
 #' @title Lattice panels for error bars and envelop bands
 #' @description Used to plot confidence bars or confidence bands in
 #'     lattice plots.
+#'
+#' \if{html}{\figure{panel_cbH.pdf}{options: width="700px"}}
+#' \if{latex}{\figure{panel_cbH.pdf}{options: width=7in}}
 #' @param y central value (point estimate).
 #' @param ly lower limit.
 #' @param uy upper limit.
@@ -27,56 +30,66 @@
 #' @return None is returned.
 #' @examples
 #'
-#' require(lattice)
-#' require(latticeExtra)
+#' library(lattice)
+#' library(latticeExtra)
 #'
-#' m0 <- lm(sqrt(dist)~speed, data=cars)
+#' #--------------------------------------------
+#'
+#' m0 <- lm(sqrt(dist) ~ speed, data = cars)
 #' pred <- with(cars,
-#'              data.frame(speed=seq(min(speed),
-#'                             max(speed), length.out=20)))
-#' aux <- predict(m0, newdata=pred, interval="confidence")
+#'              data.frame(speed = seq(min(speed), max(speed),
+#'                                     length.out = 20)))
+#' aux <- predict(m0, newdata = pred, interval = "confidence")
 #' pred <- cbind(pred, aux)
 #'
-#' xyplot(sqrt(dist)~speed, data=cars)+
-#'     as.layer(xyplot(fit~speed, data=pred, type="l",
-#'                     ly=pred$lwr, uy=pred$upr, cty="bands",
-#'                     fill="blue", alpha=0.3,
-#'                     prepanel=prepanel.cbH,
-#'                     panel=panel.cbH))
+#' xyplot(sqrt(dist) ~ speed, data = cars,
+#'        ylab = expression(sqrt(distance)),
+#'        xlab = "Speed") +
+#'     as.layer(xyplot(fit ~ speed, data = pred, type = "l",
+#'                     ly = pred$lwr, uy = pred$upr,
+#'                     cty = "bands", fill = "blue", alpha = 0.3,
+#'                     prepanel = prepanel.cbH,
+#'                     panel = panel.cbH))
 #'
-#' m1 <- lm(weight~feed, data=chickwts)
-#' pred <- with(chickwts,
-#'              data.frame(feed=levels(feed)))
-#' aux <- predict(m1, newdata=pred, interval="confidence")
+#' #--------------------------------------------
+#'
+#' m1 <- lm(weight ~ feed, data = chickwts)
+#' pred <- with(chickwts, data.frame(feed = levels(feed)))
+#' aux <- predict(m1, newdata = pred, interval = "confidence")
 #' pred <- cbind(pred, aux)
 #'
-#' xyplot(weight~feed, data=chickwts)+
-#'     as.layer(xyplot(fit~feed, data=pred,
-#'                     ly=pred$lwr, uy=pred$upr, cty="bars",
-#'                     prepanel=prepanel.cbH,
-#'                     desloc=rep(0.15, length(pred$fit)),
-#'                     panel=panel.cbH))
+#' xyplot(weight ~ feed, data = chickwts,
+#'        xlab = "Feed", ylab = "Weight") +
+#'     as.layer(xyplot(fit ~ feed, data = pred,
+#'                     ly = pred$lwr, uy = pred$upr, cty = "bars",
+#'                     desloc = rep(0.15, length(pred$fit)),
+#'                     prepanel = prepanel.cbH,
+#'                     panel = panel.cbH))
 #'
-#' da <- expand.grid(trt=gl(2,1), x=1:7)
-#' da$y <- with(da, as.integer(trt)+0.5*x+rnorm(x,0,0.4))
-#' xyplot(y~x, groups=trt, data=da)
+#' #-----------------------------------------------------------------------
 #'
-#' m2 <- lm(y~trt+x, data=da)
+#' set.seed(123)
+#' da <- expand.grid(trt = gl(2, 1), x = 1:7)
+#' da$y <- with(da, as.integer(trt) + 0.5 * x + rnorm(x, 0, 0.3))
+#' xyplot(y ~ x, groups = trt, data = da)
+#'
+#' m2 <- lm(y ~ trt + x, data = da)
 #'
 #' pred <- with(da,
-#'              expand.grid(trt=levels(trt),
-#'                          x=seq(min(x),
-#'                              max(x), length.out=20)))
-#' aux <- predict(m2, newdata=pred, interval="confidence")
+#'              expand.grid(trt = levels(trt),
+#'                          x = seq(min(x), max(x), length.out = 20)))
+#' aux <- predict(m2, newdata = pred, interval = "confidence")
 #' pred <- cbind(pred, aux)
 #'
-#' xyplot(y~x, groups=trt, data=da)+
-#'     as.layer(xyplot(fit~x, groups=trt, data=pred, type="l",
-#'                     ly=pred$lwr, uy=pred$upr,
-#'                     cty="bands", alpha=0.25,
-#'                     prepanel=prepanel.cbH,
-#'                     panel=panel.superpose,
-#'                     panel.groups=panel.cbH))
+#' xyplot(y ~ x, groups = trt, data = da) +
+#'     as.layer(xyplot(fit ~ x, groups = trt, data = pred, type = "l",
+#'                     ly = pred$lwr, uy = pred$upr,
+#'                     cty = "bands", alpha = 0.75,
+#'                     prepanel = prepanel.cbH,
+#'                     panel = panel.superpose,
+#'                     panel.groups = panel.cbH),
+#'              under = TRUE)
+#'
 panel.cbH <- function(x, y, ly, uy,
                       subscripts, cty,
                       col.line = plot.line$col,
@@ -114,9 +127,9 @@ panel.cbH <- function(x, y, ly, uy,
 #' @name prepanel.cbH
 #' @rdname panel.cbH
 #' @export
-prepanel.cbH <- function(y, ly, uy, subscripts){
+prepanel.cbH <- function(y, ly, uy, subscripts) {
     ly <- as.numeric(ly[subscripts])
     uy <- as.numeric(uy[subscripts])
     y <- as.numeric(y[subscripts])
-    list(ylim=range(y, uy, ly, finite=TRUE))
+    list(ylim = range(y, uy, ly, finite = TRUE))
 }
