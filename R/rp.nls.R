@@ -134,7 +134,6 @@
 #' }
 rp.nls <- function(model, data, start,
                    subset = NULL,
-                   assign = "rp.fit",
                    xlab = NULL, ylab = NULL,  ...,
                    start_curve = list(col = 2, lty = 2),
                    fitted_curve = list(col = 2, lty = 1, lwd = 1.5),
@@ -201,7 +200,7 @@ rp.nls <- function(model, data, start,
     }
 
     # Assign to the Global Environment.
-    assign(".rpnls", aju, envir = .GlobalEnv)
+    assign(".rpnls", aju)
 
     #-------------------------------------------------------------------
     # Internal functions.
@@ -292,7 +291,7 @@ rp.nls <- function(model, data, start,
             if (!is.null(panel$subset)) {
                 .rpnls[[panel$sbst]] <<- n0
             }
-            assign(assign, .rpnls, envir = .GlobalEnv)
+            assign("FIT", .rpnls, envir = parent.env(environment()))
         }
         return(panel)
     }
@@ -350,9 +349,21 @@ rp.nls <- function(model, data, start,
                     action = nlsajust,
                     title = "Use final_plot?")
     }
-    rp.do(panel = nlr.panel, action = action)
-
-    # Create the `Adjust` button.
     rp.button(panel = nlr.panel, action = nlsajust, title = "Adjust")
-    invisible()
+    rp.button(panel = nlr.panel,
+              title = "Save and Quit",
+              background = "gray30",
+              action = function(panel) {
+                  assign("finish", value = FALSE,
+                         envir = parent.env(environment()))
+                  rp.control.dispose(nlr.panel)
+              })
+    rp.do(panel = nlr.panel, action = action)
+    finish <- TRUE
+    while (finish) { }
+    if (exists("FIT")) {
+        return(FIT)
+    } else {
+        NULL
+    }
 }
