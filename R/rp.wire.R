@@ -6,14 +6,15 @@
 #' @description A panel (gui) rotate a wireframe plot and choose the
 #'     best view angle.
 #'
-#' \if{html}{\figure{rp_wire.pdf}{options: width="700px"}}
-#' \if{latex}{\figure{rp_wire.pdf}{options: width=7in}}
+#' \if{html}{\figure{rp-wire.pdf}{options: width="700px"}}
+#' \if{latex}{\figure{rp-wire.pdf}{options: width=7in}}
 #' @param wire a wireframe object.
 #' @return Open a window with sliders for \code{x}, \code{y} and
 #'     \code{z}. Print the \code{dput} of the last view angle using the
 #'     button.
 #' @seealso \code{\link[lattice]{wireframe}},
 #'     \code{\link[wzRfun]{panel.3d.contour}}.
+#' @import rpanel
 #' @examples
 #'
 #' \donttest{
@@ -55,18 +56,20 @@ rp.wire <- function(wire) {
     }
     print.deput <- function(panel) {
         sc <- list(x = panel$x, z = panel$z, y = panel$y)
-        ## print(dput(sc))
         dput(sc)
         panel
     }
     panel <- rp.control(wire = wire)
-    rp.slider(panel, variable = x, from = -180, to = 180, initval = -60,
+    rp.slider(panel, variable = "x",
+              from = -180, to = 180, initval = -60,
               action = draw.wire, title = "x",
               showvalue = TRUE, resolution = 5)
-    rp.slider(panel, variable = y, from = -180, to = 180, initval = -20,
+    rp.slider(panel, variable = "y",
+              from = -180, to = 180, initval = -20,
               action = draw.wire, title = "y",
               showvalue = TRUE, resolution = 5)
-    rp.slider(panel, variable = z, from = -180, to = 180, initval = -10,
+    rp.slider(panel, variable = "z",
+              from = -180, to = 180, initval = -10,
               action = draw.wire, title = "z",
               showvalue = TRUE, resolution = 5)
     rp.button(panel, action = print.deput, title = "dput screen values")

@@ -11,7 +11,7 @@
 #' @param sep a string with the separator. Default is \code{:}.
 #' @return a string composed by \code{label}, \code{sep} and
 #'     \code{caption}. Each call increments its number.
-#' @seealso \code{\link{tableFormat}}, \code{\link{matrix2html}}.
+#' @seealso \code{\link{table_format}}, \code{\link{matrix2html}}.
 #' @examples
 #'
 #' table_caption("First table label.")
@@ -98,15 +98,15 @@ table_format <- function(table, digits) {
 #' @description This function coverts a character matrix to an html
 #'     table.
 #' @param x a character matrix. Is most of the cases it is the object
-#'     returned by \code{table_format()}.
+#'     returned by \code{table_format}.
 #' @param caption a string to be the caption of the table. Default is
 #'     \code{NULL}, no caption.
 #' @param styles a vector with style definition for \code{th}, \code{tr}
 #'     and \code{td} tags. See the examples section. Default is
 #'     \code{NULL}. These styles must be defined in a css file used to
 #'     render the html page. If you are using \code{knitr}, you can use
-#'     a custom css file when knitting \code{knit2html("my_doc.Rmd",
-#'     stylesheet = "my_custom_css.css")}.
+#'     a custom css file when knitting \code{knit2html("my\_doc.Rmd",
+#'     stylesheet = "my\_custom\_css.css")}.
 #' @param indexes a positive integer matrix with dimensions equal to
 #'     \code{x}. The numbers in each cell of \code{indexes} call the
 #'     corresponding \code{styles} to be used in \code{x}. See examples
@@ -114,7 +114,7 @@ table_format <- function(table, digits) {
 #' @param class a string corresponding a table style defined in a
 #'     \code{css} file. Default is \code{NULL}.
 #' @return a character vector. Use \code{cat} inside chunks with header
-#'     \code{results="asis"} to print the result as interpretable code
+#'     \code{results = "asis"} to print the result as interpretable code
 #'     of an html table.
 #' @seealso \code{\link{table_format}}, \code{\link{table_caption}}.
 #' @examples
@@ -122,6 +122,7 @@ table_format <- function(table, digits) {
 #' x <- head(rock)
 #' x <- sapply(x, as.character)
 #' str(x)
+#'
 #' m2h <- matrix2html(x)
 #' cat(m2h)
 #'
@@ -135,99 +136,103 @@ table_format <- function(table, digits) {
 #' m2h <- matrix2html(x, caption="Part of the cars data set.")
 #' cat(m2h)
 #'
-#' styIndex <- 0L*row(x)+3L
-#' styIndex[3,] <- 4L
-#' styIndex[4,] <- 5L
-#' styIndex[5,] <- 6L
-#' styIndex[7,] <- 7L
-#' styIndex[8,] <- 8L
-#' styIndex[9,] <- 9L
-#' styIndex[,3] <- 3L
-#' styIndex[1,] <- 1L
+#' # These table class are assumed to be defined in a css file as
+#' # follow.
 #'
-#' ## These table class are assumed to be defined in a css file as
-#' ## follow.
+#' # td.red { color: #CC0000; }
+#' # td.blue { color: #0000CC; }
+#' # td.shade { background-color: #CCCCCC; }
+#' # td.line { border-bottom: 1px solid #000000; }
+#' # td.bold { font-weight: bold; }
+#' # td.italic { font-style: italic; }
 #'
-#' ## td.red { color: #CC0000; }
-#' ## td.blue { color: #0000CC; }
-#' ## td.shade { background-color: #CCCCCC; }
-#' ## td.line { border-bottom: 1px solid #000000; }
-#' ## td.bold { font-weight: bold; }
-#' ## td.italic { font-style: italic; }
+#' sty <- c("<th align=\"center\">%s</th>", "<tr>\n%s\n</tr>\n",
+#'          "<td align=\"center\">%s</td>",
+#'          "<td align=\"center\" class=\"red\">%s</td>",
+#'          "<td align=\"center\" class=\"blue line\">%s</td>",
+#'          "<td align=\"center\" class=\"shade\">%s</td>",
+#'          "<td align=\"center\" class=\"line\">%s</td>",
+#'          "<td align=\"center\" class=\"bold shade\">%s</td>",
+#'          "<td align=\"center\" class=\"italic blue\">%s</td>")
 #'
-#' styDef <- c("<th align=\"center\">%s</th>", "<tr>\n%s\n</tr>\n",
-#'             "<td align=\"center\">%s</td>",
-#'             "<td align=\"center\" class=\"red\">%s</td>",
-#'             "<td align=\"center\" class=\"blue line\">%s</td>",
-#'             "<td align=\"center\" class=\"shade\">%s</td>",
-#'             "<td align=\"center\" class=\"line\">%s</td>",
-#'             "<td align=\"center\" class=\"bold shade\">%s</td>",
-#'             "<td align=\"center\" class=\"italic blue\">%s</td>")
+#' # Which style for which cell table.
+#' idx <- 0L * row(x) + 3L
+#' idx[3, ] <- 4L
+#' idx[4, ] <- 5L
+#' idx[5, ] <- 6L
+#' idx[7, ] <- 7L
+#' idx[8, ] <- 8L
+#' idx[9, ] <- 9L
+#' idx[, 3] <- 3L
+#' idx[1, ] <- 1L
 #'
-#' m2h <- matrix2html(x=x, styDef=styDef, styIndex=styIndex,
-#'                    caption="Part of the cars data set.")
+#' m2h <- matrix2html(x = x, styles = sty, indexes = idx,
+#'                    caption = "Part of the cars data set.")
 #' cat(m2h)
-#' }
-matrix2html <- function(x, caption=NULL, styDef=NULL, styIndex=NULL,
-                        tableClass=NULL){
-    applysty <- function(x, sty, which=1L){
+#'
+matrix2html <- function(x,
+                        caption = NULL,
+                        styles = NULL,
+                        indexes = NULL,
+                        class = NULL) {
+    applysty <- function(x, sty, which = 1L) {
         sprintf(sty[which], x)
     }
     applySty <- Vectorize(applysty, c("x", "which"))
-    if(is.null(styDef)){
-        styDef <- c("<th>%s</th>", "<tr>\n%s\n</tr>\n", "<td>%s</td>")
+    if (is.null(styles)) {
+        styles <- c("<th>%s</th>", "<tr>\n%s\n</tr>\n", "<td>%s</td>")
     }
-    if(is.null(styIndex)){
-        styIndex <- 0L*row(x)+3L
-        styIndex[1,] <- 1L
+    if (is.null(indexes)) {
+        indexes <- 0L * row(x) + 3L
+        indexes[1, ] <- 1L
     }
-    if(!(is.matrix(styIndex) & is.integer(styIndex))){
-        stop("styIndex must be a integer matrix.")
+    if (!(is.matrix(indexes) & is.integer(indexes))) {
+        stop("indexes must be a integer matrix.")
     }
-    if(!(length(styDef)>=3)){
-        stop("styDef must have minimum length equal 3.")
+    if (!(length(styles)>=3)) {
+        stop("styles must have minimum length equal 3.")
     }
-    if(!is.character(styDef)){
-        stop("styDef must be character.")
+    if (!is.character(styles)) {
+        stop("styles must be character.")
     }
-    if(!all(grepl("%s", styDef))){
-        stop("All styDef elements must have %s.")
+    if (!all(grepl("%s", styles))) {
+        stop("All styles elements must have %s.")
     }
-    th <- grepl("^<th.*th>", styDef)[1]
-    td <- grepl("^<td.*td>", styDef)[1]
-    if(!(th | td)){
-        stop("styDef[1] must be a definition for <th><\th> or <td></td>.")
+    th <- grepl("^<th.*th>", styles)[1]
+    td <- grepl("^<td.*td>", styles)[1]
+    if (!(th | td)) {
+        stop(paste("styles[1] must be a definition",
+                   "for <th><\th> or <td></td>."))
     }
-    tr <- grepl("^<tr.*tr>", styDef)[2]
-    if(!tr){
-        stop("styDef[2] must be a definition for <tr><\tr>.")
+    tr <- grepl("^<tr.*tr>", styles)[2]
+    if (!tr) {
+        stop("styles[2] must be a definition for <tr><\tr>.")
     }
-    td <- grepl("^<td.*td>", styDef)[3]
-    if(!td){
-        stop("styDef[3] must be a definition for <td><\td>.")
+    td <- grepl("^<td.*td>", styles)[3]
+    if (!td) {
+        stop("styles[3] must be a definition for <td><\td>.")
     }
-    if(nrow(x)!=nrow(styIndex) | ncol(x)!=ncol(styIndex)){
-        stop("x and styIndex must be of the same dimension.")
+    if (nrow(x)!=nrow(indexes) | ncol(x)!=ncol(indexes)) {
+        stop("x and indexes must be of the same dimension.")
     }
-    if(max(styIndex)>length(styDef)){
-        stop("There is some index outside the styDef provided.")
+    if (max(indexes) > length(styles)) {
+        stop("There is some index outside the styles provided.")
     }
-    if(is.matrix(x) & is.character(x)){
-        A <- applySty(unlist(x), styDef, which=unlist(styIndex))
+    if (is.matrix(x) & is.character(x)) {
+        A <- applySty(unlist(x), styles, which = unlist(indexes))
         dim(A) <- dim(x)
-        A <- apply(A, 1, paste, collapse="\n")
-        A <- applysty(A, sty=styDef, which=2L)
+        A <- apply(A, 1, paste, collapse = "\n")
+        A <- applysty(A, sty = styles, which = 2L)
     } else {
         stop("x must be a character matrix.")
-        cat("Row names and column names must be the first column and row of this matrix.")
     }
-    if(!is.null(caption)){
+    if (!is.null(caption)) {
         cap <- c("<figcaption class=\"tab\">",
                  caption, "\n</figcaption>\n")
         A <- c(cap, A)
     }
-    if(length(tableClass)==1){
-        table <- sprintf("<table class=\"%s\">\n", tableClass)
+    if (length(class)==1) {
+        table <- sprintf("<table class=\"%s\">\n", class)
     } else {
         table <- "<table>\n"
     }

@@ -3,11 +3,11 @@
 #' @author Walmes Zeviani, \email{walmes@ufpr.br}.
 #' @title Interactive Fitting for Non Linear Regression Models
 #' @description This function opens a interface, builted with
-#'     \code{\pkg{rpanel}} elements, designed for non linear regression
-#'     models fitting. Sliders allows the user control values used as
-#'     start values in the \code{\link[stats]{nls}} call, checkbox
-#'     allows select strata of the data to fit separed curves and more
-#'     options are available.
+#'     \pkg{rpanel} elements, designed for non linear regression models
+#'     fitting. Sliders allows the user control values used as start
+#'     values in the \code{\link[stats]{nls}} call, checkbox allows
+#'     select strata of the data to fit separed curves and more options
+#'     are available.
 #' @param model a non linear model formula including variables and
 #'     parameters to passed to \code{\link[stats]{nls}} function.
 #' @param data a data frame with dependent and independent variables
@@ -36,14 +36,14 @@
 #'     horizontal lines as references for model intercept and/or model
 #'     asymptote.
 #' @param final_plot the same as \code{extra_plot} but uses the
-#'     estimated parameter values.
-#'     observed values.
+#'     estimated parameter values.  observed values.
 #' @return In fact none is returned by the function. There isn't a
 #'     \code{return}, instead there is a \code{invisible} at the end. On
 #'     the other hand, the model fit is assigned to the object with name
 #'     passed to the \code{assign} argument.
 #' @seealso \code{\link[stats]{nls}}, \code{\link[graphics]{lines}},
 #'     \code{\link[rpanel]{rp.slider}}
+#' @import rpanel graphics stats
 #' @examples
 #'
 #' \donttest{
@@ -286,10 +286,10 @@ rp.nls <- function(model, data, start,
             if (!is.null(final_plot) && panel$final_plot) {
                 do.call(final_plot, cn0)
             }
-            if (is.null(panel$sbst)) {
+            if (is.null(panel$subset)) {
                 .rpnls <<- n0
             }
-            if (!is.null(panel$sbst)) {
+            if (!is.null(panel$subset)) {
                 .rpnls[[panel$sbst]] <<- n0
             }
             assign(assign, .rpnls, envir = .GlobalEnv)

@@ -6,8 +6,8 @@
 #' @description Used to make scatter plot of discrete variables with no
 #'     overlapping points. Observations with the same y value are spread
 #'     in a sistematic pattern.
-#' \if{html}{\figure{panel_beeswarm.pdf}{options: width="700px"}}
-#' \if{latex}{\figure{panel_beeswarm.pdf}{options: width=7in}}
+#' \if{html}{\figure{panel-beeswarm.pdf}{options: width="700px"}}
+#' \if{latex}{\figure{panel-beeswarm.pdf}{options: width=7in}}
 #' @param spread a numeric scalar indicating how much to spread the
 #'     values. This value should be determined by try and error. If you
 #'     change the window plot dimensions, you should determine a new
@@ -35,7 +35,7 @@
 #'
 #' library(lattice)
 #'
-#' x11(width = 7, height = 2.8)
+#' # x11(width = 7, height = 2.8)
 #' xyplot(nc ~ des | est, data = cap,
 #'        layout = c(5, 1), as.table = TRUE,
 #'        col = 1, type = c("p", "smooth"), col.line = "gray50",
@@ -45,7 +45,7 @@
 #'        strip = strip.custom(bg = "gray90", factor.levels = est.ing),
 #'        spread = 0.07, panel = panel.beeswarm)
 #'
-#' x11(width = 7, height = 2.8)
+#' # x11(width = 7, height = 2.8)
 #' xyplot(nc ~ est | factor(des), data = cap,
 #'        layout = c(5, 1), as.table = TRUE, col = 1,
 #'        type = c("p", "smooth"), col.line = "gray50",

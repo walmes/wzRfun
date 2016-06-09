@@ -15,6 +15,7 @@
 #' @param x,y,z,rot.mat,distance,zlim.scaled,zlim,... arguments passed
 #'     to panel.3dwire, the core function of wireframe.
 #' @seealso \code{\link[lattice]{wireframe}}.
+#' @import grDevices
 #' @examples
 #'
 #' library(lattice)

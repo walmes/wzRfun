@@ -49,7 +49,7 @@ apc <- function(lfm, lev = NULL) {
             lev <- as.character(1:nlev)
         }
     }
-    cbn <- combn(seq_along(lev), 2)
+    cbn <- utils::combn(seq_along(lev), 2)
     M <- lfm[cbn[1, ], ] - lfm[cbn[2, ], ]
     if (is.vector(M)) {
         dim(M) <- c(1, length(M))
