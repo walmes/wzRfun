@@ -18,11 +18,13 @@ Imports:
     doBy,
     multcomp,
     lattice,
-    latticeExtra
+    latticeExtra,
+    rpanel
 Suggests:
     plyr,
-    rpanel,
     RColorBrewer,
-    lme4
+    lme4,
+    knitr,
+    alr3
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
