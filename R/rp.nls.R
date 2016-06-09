@@ -55,11 +55,10 @@
 #'
 #' library(rpanel)
 #'
-#' rp.nls(model = dist ~ b0 + b1 * speed, data = cars,
-#'        start = list(b0 = c(-20, 20),
-#'                     b1 = c(0, 2, 10)),
-#'        assign = "cars.fit",
-#'        xlab = "Speed", ylab = "Distance")
+#' cars.fit <- rp.nls(model = dist ~ b0 + b1 * speed, data = cars,
+#'                    start = list(b0 = c(-20, 20),
+#'                                 b1 = c(0, 2, 10)),
+#'                    xlab = "Speed", ylab = "Distance")
 #'
 #' summary(cars.fit)
 #' confint(cars.fit)
@@ -81,12 +80,12 @@
 #' plot(Gain ~ A, data = turk0,
 #'      xlab = "Metionine", ylab = "Weight gain")
 #'
-#' rp.nls(model = Gain ~ Int + (Asy - Int) * A/(Half + A), data = turk0,
-#'        start = list(Int = c(600, 650),
-#'                     Asy = c(750, 850),
-#'                     Half = c(0, 0.2)),
-#'        assign = "turk.fit",
-#'        xlab = "Metionine", ylab = "Weight gain")
+#' turk.fit <- rp.nls(model = Gain ~ Int + (Asy - Int) * A/(Half + A),
+#'                    data = turk0,
+#'                    start = list(Int = c(600, 650),
+#'                                 Asy = c(750, 850),
+#'                                 Half = c(0, 0.2)),
+#'                    xlab = "Metionine", ylab = "Weight gain")
 #'
 #' summary(turk.fit)
 #' confint(turk.fit)
@@ -108,23 +107,25 @@
 #' xyplot(rate ~ conc, groups = state, data = Puromycin,
 #'        type = c("p", "smooth"), auto.key = TRUE)
 #'
-#' rp.nls(model = rate ~ Int + (Top - Int) * conc/(Half + conc),
-#'        data = Puromycin,
-#'        start = list(Int = c(20, 70),
-#'                     Top = c(100, 200),
-#'                     Half = c(0, 0.6)),
-#'        subset = "state",
-#'        assign = "Puro.fit",
-#'        start_curve = list(col = 3, lty = 3, lwd = 1),
-#'        fitted_curve = list(col = 4, lty = 1, lwd = 1.5),
-#'        extra_plot = function(Int, Top, Half) {
-#'            abline(h = c(Int, Top), v = Half, col = 2, lty = 2)
-#'        },
-#'        final_plot = function(Int, Top, Half) {
-#'            abline(h = c(Int, Top), v = Half, col = 3, lty = 1)
-#'        },
-#'        xlab = "Concentration", ylab = "Rate",
-#'        xlim = c(0, 1.2), ylim = c(40, 220))
+#' Puro.fit <- rp.nls(model = rate ~
+#'                        Int + (Top - Int) * conc/(Half + conc),
+#'                    data = Puromycin,
+#'                    start = list(Int = c(20, 70),
+#'                                 Top = c(100, 200),
+#'                                 Half = c(0, 0.6)),
+#'                    subset = "state",
+#'                    start_curve = list(col = 3, lty = 3, lwd = 1),
+#'                    fitted_curve = list(col = 4, lty = 1, lwd = 1.5),
+#'                    extra_plot = function(Int, Top, Half) {
+#'                        abline(h = c(Int, Top), v = Half,
+#'                               col = 2, lty = 2)
+#'                    },
+#'                    final_plot = function(Int, Top, Half) {
+#'                        abline(h = c(Int, Top), v = Half,
+#'                               col = 3, lty = 1)
+#'                    },
+#'                    xlab = "Concentration", ylab = "Rate",
+#'                    xlim = c(0, 1.2), ylim = c(40, 220))
 #'
 #' length(Puro.fit)
 #' sapply(Puro.fit, coef)
