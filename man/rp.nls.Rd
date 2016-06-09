@@ -2,107 +2,150 @@
 % Please edit documentation in R/rp.nls.R
 \name{rp.nls}
 \alias{rp.nls}
-\title{Interactive panel to estimate non linear regression models}
+\title{Interactive Fitting for Non Linear Regression Models}
 \usage{
-rp.nls(model, data, start, subset = NULL, assignTo = "rp.fit",
-  startCurve = list(col = 2, lty = 2), fittedCurve = list(col = 2, lty = 1,
-  lwd = 1.5), extraplot = NULL, finalplot = NULL, xlab = NULL,
-  ylab = NULL, ...)
+rp.nls(model, data, start, subset = NULL, assign = "rp.fit", xlab = NULL,
+  ylab = NULL, ..., start_curve = list(col = 2, lty = 2),
+  fitted_curve = list(col = 2, lty = 1, lwd = 1.5), extra_plot = NULL,
+  final_plot = NULL)
 }
 \arguments{
 \item{model}{a non linear model formula including variables and
-parameters to passed to \code{nls} function.}
+parameters to passed to \code{\link[stats]{nls}} function.}
 
 \item{data}{a data frame with dependent and independent variables
 present in the model formula.}
 
-\item{start}{a named list with one item for each parameter. Itens
-names must be equal the parameters. Each item must be named vector
-with values for the \code{init}, \code{from} and \code{to}. This is
-the order assumed if vector are no named. These values will be used
-by \code{rp.slider} as initial, minimum and maximum.}
+\item{start}{a named list with one item for each parameter. Each item
+must vector with 2 (from, to) or 3 values (from, to, init) for
+the \code{init}, \code{from} and \code{to}. When two values are
+provided, the third is the average of them. Values are sorted
+internally to match the initial, minimum and maximum to be used
+by \code{\link[rpanel]{rp.slider}}.}
 
-\item{subset}{an optional string indicating a grouping variable. It
-must be a factor.}
+\item{subset}{an optional string indicating a grouping variable to
+fit separeted curves for each level. It must be a factor.}
 
-\item{assignTo}{the name of the object that will storage the value
-returned by the \code{nls} call. It will be a list with one element
-per level of the factor used as \code{subset}.}
-
-\item{startCurve}{a list with graphical definitions passed to the
-\code{lines} function to draw the curve at the start values. The most
-used arguments are \code{lty}, \code{col} and \code{lwd}.}
-
-\item{fittedCurve}{the same as \code{startCurve} but for the
-estimated curve.}
-
-\item{extraplot}{a function of the model parameters that draw
-auxiliary graphical elements as vertical and horizontal lines as
-references for model intercept and/or model asymptote.}
-
-\item{finalplot}{the same as \code{extraplot} but uses the estimated
-parameter values.}
+\item{assign}{the name of the object that will storage the value
+returned by the \code{\link[stats]{nls}} call. It will be a list
+with one element per level of the factor used as \code{subset}.}
 
 \item{xlab}{labels for the x axis.}
 
 \item{ylab}{labels for the y axis.}
 
 \item{...}{arguments passed to the plot function used to draw the
-observed values.}
+\code{lines} function to draw the curve at the start values. The
+most used arguments are \code{lty}, \code{col} and \code{lwd}.}
+
+\item{start_curve}{a list with graphical definitions passed to the}
+
+\item{fitted_curve}{the same as \code{start_curve} but for the fitted
+curve.}
+
+\item{extra_plot}{a function of the model parameters that draw
+auxiliary graphical elements. For example, draw vertical and
+horizontal lines as references for model intercept and/or model
+asymptote.}
+
+\item{final_plot}{the same as \code{extra_plot} but uses the
+estimated parameter values.  observed values.}
 }
 \value{
 In fact none is returned by the function. There isn't a
-\code{return}, instead there is a \code{invisible} at the end. On the
-other hand, the model fit is assigned to the object with name passed
-to the \code{assingTo} argument.
+    \code{return}, instead there is a \code{invisible} at the end. On
+    the other hand, the model fit is assigned to the object with name
+    passed to the \code{assign} argument.
 }
 \description{
 This function opens a interface, builted with
-\code{rpanel} elements, designed for the estimation of non linear
-regression models. Sliders allows the user control values used as
-start values in the \code{nls} call, checkbox allows select strata of
-the data and more options are available.
+    \pkg{rpanel} elements, designed for non linear regression models
+    fitting. Sliders allows the user control values used as start
+    values in the \code{\link[stats]{nls}} call, checkbox allows
+    select strata of the data to fit separed curves and more options
+    are available.
 }
 \examples{
+
 \donttest{
-##--------------------------------------------
-## A simple linear regression.
 
-rp.nls(model=dist~b0+b1*speed,
-       data=cars,
-       start=list(
-           b0=c(init=0, from=-20, to=20),
-           b1=c(init=2, from=0, to=10)),
-       assignTo="cars.fit")
+#--------------------------------------------
+# A simple linear regression.
 
-cars.fit
+# The model below is a linear model. You should fit in lm().
 
-##--------------------------------------------
-## A more interesting example.
+library(rpanel)
 
-require(lattice)
-xyplot(rate~conc, groups=state, data=Puromycin)
+rp.nls(model = dist ~ b0 + b1 * speed, data = cars,
+       start = list(b0 = c(-20, 20),
+                    b1 = c(0, 2, 10)),
+       assign = "cars.fit",
+       xlab = "Speed", ylab = "Distance")
 
-rp.nls(model=rate~Int+(Top-Int)*conc/(Half+conc),
-       data=Puromycin,
-       start=list(
-           Int=c(init=50, from=20, to=70),
-           Top=c(init=150, from=100, to=200),
-           Half=c(init=0.1, from=0, to=0.6)),
-       subset="state",
-       assignTo="Puro.fit",
-       startCurve=list(col=3, lty=3, lwd=1),
-       fittedCurve=list(col=4, lty=1, lwd=1.5),
-       extraplot=function(Int, Top, Half){
-           abline(h=c(Int, Top), v=Half, col=2, lty=2)
+summary(cars.fit)
+confint(cars.fit)
+
+f <- formula(cars.fit)
+
+plot(dist ~ speed, data = cars)
+with(as.list(coef(cars.fit)), {
+    eval(call("curve", f[[3]], add = TRUE,
+              xname= intersect(all.vars(f[-2]), names(cars))))
+})
+
+#--------------------------------------------
+# A non linear regression.
+
+data(turk0, package = "alr3")
+str(turk0)
+
+plot(Gain ~ A, data = turk0,
+     xlab = "Metionine", ylab = "Weight gain")
+
+rp.nls(model = Gain ~ Int + (Asy - Int) * A/(Half + A), data = turk0,
+       start = list(Int = c(600, 650),
+                    Asy = c(750, 850),
+                    Half = c(0, 0.2)),
+       assign = "turk.fit",
+       xlab = "Metionine", ylab = "Weight gain")
+
+summary(turk.fit)
+confint(turk.fit)
+
+f <- formula(turk.fit)
+
+plot(Gain ~ A, data = turk0,
+     xlab = "Metionine", ylab = "Weight gain")
+with(as.list(coef(turk.fit)), {
+    eval(call("curve", f[[3]], add = TRUE,
+              xname= intersect(all.vars(f[-2]), names(turk0))))
+})
+
+#--------------------------------------------
+# A more interesting example.
+
+library(lattice)
+
+xyplot(rate ~ conc, groups = state, data = Puromycin,
+       type = c("p", "smooth"), auto.key = TRUE)
+
+rp.nls(model = rate ~ Int + (Top - Int) * conc/(Half + conc),
+       data = Puromycin,
+       start = list(Int = c(20, 70),
+                    Top = c(100, 200),
+                    Half = c(0, 0.6)),
+       subset = "state",
+       assign = "Puro.fit",
+       start_curve = list(col = 3, lty = 3, lwd = 1),
+       fitted_curve = list(col = 4, lty = 1, lwd = 1.5),
+       extra_plot = function(Int, Top, Half) {
+           abline(h = c(Int, Top), v = Half, col = 2, lty = 2)
        },
-       finalplot=function(Int, Top, Half){
-           abline(h=c(Int, Top), v=Half, col=3, lty=1)
+       final_plot = function(Int, Top, Half) {
+           abline(h = c(Int, Top), v = Half, col = 3, lty = 1)
        },
-       xlab="Concentration",
-       ylab="Rate",
-       xlim=c(0, 1.2),
-       ylim=c(40, 220))
+       xlab = "Concentration", ylab = "Rate",
+       xlim = c(0, 1.2), ylim = c(40, 220))
 
 length(Puro.fit)
 sapply(Puro.fit, coef)
@@ -111,8 +154,11 @@ sapply(Puro.fit, deviance)
 
 }
 }
+\author{
+Walmes Zeviani, \email{walmes@ufpr.br}.
+}
 \seealso{
 \code{\link[stats]{nls}}, \code{\link[graphics]{lines}},
-\code{\link[rpanel]{rp.slider}}
+    \code{\link[rpanel]{rp.slider}}
 }
 

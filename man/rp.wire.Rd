@@ -3,7 +3,7 @@
 \name{rp.wire}
 \alias{rp.wire}
 \title{A panel to rotate and choose the better view angle of a
-wireframe}
+    wireframe}
 \usage{
 rp.wire(wire)
 }
@@ -11,47 +11,51 @@ rp.wire(wire)
 \item{wire}{a wireframe object.}
 }
 \value{
-Opens a window with sliders for \code{x}, \code{y} and
-\code{z}. Print the \code{dput} os the last view angle using the
-button.
+Open a window with sliders for \code{x}, \code{y} and
+    \code{z}. Print the \code{dput} of the last view angle using the
+    button.
 }
 \description{
-A panel rotate a wireframe plot and choose the best view
-angle.
+A panel (gui) rotate a wireframe plot and choose the
+    best view angle.
+
+\if{html}{\figure{rp-wire.pdf}{options: width="700px"}}
+\if{latex}{\figure{rp-wire.pdf}{options: width=7in}}
 }
 \examples{
-\donttest{
-##-----------------------------------------------------------------------------
-## A simple example.
 
-require(rpanel)
-require(lattice)
-require(latticeExtra)
-require(RColorBrewer)
+\donttest{
+# A simple example.
+
+library(rpanel)
+library(lattice)
+library(latticeExtra)
+library(RColorBrewer)
 
 colr <- brewer.pal(11, "Spectral")
-colr <- colorRampPalette(colr, space="rgb")
+colr <- colorRampPalette(colr, space = "rgb")
 
-grid <- expand.grid(x=seq(-1, 1, by=0.1),
-                    y=seq(-1, 1, by=0.1))
-grid$z <- with(grid, 1+0.01*x+0.05*y-0.5*x*y-0.5*x^2-0.2*y^2)
+grid <- expand.grid(x = seq(-1, 1, by = 0.1),
+                    y = seq(-1, 1, by = 0.1))
+grid$z <- with(grid, 1 + 0.01 * x + 0.05 * y -
+                     0.5 * x * y - 0.5 * x^2 - 0.2 * y^2)
 
-p1 <- wireframe(z~x+y, data=grid,
-                scales=list(arrows=FALSE),
-                ## zlim=extendrange(grid$z, f=0.5),
-                ## panel.3d.wireframe=panel.3d.contour,
-                ## nlevels=18, col="gray30",
-                ## type=c("on", "top", "bottom"),
-                col.regions=colr(101),  drape=TRUE)
+p1 <- wireframe(z ~ x + y, data = grid,
+                scales = list(arrows = FALSE),
+                col.regions = colr(101), drape = TRUE)
 p1
 
-
-## Choose the better angle.
+# Choose the better angle.
 rp.wire(p1)
 
 }
+
+}
+\author{
+Walmes Zeviani, \email{walmes@ufpr.br}.
 }
 \seealso{
-\code{\link[lattice]{wireframe}}, \code{\link[wzRfun]{panel.3d.contour}}.
+\code{\link[lattice]{wireframe}},
+    \code{\link[wzRfun]{panel.3d.contour}}.
 }
 

@@ -2,17 +2,17 @@
 % Please edit documentation in R/panel.3d.contour.R
 \name{panel.3d.contour}
 \alias{panel.3d.contour}
-\title{Lattice panel for draw contour lines in wireframe plots}
+\title{Lattice Panel for Draw Contour Lines In Wireframe Plots}
 \usage{
 panel.3d.contour(x, y, z, rot.mat, distance, type = c("on", "top", "bottom"),
   nlevels = 20, levels = NULL, zlim.scaled, zlim, col.contour = 1, ...)
 }
 \arguments{
-\item{x, y, z, rot.mat, distance, zlim.scaled, zlim}{arguments passed to
-panel.3dwire, the core function of wireframe.}
+\item{x, y, z, rot.mat, distance, zlim.scaled, zlim, ...}{arguments passed
+to panel.3dwire, the core function of wireframe.}
 
-\item{type}{a string vector. The values allowed are top, bottom
-and/or on. Can be use more than one.}
+\item{type}{a string vector. The values allowed are \code{top},
+\code{bottom} and/or \code{on}. Can be use more than one.}
 
 \item{nlevels}{the same argument defined in
 \code{\link[lattice]{wireframe}}.}
@@ -20,63 +20,58 @@ and/or on. Can be use more than one.}
 \item{levels}{the same argument defined in
 \code{\link[lattice]{wireframe}}.}
 
-\item{col.contour}{color of the contour line.}
-
-\item{...}{arguments passed to panel.3dwire, the core function of
-wireframe.}
-}
-\value{
-None is returned.
+\item{col.contour}{color of the contour lines.}
 }
 \description{
 Used to superpose contour lines at the bottom, top or on
-the surface of a wireframe.
+    the surface of a wireframe.
 }
 \examples{
-\donttest{
-##----------------------------------------------------------------------
-## Examples of use.
 
-require(lattice)
-require(latticeExtra)
-require(RColorBrewer)
+library(lattice)
+library(latticeExtra)
+library(RColorBrewer)
 
-##----------------------------------------------------------------------
-## Example 1.
+#--------------------------------------------
+# Example 1.
 
-## display.brewer.all()
+# display.brewer.all()
 colr <- brewer.pal(11, "RdYlGn")
-colr <- colorRampPalette(colr, space="rgb")
+colr <- colorRampPalette(colr, space = "rgb")
 
-grid <- expand.grid(x=seq(0, 1, by=0.05),
-                    y=seq(0, 1, by=0.05))
-grid$z <- with(grid, x+y)
+grid <- expand.grid(x = seq(0, 1, by = 0.05),
+                    y = seq(0, 1, by = 0.05))
+grid$z <- with(grid, x + y)
 
-wireframe(z~x+y, data=grid,
-          scales=list(arrows=FALSE),
-          panel.3d.wireframe=panel.3d.contour,
-          levels=seq(0.5,1.5, by=0.1), type="on",
-          col.regions=colr(101),  drape=TRUE)
+wireframe(z ~ x + y, data = grid,
+          scales = list(arrows = FALSE),
+          panel.3d.wireframe = panel.3d.contour,
+          levels = seq(0.5, 1.5, by = 0.1), type = "on",
+          col.regions = colr(101), drape = TRUE)
 
-##----------------------------------------------------------------------
-## Example 2.
+#--------------------------------------------
+# Example 2.
 
 colr <- brewer.pal(11, "Spectral")
-colr <- colorRampPalette(colr, space="rgb")
+colr <- colorRampPalette(colr, space = "rgb")
 
-grid <- expand.grid(x=seq(-1, 1, by=0.1),
-                    y=seq(-1, 1, by=0.1))
-grid$z <- with(grid, 1+0.01*x+0.05*y-0.5*x*y-0.5*x^2-0.2*y^2)
+grid <- expand.grid(x = seq(-1, 1, by = 0.1),
+                    y = seq(-1, 1, by = 0.1))
+grid$z <- with(grid, 1 + 0.01 * x + 0.05 * y -
+                     0.5 * x * y - 0.5 * x^2 - 0.2 * y^2)
 
-wireframe(z~x+y, data=grid,
-          scales=list(arrows=FALSE),
-          zlim=extendrange(grid$z, f=0.5),
-          panel.3d.wireframe=panel.3d.contour,
-          nlevels=18, col="gray30",
-          type=c("on", "top", "bottom"),
-          col.regions=colr(101),  drape=TRUE)
+wireframe(z ~ x + y, data = grid,
+          scales = list(arrows = FALSE),
+          zlim = extendrange(grid$z, f = 0.5),
+          panel.3d.wireframe = panel.3d.contour,
+          nlevels = 18, col = "gray30",
+          type = c("on", "top", "bottom"),
+          col.regions = colr(101), drape = TRUE)
 
 }
+\author{
+Walmes Zeviani, \email{walmes@ufpr.br}, based on the
+    messages to the R-help mailing list.
 }
 \seealso{
 \code{\link[lattice]{wireframe}}.

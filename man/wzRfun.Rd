@@ -4,8 +4,10 @@
 \name{wzRfun}
 \alias{wzRfun}
 \alias{wzRfun-package}
-\title{wzRfun}
+\title{Walmes Zeviani's collection of functions}
 \description{
-wzRfun
+An R package with functions writen for general
+    purpose. Most of these are related to the analisys of experiments
+    and graphical representation with trellis based plots.
 }
 

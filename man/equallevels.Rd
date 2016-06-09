@@ -2,7 +2,7 @@
 % Please edit documentation in R/equallevels.R
 \name{equallevels}
 \alias{equallevels}
-\title{Make that to data frames have the same factor levels}
+\title{Make Two Data Frames Have The Same Factor Levels}
 \usage{
 equallevels(x, y)
 }
@@ -12,23 +12,27 @@ equallevels(x, y)
 \item{y}{the reference data frame.}
 }
 \value{
-the restructred data frame.
+the restructured data frame.
 }
 \description{
-If two data frames have factor ou character columns with
-the same name, those in the first will have the same level order as
-those in the second. So, in terms of factor columns, these data
-frames will have the same levels in the same order. Character columns
-in the first will be converted to factor.
+If two data frames have factors ou characters columns
+    with the same column names, those in the first will have the same
+    level order as those in the second. So, for factors, these data
+    frames will have the same levels in the same order. Characters in
+    the first will be converted to factor.
 }
 \examples{
-\donttest{
-a <- data.frame(Species=as.character(
-                    sample(iris$Species, 10, repl=TRUE)),
-                stringsAsFactors=FALSE)
+
+a <- data.frame(Species = as.character(
+                    sample(iris$Species, size = 20, repl = TRUE)),
+                stringsAsFactors = FALSE)
 str(a)
+
 b <- equallevels(a, iris)
 str(b)
+
 }
+\author{
+Walmes Zeviani, \email{walmes@ufpr.br}.
 }
 
