@@ -22,7 +22,7 @@ Used to make scatter plot of discrete variables with no
     overlapping points. Observations with the same y value are spread
     in a sistematic pattern.
 \if{html}{\figure{panel-beeswarm.pdf}{options: width="700px"}}
-\if{latex}{\figure{panel-beeswarm.pdf}{options: width=7in}}
+\if{latex}{\figure{panel-beeswarm.pdf}{options: width=5.4in}}
 }
 \examples{
 

@@ -48,7 +48,7 @@ Used to plot confidence bars or confidence bands in
     lattice plots.
 
 \if{html}{\figure{panel-cbH.pdf}{options: width="700px"}}
-\if{latex}{\figure{panel-cbH.pdf}{options: width=7in}}
+\if{latex}{\figure{panel-cbH.pdf}{options: width=5.4in}}
 }
 \examples{
 

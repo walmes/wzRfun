@@ -7,7 +7,7 @@
 #'     best view angle.
 #'
 #' \if{html}{\figure{rp-wire.pdf}{options: width="700px"}}
-#' \if{latex}{\figure{rp-wire.pdf}{options: width=7in}}
+#' \if{latex}{\figure{rp-wire.pdf}{options: width=5.4in}}
 #' @param wire a wireframe object.
 #' @return Open a window with sliders for \code{x}, \code{y} and
 #'     \code{z}. Print the \code{dput} of the last view angle using the
@@ -15,6 +15,7 @@
 #' @seealso \code{\link[lattice]{wireframe}},
 #'     \code{\link[wzRfun]{panel.3d.contour}}.
 #' @import rpanel
+#' @keywords GUI
 #' @examples
 #'
 #' \donttest{

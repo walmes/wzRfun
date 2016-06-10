@@ -20,7 +20,7 @@ A panel (gui) rotate a wireframe plot and choose the
     best view angle.
 
 \if{html}{\figure{rp-wire.pdf}{options: width="700px"}}
-\if{latex}{\figure{rp-wire.pdf}{options: width=7in}}
+\if{latex}{\figure{rp-wire.pdf}{options: width=5.4in}}
 }
 \examples{
 
@@ -58,4 +58,5 @@ Walmes Zeviani, \email{walmes@ufpr.br}.
 \code{\link[lattice]{wireframe}},
     \code{\link[wzRfun]{panel.3d.contour}}.
 }
+\keyword{GUI}
 

@@ -7,7 +7,7 @@
 #'     overlapping points. Observations with the same y value are spread
 #'     in a sistematic pattern.
 #' \if{html}{\figure{panel-beeswarm.pdf}{options: width="700px"}}
-#' \if{latex}{\figure{panel-beeswarm.pdf}{options: width=7in}}
+#' \if{latex}{\figure{panel-beeswarm.pdf}{options: width=5.4in}}
 #' @param spread a numeric scalar indicating how much to spread the
 #'     values. This value should be determined by try and error. If you
 #'     change the window plot dimensions, you should determine a new

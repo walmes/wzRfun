@@ -7,7 +7,7 @@
 #'     lattice plots.
 #'
 #' \if{html}{\figure{panel-cbH.pdf}{options: width="700px"}}
-#' \if{latex}{\figure{panel-cbH.pdf}{options: width=7in}}
+#' \if{latex}{\figure{panel-cbH.pdf}{options: width=5.4in}}
 #' @param y central value (point estimate).
 #' @param ly lower limit.
 #' @param uy upper limit.
