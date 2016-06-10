@@ -20,9 +20,6 @@
 #'     by \code{\link[rpanel]{rp.slider}}.
 #' @param subset an optional string indicating a grouping variable to
 #'     fit separeted curves for each level. It must be a factor.
-#' @param assign the name of the object that will storage the value
-#'     returned by the \code{\link[stats]{nls}} call. It will be a list
-#'     with one element per level of the factor used as \code{subset}.
 #' @param start_curve a list with graphical definitions passed to the
 #' @param xlab labels for the x axis.
 #' @param ylab labels for the y axis.
@@ -43,6 +40,7 @@
 #'     passed to the \code{assign} argument.
 #' @seealso \code{\link[stats]{nls}}, \code{\link[graphics]{lines}},
 #'     \code{\link[rpanel]{rp.slider}}
+#' @keywords GUI
 #' @import rpanel graphics stats
 #' @examples
 #'
@@ -193,15 +191,12 @@ rp.nls <- function(model, data, start,
     # If susbset non null, creates a list for each level, if not, a
     # single element list.
     if (is.null(subset)) {
-        aju <- vector(mode = "list", length = 1)
+        FIT <- vector(mode = "list", length = 1)
     } else {
-        aju <- vector(mode = "list",
+        FIT <- vector(mode = "list",
                       length = nlevels(data[, subset]))
-        names(aju) <- levels(data[, subset])
+        names(FIT) <- levels(data[, subset])
     }
-
-    # Assign to the Global Environment.
-    assign(".rpnls", aju)
 
     #-------------------------------------------------------------------
     # Internal functions.
@@ -286,13 +281,13 @@ rp.nls <- function(model, data, start,
             if (!is.null(final_plot) && panel$final_plot) {
                 do.call(final_plot, cn0)
             }
+            # Assign values to FIT in the parent environment.
             if (is.null(panel$subset)) {
-                .rpnls <<- n0
+                FIT <<- n0
             }
             if (!is.null(panel$subset)) {
-                .rpnls[[panel$sbst]] <<- n0
+                FIT[[panel$sbst]] <<- n0
             }
-            assign("FIT", .rpnls, envir = parent.env(environment()))
         }
         return(panel)
     }
@@ -309,7 +304,8 @@ rp.nls <- function(model, data, start,
                                 model = model,
                                 vdep = data[, vardep],
                                 vindep = data[, varindep],
-                                subset = NULL)
+                                subset = NULL,
+                                sbst = NULL)
     }
     if (!is.null(subset)) {
         nlr.panel <- rp.control(title = "rp.nls",
@@ -318,7 +314,8 @@ rp.nls <- function(model, data, start,
                                 vdep = data[, vardep],
                                 vindep = data[, varindep],
                                 subset = data[, subset])
-        rp.listbox(nlr.panel, variable = sbst,
+        rp.listbox(nlr.panel,
+                   variable = "sbst",
                    vals = levels(data[, subset]),
                    rows = min(c(10, nlevels(data[, subset]))),
                    title = "subset",
@@ -340,13 +337,13 @@ rp.nls <- function(model, data, start,
     }
     if (!is.null(extra_plot)) {
         rp.checkbox(panel = nlr.panel,
-                    variable = extra_plot,
+                    variable = "extra_plot",
                     action = nlr.draw,
                     title = "Use extra_plot")
     }
     if (!is.null(final_plot)) {
         rp.checkbox(panel = nlr.panel,
-                    variable = final_plot,
+                    variable = "final_plot",
                     action = nlsajust,
                     title = "Use final_plot?")
     }
