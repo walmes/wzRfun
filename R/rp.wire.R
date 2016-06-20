@@ -6,7 +6,7 @@
 #' @description A panel (gui) rotate a wireframe plot and choose the
 #'     best view angle.
 #'
-#' \if{html}{\figure{rp-wire.pdf}{options: width="700px"}}
+#' \if{html}{\figure{rp-wire.png}{options: width="700px"}}
 #' \if{latex}{\figure{rp-wire.pdf}{options: width=5.4in}}
 #' @param wire a wireframe object.
 #' @return Open a window with sliders for \code{x}, \code{y} and
