@@ -1,7 +1,7 @@
 Package: wzRfun
 Title: Walmes Zeviani functions
-Version: 0.61
-Date: 2016-06-06
+Version: 0.65
+Date: 2016-06-20
 Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
 Description: An R package with functions writen for general
