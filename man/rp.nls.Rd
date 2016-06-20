@@ -59,6 +59,9 @@ This function opens a interface, builted with
     values in the \code{\link[stats]{nls}} call, checkbox allows
     select strata of the data to fit separed curves and more options
     are available.
+
+\if{html}{\figure{rp-nls.png}{options: width="671px"}}
+\if{latex}{\figure{rp-nls.pdf}{options: width=5.4in}}
 }
 \examples{
 
@@ -130,16 +133,17 @@ Puro.fit <- rp.nls(model = rate ~
                                 Top = c(100, 200),
                                 Half = c(0, 0.6)),
                    subset = "state",
-                   start_curve = list(col = 3, lty = 3, lwd = 1),
-                   fitted_curve = list(col = 4, lty = 1, lwd = 1.5),
-                   extra_plot = function(Int, Top, Half) {
-                       abline(h = c(Int, Top), v = Half,
-                              col = 2, lty = 2)
-                   },
-                   final_plot = function(Int, Top, Half) {
-                       abline(h = c(Int, Top), v = Half,
-                              col = 3, lty = 1)
-                   },
+                   start_curve = list(col = 2),
+                   fitted_curve = list(col = 4, lwd = 2),
+                   # FIXME
+                   # extra_plot = function(Int, Top, Half) {
+                   #     abline(h = c(Int, Top), v = Half,
+                   #            col = 2, lty = 2)
+                   # },
+                   # final_plot = function(Int, Top, Half) {
+                   #     abline(h = c(Int, Top), v = Half,
+                   #            col = 3, lty = 1)
+                   # },
                    xlab = "Concentration", ylab = "Rate",
                    xlim = c(0, 1.2), ylim = c(40, 220))
 
