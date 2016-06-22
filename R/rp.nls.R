@@ -29,14 +29,13 @@
 #' @param ... arguments passed to the plot function used to draw the
 #'     \code{lines} function to draw the curve at the start values. The
 #'     most used arguments are \code{lty}, \code{col} and \code{lwd}.
-#' @param fitted_curve the same as \code{start_curve} but for the fitted
-#'     curve.
-#' @param extra_plot a function of the model parameters that draw
-#'     auxiliary graphical elements. For example, draw vertical and
-#'     horizontal lines as references for model intercept and/or model
-#'     asymptote.
-#' @param final_plot the same as \code{extra_plot} but uses the
-#'     estimated parameter values.  observed values.
+#' @param gpar a named list with graphical parameters for curve. The
+#'     \code{"try"} element is a list for the eye curve that is
+#'     manipulated with sliders. The \code{"fit"} is a list for the
+#'     fitted curve.
+#' @param extra a function of the model parameters that draw auxiliary
+#'     graphical elements. For example, draw vertical and horizontal
+#'     lines as references for model intercept and/or model asymptote.
 #' @return In fact none is returned by the function. There isn't a
 #'     \code{return}, instead there is a \code{invisible} at the end. On
 #'     the other hand, the model fit is assigned to the object with name
@@ -86,6 +85,10 @@
 #'                    start = list(Int = c(600, 650),
 #'                                 Asy = c(750, 850),
 #'                                 Half = c(0, 0.2)),
+#'                    extra = function(Int, Asy, Half) {
+#'                        abline(h = c(Asy, Int), v = Half,
+#'                               col = "green")
+#'                    },
 #'                    xlab = "Metionine", ylab = "Weight gain")
 #'
 #' summary(turk.fit)
@@ -115,17 +118,12 @@
 #'                                 Top = c(100, 200),
 #'                                 Half = c(0, 0.6)),
 #'                    subset = "state",
-#'                    start_curve = list(col = 2),
-#'                    fitted_curve = list(col = 4, lwd = 2),
-#'                    # FIXME
-#'                    # extra_plot = function(Int, Top, Half) {
-#'                    #     abline(h = c(Int, Top), v = Half,
-#'                    #            col = 2, lty = 2)
-#'                    # },
-#'                    # final_plot = function(Int, Top, Half) {
-#'                    #     abline(h = c(Int, Top), v = Half,
-#'                    #            col = 3, lty = 1)
-#'                    # },
+#'                    gpar = list(try = list(col = 2, lty = 2),
+#'                                fit = list(col = "blue", lwd = 1.5)),
+#'                    extra = function(Int, Top, Half) {
+#'                        abline(h = c(Int, Top), v = Half,
+#'                               col = 2, lty = 2)
+#'                    },
 #'                    xlab = "Concentration", ylab = "Rate",
 #'                    xlim = c(0, 1.2), ylim = c(40, 220))
 #'
@@ -138,10 +136,9 @@
 rp.nls <- function(model, data, start,
                    subset = NULL,
                    xlab = NULL, ylab = NULL,  ...,
-                   start_curve = list(col = 2, lty = 2),
-                   fitted_curve = list(col = 2, lty = 1, lwd = 1.5),
-                   extra_plot = NULL,
-                   final_plot = NULL){
+                   gpar = list(try = list(col = 2, lty = 2),
+                               fit = list(col = 2, lwd = 1.5)),
+                   extra = NULL){
 
     #-------------------------------------------------------------------
     # Test the presence of rpanel package.
@@ -205,20 +202,6 @@ rp.nls <- function(model, data, start,
     #-------------------------------------------------------------------
     # Internal functions.
 
-    # Built a function from a model formula (based on the nlstools
-    # package).
-    form2func <- function(formu) {
-        arg1 <- all.vars(formu)
-        arg2 <- vector("list", length(arg1))
-        names(arg2) <- arg1
-        Args <- do.call("alist", arg2)
-        fmodele <- as.function(c(Args, formu))
-        return(fmodele)
-    }
-
-    # Function to get fit values from the model.
-    fmodele <- form2func(model[[3]])
-
     # Function that plot observed values and superpose the curve of the
     # model.
     nlr.draw <- function(panel) {
@@ -229,27 +212,28 @@ rp.nls <- function(model, data, start,
             ylab <- vardep
         }
         if (is.null(panel$subset)) {
-            plot(panel$vindep, panel$vdep,
+            plot(panel$vdep ~ panel$vindep,
                  xlab = xlab, ylab = ylab, ...)
         } else {
-            da <- data.frame(vindep = panel$vindep, vdep = panel$vdep,
+            da <- data.frame(vindep = panel$vindep,
+                             vdep = panel$vdep,
                              subset = panel$subset)
             plot(vdep ~ vindep,
                  data = subset(da, subset == panel$sbst),
                  xlab = xlab, ylab = ylab, ...)
         }
-        vindepseq <- seq(min(panel$vindep), max(panel$vindep),
-                         length.out = 101)
-        listparvar <- c(list(vindepseq), panel[parnames])
-        names(listparvar)[1] <- varindep
-        fx <- do.call("fmodele", listparvar)
-        do.call(lines, c(list(x = vindepseq, y = fx), start_curve))
-        if (!is.null(extra_plot)) {
-            if (panel$extra_plot) {
-                do.call(extra_plot, panel[parnames])
-            }
+
+        with(panel, {
+            do.call("curve",
+                    args = c(expr = model[[3]],
+                             xname = varindep,
+                             add = TRUE, gpar$try))
+        })
+
+        if (!is.null(extra)) {
+            do.call(what = "extra", panel[parnames])
         }
-        panel
+        return(panel)
     }
 
     # Function that is called when click on "Adjust" button.
@@ -275,15 +259,15 @@ rp.nls <- function(model, data, start,
             text(x = 0.5, y = 0.5, col = "red", cex = 2,
                  labels = "Convergence not met!\nGet closer!")
         } else {
-            vindepseq <- seq(min(panel$vindep), max(panel$vindep),
-                             length.out = 101)
             cn0 <- as.list(coef(n0))
-            listparvar <- c(list(vindepseq), cn0)
-            names(listparvar)[1] <- varindep
-            fx <- do.call("fmodele", listparvar)
-            do.call(lines, c(list(x = vindepseq, y = fx), fitted_curve))
-            if (!is.null(final_plot) && panel$final_plot) {
-                do.call(final_plot, cn0)
+            with(cn0, {
+                do.call("curve",
+                        args = c(expr = model[[3]],
+                                 xname = varindep,
+                                 add = TRUE, gpar$fit))
+            })
+            if (!is.null(plot)) {
+                do.call(what = "extra", cn0)
             }
             # Assign values to FIT in the parent environment.
             if (is.null(panel$subset)) {
@@ -299,33 +283,35 @@ rp.nls <- function(model, data, start,
     #----------------------------------------
     # Building the controls.
 
-    action <- nlr.draw
-
-    # Open empty window, if there is subset, creates the list box.
-    if (is.null(subset)) {
-        nlr.panel <- rp.control(title = "rp.nls",
-                                size = c(300, 200),
-                                model = model,
-                                vdep = data[, vardep],
-                                vindep = data[, varindep],
-                                subset = NULL,
-                                sbst = NULL)
-    }
+    nlr.panel <- rp.control(title = "rp.nls",
+                            size = c(300, 200),
+                            model = model,
+                            vdep = data[, vardep],
+                            vindep = data[, varindep],
+                            subset = if (is.null(subset)) {
+                                         NULL
+                                     } else {
+                                         data[, subset]
+                                     })
+    rp.text(panel = nlr.panel,
+            text = paste0("Don't quit closing the window.\n",
+                          "Click on `Save and Quit` button."))
+    rp.button(panel = nlr.panel,
+              title = "Save and Quit",
+              background = "yellow",
+              action = function(panel) {
+                  assign("finish", value = FALSE,
+                         envir = parent.env(environment()))
+                  rp.control.dispose(nlr.panel)
+              })
     if (!is.null(subset)) {
-        nlr.panel <- rp.control(title = "rp.nls",
-                                size = c(300, 200),
-                                model = model,
-                                vdep = data[, vardep],
-                                vindep = data[, varindep],
-                                subset = data[, subset])
         rp.listbox(nlr.panel,
                    variable = "sbst",
                    vals = levels(data[, subset]),
                    rows = min(c(10, nlevels(data[, subset]))),
                    title = "subset",
-                   action = action)
+                   action = nlr.draw)
     }
-
     # Create the sliders for each parameter.
     for (i in parnames) {
         callstr <- 'rp.slider(panel = nlr.panel,
@@ -334,33 +320,14 @@ rp.nls <- function(model, data, start,
                               to = start[["PAR"]]["to"],
                               initval = start[["PAR"]]["init"],
                               showvalue = TRUE,
-                              action = action,
+                              action = nlr.draw,
                               title = "PAR")'
         callstr <- gsub("PAR", i, callstr)
         source(textConnection(callstr), local = TRUE)
-    }
-    if (!is.null(extra_plot)) {
-        rp.checkbox(panel = nlr.panel,
-                    variable = "extra_plot",
-                    action = nlr.draw,
-                    title = "Use extra_plot")
-    }
-    if (!is.null(final_plot)) {
-        rp.checkbox(panel = nlr.panel,
-                    variable = "final_plot",
-                    action = nlsajust,
-                    title = "Use final_plot?")
+        closeAllConnections()
     }
     rp.button(panel = nlr.panel, action = nlsajust, title = "Adjust")
-    rp.button(panel = nlr.panel,
-              title = "Save and Quit",
-              background = "gray30",
-              action = function(panel) {
-                  assign("finish", value = FALSE,
-                         envir = parent.env(environment()))
-                  rp.control.dispose(nlr.panel)
-              })
-    rp.do(panel = nlr.panel, action = action)
+    rp.do(panel = nlr.panel, action = nlr.draw)
     finish <- TRUE
     while (finish) { }
     if (exists("FIT")) {
