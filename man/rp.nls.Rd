@@ -5,8 +5,8 @@
 \title{Interactive Fitting for Non Linear Regression Models}
 \usage{
 rp.nls(model, data, start, subset = NULL, xlab = NULL, ylab = NULL, ...,
-  start_curve = list(col = 2, lty = 2), fitted_curve = list(col = 2, lty =
-  1, lwd = 1.5), extra_plot = NULL, final_plot = NULL)
+  gpar = list(try = list(col = 2, lty = 2), fit = list(col = 2, lwd = 1.5)),
+  extra = NULL)
 }
 \arguments{
 \item{model}{a non linear model formula including variables and
@@ -33,18 +33,14 @@ fit separeted curves for each level. It must be a factor.}
 \code{lines} function to draw the curve at the start values. The
 most used arguments are \code{lty}, \code{col} and \code{lwd}.}
 
-\item{start_curve}{a list with graphical definitions passed to the}
+\item{gpar}{a named list with graphical parameters for curve. The
+\code{"try"} element is a list for the eye curve that is
+manipulated with sliders. The \code{"fit"} is a list for the
+fitted curve.}
 
-\item{fitted_curve}{the same as \code{start_curve} but for the fitted
-curve.}
-
-\item{extra_plot}{a function of the model parameters that draw
-auxiliary graphical elements. For example, draw vertical and
-horizontal lines as references for model intercept and/or model
-asymptote.}
-
-\item{final_plot}{the same as \code{extra_plot} but uses the
-estimated parameter values.  observed values.}
+\item{extra}{a function of the model parameters that draw auxiliary
+graphical elements. For example, draw vertical and horizontal
+lines as references for model intercept and/or model asymptote.}
 }
 \value{
 In fact none is returned by the function. There isn't a
@@ -87,7 +83,7 @@ f <- formula(cars.fit)
 plot(dist ~ speed, data = cars)
 with(as.list(coef(cars.fit)), {
     eval(call("curve", f[[3]], add = TRUE,
-              xname= intersect(all.vars(f[-2]), names(cars))))
+              xname = intersect(all.vars(f[-2]), names(cars))))
 })
 
 #--------------------------------------------
@@ -104,6 +100,10 @@ turk.fit <- rp.nls(model = Gain ~ Int + (Asy - Int) * A/(Half + A),
                    start = list(Int = c(600, 650),
                                 Asy = c(750, 850),
                                 Half = c(0, 0.2)),
+                   extra = function(Int, Asy, Half) {
+                       abline(h = c(Asy, Int), v = Half,
+                              col = "green")
+                   },
                    xlab = "Metionine", ylab = "Weight gain")
 
 summary(turk.fit)
@@ -115,7 +115,7 @@ plot(Gain ~ A, data = turk0,
      xlab = "Metionine", ylab = "Weight gain")
 with(as.list(coef(turk.fit)), {
     eval(call("curve", f[[3]], add = TRUE,
-              xname= intersect(all.vars(f[-2]), names(turk0))))
+              xname = intersect(all.vars(f[-2]), names(turk0))))
 })
 
 #--------------------------------------------
@@ -133,17 +133,12 @@ Puro.fit <- rp.nls(model = rate ~
                                 Top = c(100, 200),
                                 Half = c(0, 0.6)),
                    subset = "state",
-                   start_curve = list(col = 2),
-                   fitted_curve = list(col = 4, lwd = 2),
-                   # FIXME
-                   # extra_plot = function(Int, Top, Half) {
-                   #     abline(h = c(Int, Top), v = Half,
-                   #            col = 2, lty = 2)
-                   # },
-                   # final_plot = function(Int, Top, Half) {
-                   #     abline(h = c(Int, Top), v = Half,
-                   #            col = 3, lty = 1)
-                   # },
+                   gpar = list(try = list(col = 2, lty = 2),
+                               fit = list(col = "blue", lwd = 1.5)),
+#                  extra = function(Int, Top, Half) {
+#                      abline(h = c(Int, Top), v = Half,
+#                             col = 2, lty = 2)
+#                  },
                    xlab = "Concentration", ylab = "Rate",
                    xlim = c(0, 1.2), ylim = c(40, 220))
 

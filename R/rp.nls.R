@@ -23,7 +23,6 @@
 #'     by \code{\link[rpanel]{rp.slider}}.
 #' @param subset an optional string indicating a grouping variable to
 #'     fit separeted curves for each level. It must be a factor.
-#' @param start_curve a list with graphical definitions passed to the
 #' @param xlab labels for the x axis.
 #' @param ylab labels for the y axis.
 #' @param ... arguments passed to the plot function used to draw the
@@ -120,10 +119,10 @@
 #'                    subset = "state",
 #'                    gpar = list(try = list(col = 2, lty = 2),
 #'                                fit = list(col = "blue", lwd = 1.5)),
-#'                    extra = function(Int, Top, Half) {
-#'                        abline(h = c(Int, Top), v = Half,
-#'                               col = 2, lty = 2)
-#'                    },
+#' #                  extra = function(Int, Top, Half) {
+#' #                      abline(h = c(Int, Top), v = Half,
+#' #                             col = 2, lty = 2)
+#' #                  },
 #'                    xlab = "Concentration", ylab = "Rate",
 #'                    xlim = c(0, 1.2), ylim = c(40, 220))
 #'
