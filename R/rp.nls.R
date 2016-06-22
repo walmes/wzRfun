@@ -68,7 +68,7 @@
 #' plot(dist ~ speed, data = cars)
 #' with(as.list(coef(cars.fit)), {
 #'     eval(call("curve", f[[3]], add = TRUE,
-#'               xname= intersect(all.vars(f[-2]), names(cars))))
+#'               xname = intersect(all.vars(f[-2]), names(cars))))
 #' })
 #'
 #' #--------------------------------------------
@@ -100,7 +100,7 @@
 #'      xlab = "Metionine", ylab = "Weight gain")
 #' with(as.list(coef(turk.fit)), {
 #'     eval(call("curve", f[[3]], add = TRUE,
-#'               xname= intersect(all.vars(f[-2]), names(turk0))))
+#'               xname = intersect(all.vars(f[-2]), names(turk0))))
 #' })
 #'
 #' #--------------------------------------------
@@ -266,7 +266,7 @@ rp.nls <- function(model, data, start,
                                  xname = varindep,
                                  add = TRUE, gpar$fit))
             })
-            if (!is.null(plot)) {
+            if (!is.null(extra)) {
                 do.call(what = "extra", cn0)
             }
             # Assign values to FIT in the parent environment.
