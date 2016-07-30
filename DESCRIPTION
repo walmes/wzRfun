@@ -1,7 +1,7 @@
 Package: wzRfun
 Title: Walmes Zeviani functions
-Version: 0.65
-Date: 2016-06-20
+Version: 0.70
+Date: 2016-07-29
 Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
 Description: An R package with functions writen for general
@@ -18,9 +18,9 @@ Imports:
     doBy,
     multcomp,
     lattice,
-    latticeExtra
+    latticeExtra,
+    rpanel
 Suggests:
-    rpanel,
     plyr,
     RColorBrewer,
     lme4,
