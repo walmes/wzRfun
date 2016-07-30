@@ -1,40 +1,3 @@
-#' @name table_caption
-#' @export
-#' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
-#' @title Numbered Caption Labels For Exported Tables
-#' @description This function does numered caption for exported tables.
-#' @param caption a string that is the caption for a table.
-#' @param reset integer value used to reset the table caption
-#'     counter. Default is \code{NULL}.
-#' @param label a string representing the name for table. Default is
-#'     \code{Tabela}.
-#' @param sep a string with the separator. Default is \code{:}.
-#' @return a string composed by \code{label}, \code{sep} and
-#'     \code{caption}. Each call increments its number.
-#' @seealso \code{\link{table_format}}, \code{\link{matrix2html}}.
-#' @examples
-#'
-#' table_caption("First table label.")
-#' table_caption("Second table label.")
-#' table_caption("Third table label.")
-#' table_caption("Counter reseted.", reset = 0)
-#'
-table_caption <- function(caption,
-                          reset = NULL,
-                          label = "Tabela",
-                          sep = ":") {
-    if (!exists(".tabEnv", mode = "environment", envir = .GlobalEnv)) {
-        .tabEnv <<- new.env(parent = .GlobalEnv)
-        assign("n", 0, envir = .tabEnv)
-    }
-    if (!is.null(reset)) {
-        assign("n", reset, envir = .tabEnv)
-    } else {
-        assign("n", .tabEnv$n + 1L, envir = .tabEnv)
-    }
-    sprintf("%s %d%s %s", label, .tabEnv$n, sep, caption)
-}
-
 #' @name table_format
 #' @export
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
@@ -53,7 +16,7 @@ table_caption <- function(caption,
 #'     functions can not be direct applied to them anymore. Because of
 #'     this, it is not recommended assign the result of the function to
 #'     the object used as \code{table} argument.
-#' @seealso \code{\link{table_caption}}, \code{\link{matrix2html}}.
+#' @seealso \code{\link{matrix2html}}.
 #' @examples
 #'
 #' x <- table_format(head(rock), digits = c(1, 2, 3, 4))
@@ -116,7 +79,7 @@ table_format <- function(table, digits) {
 #' @return a character vector. Use \code{cat} inside chunks with header
 #'     \code{results = "asis"} to print the result as interpretable code
 #'     of an html table.
-#' @seealso \code{\link{table_format}}, \code{\link{table_caption}}.
+#' @seealso \code{\link{table_format}}.
 #' @examples
 #'
 #' x <- head(rock)

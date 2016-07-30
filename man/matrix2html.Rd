@@ -96,6 +96,6 @@ cat(m2h)
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
 \seealso{
-\code{\link{table_format}}, \code{\link{table_caption}}.
+\code{\link{table_format}}.
 }
 

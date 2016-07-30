@@ -46,6 +46,6 @@ str(x)
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
 \seealso{
-\code{\link{table_caption}}, \code{\link{matrix2html}}.
+\code{\link{matrix2html}}.
 }
 
