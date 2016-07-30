@@ -198,10 +198,10 @@ cld2 <- function(object, level = 0.05) {
     ret$comps <- do.call(rbind,
                          strsplit(rownames(object$linfct), "-"))
     ret$mcletters <-
-        multcomp:::insert_absorb(x = signif,
-                                 decreasing = TRUE,
-                                 comps = ret$comps,
-                                 lvl_order = lvl_order)
+        insert_absorb(x = signif,
+                      decreasing = TRUE,
+                      comps = ret$comps,
+                      lvl_order = lvl_order)
     class(ret) <- "cld"
     return(ret)
 }
