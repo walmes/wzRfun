@@ -1,11 +1,11 @@
 Package: wzRfun
 Title: Walmes Zeviani functions
-Version: 0.70
-Date: 2016-07-29
+Version: 0.71
+Date: 2016-12-29
 Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
-Description: An R package with functions writen for general
-    purpose. Most of these are related to the analisys of experiments
+Description: An R package with functions written for general
+    purpose. Most of these are related to the analysis of experiments
     and graphical representation with trellis based plots.
 License: GPL-3
 LazyData: true

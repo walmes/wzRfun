@@ -205,3 +205,64 @@ cld2 <- function(object, level = 0.05) {
     class(ret) <- "cld"
     return(ret)
 }
+
+#' @name ordered_cld2
+#' @author Walmes Zeviani, \email{walmes@@ufpr.r}.
+#' @export
+#' @title Order Letters According to Numeric Vector
+#' @description This function order the letters in the compact letter
+#'     display to the highest estimate receive the letter \code{a}. This
+#'     is a convetion in most software for analysis of experiments.
+#' @param let Character vector with the letters returned by \code{cld2}.
+#' @param means Numeric vector with the corresponding estimates in which
+#'     the highest value will have the letter \code{a}.
+#' @return A character vector with the letters rearranged.
+#' @seealso \code{\link{cld2}}.
+#' @examples
+#'
+#' # Toy data.
+#' set.seed(4321)
+#' td <- data.frame(trt = rep(sample(1:8), each = 5))
+#' td$y <- rnorm(nrow(td), mean = sort(td$trt), sd = 2)
+#'
+#' plot(y ~ trt, data = td)
+#'
+#' # Fit the model.
+#' td$trt <- factor(td$trt)
+#' m0 <- lm(y ~ trt, data = td)
+#' anova(m0)
+#' summary(m0)
+#'
+#' library(multcomp)
+#' library(doBy)
+#'
+#' X <- LSmatrix(m0, effect = "trt")
+#' rownames(X) <- levels(td$trt)
+#' Xc <- apc(X)
+#'
+#' g <- summary(glht(m0, linfct = Xc),
+#'              test = adjusted(type = "fdr"))
+#'
+#' res <- data.frame(trt = levels(td$trt),
+#'                   mean = X %*% coef(m0))
+#'
+#' let <- cld2(g)
+#' res$cld2 <- let$mcletters$Letters
+#' res[order(res$mean), ]
+#'
+#' res$let2 <- ordered_cld(res$cld2, res$mean)
+#' res[order(res$mean), ]
+#'
+ordered_cld <- function(let, means = let) {
+    or <- order(means)
+    let <- as.character(let[or])
+    s <- strsplit(let, "")
+    ul <- unique(unlist(s))
+    UL <- sort(ul, decreasing = TRUE)
+    l <- sapply(s,
+                FUN = function(i) {
+                    paste(sort(UL[match(i, table = ul)]),
+                          collapse = "")
+    })
+    return(l[order(or)])
+}
