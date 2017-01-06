@@ -1,3 +1,31 @@
+#' @name centfac
+#' @export
+#' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
+#' @title Numeric Centered Factor Levels
+#'
+#' @description This function receveis a factor and return a numeric
+#'     vector with equally spaced factor levels centered at 0.
+#'
+#' @param group A factor.
+#' @param space A numeric value to be used as the space between
+#'     levels. If \code{NULL}, the space is determined by the
+#'     \code{group}.
+#' @examples
+#'
+#' centfac(warpbreaks$tension)
+#' centfac(warpbreaks$tension, space = 1)
+#' centfac(warpbreaks$wool)
+#' centfac(warpbreaks$wool, space = 1)
+#'
+centfac <- function(group, space = NULL) {
+    stopifnot(is.factor(group))
+    if (is.null(space)) {
+        space <- 0.5/nlevels(group)
+    }
+    d <- 2 * ((as.integer(group) - 1)/(nlevels(group) - 1)) - 1
+    return(space * d)
+}
+
 #' @name panel.groups.segplot
 #' @export
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
@@ -40,7 +68,7 @@
 #'
 #' segplot(wool ~ lwr + upr, centers = fit, data = pred,
 #'         draw = FALSE, horizontal = FALSE,
-#'         groups = tension, gap = NULL,
+#'         groups = tension, gap = 0.05,
 #'         panel = panel.groups.segplot)
 #'
 panel.groups.segplot <- function(x, y, z, centers,
@@ -52,11 +80,7 @@ panel.groups.segplot <- function(x, y, z, centers,
     }
     stopifnot(is.factor(groups))
     stopifnot(length(groups) == length(z))
-    if (is.null(gap)) {
-        gap <- 0.5/nlevels(groups)
-    }
-    d <- 2 * ((as.numeric(groups) - 1)/(nlevels(groups) - 1)) - 1
-    z <- as.numeric(z) + gap * d
+    z <- as.numeric(z) + centfac(groups, space = gap)
     panel.segplot(x, y, z, centers = centers,
                   subscripts = subscripts, ...)
 }

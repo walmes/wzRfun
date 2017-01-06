@@ -44,7 +44,7 @@ segplot(wool ~ lwr + upr, centers = fit, data = pred,
 
 segplot(wool ~ lwr + upr, centers = fit, data = pred,
         draw = FALSE, horizontal = FALSE,
-        groups = tension, gap = NULL,
+        groups = tension, gap = 0.05,
         panel = panel.groups.segplot)
 
 }
