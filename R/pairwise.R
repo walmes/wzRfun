@@ -78,6 +78,9 @@ apc <- function(lfm, lev = NULL) {
 #' @param level the experimentwise significance level for the multiple
 #'     comparisons. The individual coverage of the confidence interval
 #'     is \code{1-level}. Default is 0.05.
+#' @param cld2 Logical, if \code{TRUE} uses the \code{\link{cld2}}
+#'     functions, otherwise uses the \code{\link[multcomp]{cld}}
+#'     function.
 #' @return a \code{data.frame} with interval estimates and compact
 #'     letter display for the means comparisons.
 #' @seealso \code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
@@ -92,25 +95,67 @@ apc <- function(lfm, lev = NULL) {
 #' anova(m0)
 #'
 #' # Prepare the matrix to estimate lsmeans.
-#' X <- LSmatrix(m0, effect = "feed")
-#' rownames(X) <- levels(chickwts$feed)
-#' apmc(X, model = m0, focus = "feed", test = "fdr")
+#' L <- LSmatrix(m0, effect = "feed")
+#' rownames(L) <- levels(chickwts$feed)
+#' apmc(L, model = m0, focus = "feed", test = "fdr")
 #'
-#' # Two factors.
+#' data(warpbreaks)
+#'
+#' # Two factors (complete factorial).
 #' m1 <- lm(breaks ~ wool * tension, data = warpbreaks)
 #' anova(m1)
 #'
-#' X <- LSmatrix(m1, effect = c("wool", "tension"))
-#' attributes(X)
+#' L <- LSmatrix(m1, effect = c("wool", "tension"))
+#' attributes(L)
 #'
-#' Xs <- by(X, INDICES = attr(X, "grid")$tension, FUN = as.matrix)
-#' Xs <- lapply(Xs, "rownames<-", levels(warpbreaks$wool))
+#' Ls <- by(L, INDICES = attr(L, "grid")$tension, FUN = as.matrix)
+#' Ls <- lapply(Ls, "rownames<-", levels(warpbreaks$wool))
 #'
 #' # Comparing means of wool in each tension.
-#' lapply(Xs, apmc, model = m1, focus = "wool",
+#' lapply(Ls, apmc, model = m1, focus = "wool",
 #'        test = "single-step", level = 0.1)
 #'
-apmc <- function(X, model, focus, test = "single-step", level = 0.05) {
+#' # Two factors (incomplete factorial).
+#' warpbreaks <- subset(warpbreaks, !(tension == "H" & wool == "A"))
+#' xtabs(~tension + wool, data = warpbreaks)
+#'
+#' # There is NA in the estimated parameters.
+#' m2 <- lm(breaks ~ wool * tension, data = warpbreaks)
+#' coef(m2)
+#'
+#' X <- model.matrix(m2)
+#' b <- coef(m2)
+#'
+#' X <- X[, !is.na(b)]
+#'
+#' # unique(X)
+#'
+#' # Uses the full estimable model matriz.
+#' m3 <- update(m2, . ~ 0 + X)
+#'
+#' # These models are in fact the same.
+#' anova(m2, m3)
+#'
+#' # LS matrix has all cells.
+#' L <- LSmatrix(m2, effect = c("wool", "tension"))
+#' g <- attr(L, "grid")
+#' L <- L[, !is.na(b)]
+#' i <- 5
+#' L <- L[-i, ]
+#' g <- g[-i, ]
+#'
+#' rownames(L) <- g$tension
+#' Ls <- by(L, INDICES = g$wool, FUN = as.matrix)
+#'
+#' # LSmeans with MCP test.
+#' lapply(Ls, apmc, model = m3, focus = "tension",
+#'        test = "single-step", level = 0.1, cld2 = TRUE)
+#'
+#' # Sample means.
+#' aggregate(breaks ~ tension + wool, data = warpbreaks, FUN = mean)
+#'
+apmc <- function(X, model, focus, test = "single-step", level = 0.05,
+                 cld2 = FALSE) {
     if (is.null(rownames(X))) {
         stop("The X matrix must have row names.")
     }
@@ -125,8 +170,14 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05) {
                  test = adjusted(type = test))
     h$type <- "Tukey"
     h$focus <- focus
-    ci$cld <- multcomp::cld(h, level = level,
-                            decreasing = TRUE)$mcletters$Letters
+    if (cld2) {
+        ci$cld <- cld2(h,
+                       level = level)$mcletters$Letters
+        ci$cld <- ordered_cld(ci$cld, ci$fit)
+    } else {
+        ci$cld <- multcomp::cld(h, level = level,
+                                decreasing = TRUE)$mcletters$Letters
+    }
     ci <- cbind(rownames(ci), ci)
     names(ci)[1] <- focus
     rownames(ci) <- NULL
@@ -140,8 +191,9 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05) {
 #' @description This functions get the compact letter display for
 #'     objects of class \code{"glht"}. Modification was done to get the
 #'     letters to design with missing cells, non completelly crossed
-#'     factorial designs and nested factorial designs. It is assumed
-#'     that Tukey contrasts was used.
+#'     factorial designs and nested factorial designs. These models are
+#'     usually declared by a model matrix to have all effects
+#'     estimated. It is assumed that Tukey contrasts was used.
 #' @param object an object returned by \code{\link[multcomp]{glht}}. It
 #'     is assumed that the matrix used as the \code{linfct} argument in
 #'     \code{glht} corresponds to a matrix to get Tukey contrasts of
@@ -155,7 +207,9 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05) {
 #' @examples
 #'
 #' # Toy data 1: experiment with cultivars in several locations.
-#' td1 <- expand.grid(loc = gl(5, 1), block = gl(3, 1), cult = LETTERS[1:6])
+#' td1 <- expand.grid(loc = gl(5, 1),
+#'                    block = gl(3, 1),
+#'                    cult = LETTERS[1:6])
 #' td1 <- subset(td1, !(loc == 1 & cult == "A"))
 #' td1 <- subset(td1, !(loc == 2 & cult == "B"))
 #' xtabs(~loc + cult, td1)

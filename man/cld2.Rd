@@ -22,13 +22,16 @@ an object of class \code{"cld"} with letters to resume mean
 This functions get the compact letter display for
     objects of class \code{"glht"}. Modification was done to get the
     letters to design with missing cells, non completelly crossed
-    factorial designs and nested factorial designs. It is assumed
-    that Tukey contrasts was used.
+    factorial designs and nested factorial designs. These models are
+    usually declared by a model matrix to have all effects
+    estimated. It is assumed that Tukey contrasts was used.
 }
 \examples{
 
 # Toy data 1: experiment with cultivars in several locations.
-td1 <- expand.grid(loc = gl(5, 1), block = gl(3, 1), cult = LETTERS[1:6])
+td1 <- expand.grid(loc = gl(5, 1),
+                   block = gl(3, 1),
+                   cult = LETTERS[1:6])
 td1 <- subset(td1, !(loc == 1 & cult == "A"))
 td1 <- subset(td1, !(loc == 2 & cult == "B"))
 xtabs(~loc + cult, td1)

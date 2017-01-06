@@ -4,7 +4,7 @@
 \alias{apmc}
 \title{A Wraper of glht to Get All Pairwise Mean Comparisons}
 \usage{
-apmc(X, model, focus, test = "single-step", level = 0.05)
+apmc(X, model, focus, test = "single-step", level = 0.05, cld2 = FALSE)
 }
 \arguments{
 \item{X}{a matrix where each line is a linear function of the model
@@ -23,6 +23,10 @@ being compared.}
 \item{level}{the experimentwise significance level for the multiple
 comparisons. The individual coverage of the confidence interval
 is \code{1-level}. Default is 0.05.}
+
+\item{cld2}{Logical, if \code{TRUE} uses the \code{\link{cld2}}
+functions, otherwise uses the \code{\link[multcomp]{cld}}
+function.}
 }
 \value{
 a \code{data.frame} with interval estimates and compact
@@ -44,23 +48,64 @@ m0 <- lm(weight ~ feed, data = chickwts)
 anova(m0)
 
 # Prepare the matrix to estimate lsmeans.
-X <- LSmatrix(m0, effect = "feed")
-rownames(X) <- levels(chickwts$feed)
-apmc(X, model = m0, focus = "feed", test = "fdr")
+L <- LSmatrix(m0, effect = "feed")
+rownames(L) <- levels(chickwts$feed)
+apmc(L, model = m0, focus = "feed", test = "fdr")
 
-# Two factors.
+data(warpbreaks)
+
+# Two factors (complete factorial).
 m1 <- lm(breaks ~ wool * tension, data = warpbreaks)
 anova(m1)
 
-X <- LSmatrix(m1, effect = c("wool", "tension"))
-attributes(X)
+L <- LSmatrix(m1, effect = c("wool", "tension"))
+attributes(L)
 
-Xs <- by(X, INDICES = attr(X, "grid")$tension, FUN = as.matrix)
-Xs <- lapply(Xs, "rownames<-", levels(warpbreaks$wool))
+Ls <- by(L, INDICES = attr(L, "grid")$tension, FUN = as.matrix)
+Ls <- lapply(Ls, "rownames<-", levels(warpbreaks$wool))
 
 # Comparing means of wool in each tension.
-lapply(Xs, apmc, model = m1, focus = "wool",
+lapply(Ls, apmc, model = m1, focus = "wool",
        test = "single-step", level = 0.1)
+
+# Two factors (incomplete factorial).
+warpbreaks <- subset(warpbreaks, !(tension == "H" & wool == "A"))
+xtabs(~tension + wool, data = warpbreaks)
+
+# There is NA in the estimated parameters.
+m2 <- lm(breaks ~ wool * tension, data = warpbreaks)
+coef(m2)
+
+X <- model.matrix(m2)
+b <- coef(m2)
+
+X <- X[, !is.na(b)]
+
+# unique(X)
+
+# Uses the full estimable model matriz.
+m3 <- update(m2, . ~ 0 + X)
+
+# These models are in fact the same.
+anova(m2, m3)
+
+# LS matrix has all cells.
+L <- LSmatrix(m2, effect = c("wool", "tension"))
+g <- attr(L, "grid")
+L <- L[, !is.na(b)]
+i <- 5
+L <- L[-i, ]
+g <- g[-i, ]
+
+rownames(L) <- g$tension
+Ls <- by(L, INDICES = g$wool, FUN = as.matrix)
+
+# LSmeans with MCP test.
+lapply(Ls, apmc, model = m3, focus = "tension",
+       test = "single-step", level = 0.1, cld2 = TRUE)
+
+# Sample means.
+aggregate(breaks ~ tension + wool, data = warpbreaks, FUN = mean)
 
 }
 \author{
