@@ -311,7 +311,7 @@ ordered_cld <- function(let, means = let) {
     or <- order(means)
     let <- as.character(let[or])
     s <- strsplit(let, "")
-    ul <- unique(unlist(s))
+    ul <- unique(let[nchar(let) == 1])
     UL <- sort(ul, decreasing = TRUE)
     l <- sapply(s,
                 FUN = function(i) {
