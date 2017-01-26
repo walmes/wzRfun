@@ -1,5 +1,7 @@
 before_install:
   - sudo apt-get install r-cran-tkrplot bwidget
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 language: r
 cache: packages
