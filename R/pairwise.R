@@ -311,12 +311,14 @@ ordered_cld <- function(let, means = let) {
     or <- order(means)
     let <- as.character(let[or])
     s <- strsplit(let, "")
-    ul <- unique(let[nchar(let) == 1])
+    v <- rep(means[or], nchar(let))
+    u <- unlist(s)
+    ul <- names(sort(tapply(v, u, mean)))
     UL <- sort(ul, decreasing = TRUE)
     l <- sapply(s,
                 FUN = function(i) {
                     paste(sort(UL[match(i, table = ul)]),
                           collapse = "")
-    })
+                })
     return(l[order(or)])
 }
