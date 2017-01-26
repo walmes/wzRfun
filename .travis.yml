@@ -1,3 +1,6 @@
+before_install:
+  - sudo apt-get install r-cran-tkrplot bwidget
+
 language: r
 cache: packages
 cran: http://cran-r.c3sl.ufpr.br/
