@@ -16,7 +16,7 @@
 #'     functions can not be direct applied to them anymore. Because of
 #'     this, it is not recommended assign the result of the function to
 #'     the object used as \code{table} argument.
-#' @seealso \code{\link{matrix2html}}.
+#' @seealso \code{\link{matrix2html}()}.
 #' @examples
 #'
 #' x <- table_format(head(rock), digits = c(1, 2, 3, 4))
@@ -79,7 +79,7 @@ table_format <- function(table, digits) {
 #' @return a character vector. Use \code{cat} inside chunks with header
 #'     \code{results = "asis"} to print the result as interpretable code
 #'     of an html table.
-#' @seealso \code{\link{table_format}}.
+#' @seealso \code{\link{table_format}()}.
 #' @examples
 #'
 #' x <- head(rock)

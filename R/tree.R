@@ -122,7 +122,7 @@ path2bigNestedList <- function(path, type = "none", all.files = TRUE) {
 #' @param all.files a logical, if \code{TRUE} hidden files and
 #'     directories will be printed.
 #' @return Prints on the console the tree of the directory.
-#' @seealso \code{\link[base]{dir}}, \code{\link[base]{list.files}}.
+#' @seealso \code{\link[base]{dir}()}, \code{\link[base]{list.files}()}.
 #' @examples
 #'
 #' \donttest{

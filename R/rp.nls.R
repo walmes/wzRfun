@@ -5,14 +5,14 @@
 #' @description This function opens a interface, builted with
 #'     \pkg{rpanel} elements, designed for non linear regression models
 #'     fitting. Sliders allows the user control values used as start
-#'     values in the \code{\link[stats]{nls}} call, checkbox allows
+#'     values in the \code{\link[stats]{nls}()} call, checkbox allows
 #'     select strata of the data to fit separed curves and more options
 #'     are available.
 #'
 #' \if{html}{\figure{rp-nls.png}{options: width="671px"}}
 #' \if{latex}{\figure{rp-nls.pdf}{options: width=5.4in}}
 #' @param model a non linear model formula including variables and
-#'     parameters to passed to \code{\link[stats]{nls}} function.
+#'     parameters to passed to \code{\link[stats]{nls}()} function.
 #' @param data a data frame with dependent and independent variables
 #'     present in the model formula.
 #' @param start a named list with one item for each parameter. Each item
@@ -20,7 +20,7 @@
 #'     the \code{init}, \code{from} and \code{to}. When two values are
 #'     provided, the third is the average of them. Values are sorted
 #'     internally to match the initial, minimum and maximum to be used
-#'     by \code{\link[rpanel]{rp.slider}}.
+#'     by \code{\link[rpanel]{rp.slider}()}.
 #' @param subset an optional string indicating a grouping variable to
 #'     fit separeted curves for each level. It must be a factor.
 #' @param xlab labels for the x axis.
@@ -39,8 +39,8 @@
 #'     \code{return}, instead there is a \code{invisible} at the end. On
 #'     the other hand, the model fit is assigned to the object with name
 #'     passed to the \code{assign} argument.
-#' @seealso \code{\link[stats]{nls}}, \code{\link[graphics]{lines}},
-#'     \code{\link[rpanel]{rp.slider}}
+#' @seealso \code{\link[stats]{nls}()}, \code{\link[graphics]{lines}()},
+#'     \code{\link[rpanel]{rp.slider}()}
 #' @keywords GUI
 #' @import rpanel graphics stats
 #' @examples

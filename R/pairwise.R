@@ -7,11 +7,11 @@
 #'     (aka least squares mean) and return the matrix that define the
 #'     contrasts among these means. All pairwise contrasts are returned
 #'     (aka Tukey contrasts). The matrix with these contrasts can be
-#'     passed to \code{\link[multcomp]{glht}} to estimate them or used
+#'     passed to \code{\link[multcomp]{glht}()} to estimate them or used
 #'     in explicit matricial calculus.
 #' @param lfm a \eqn{k \times p} matrix where each line defines a linear
 #'     function to estimate a lsmean. In general, these matrices are
-#'     obtained by using \code{\link[doBy]{LSmatrix}}.
+#'     obtained by using \code{\link[doBy]{LSmatrix}()}.
 #' @param lev a character vector with length equals to the numbers of
 #'     lines of \code{lfm} matrix, (\eqn{k}). Default is \code{NULL} and
 #'     the row names of code{lfm} is used. If row names is also
@@ -19,7 +19,7 @@
 #'     comparisons.
 #' @return a \eqn{K\times p} matrix with the linear functions that
 #'     define all pairwise contrasts. \eqn{K} is \eqn{{k}\choose{2}}.
-#' @seealso \code{\link{apmc}}, \code{\link[doBy]{LSmatrix}}.
+#' @seealso \code{\link{apmc}()}, \code{\link[doBy]{LSmatrix}()}.
 #' @examples
 #'
 #' X <- diag(3)
@@ -65,26 +65,26 @@ apc <- function(lfm, lev = NULL) {
 #' @description This function performs all pairwise compararisons among
 #'     means returning pontual and intervalar estimates followed by
 #'     letters to easy discriminate values. It is in fact a wraper of
-#'     \code{\link[multcomp]{glht}}.
+#'     \code{\link[multcomp]{glht}()}.
 #' @param X a matrix where each line is a linear function of the model
 #'     parameters to estimate a least squares mean. In most pratical
-#'     cases, it is an object from the \code{\link[doBy]{LSmatrix}}.
+#'     cases, it is an object from the \code{\link[doBy]{LSmatrix}()}.
 #' @param model a model with class recognized by
-#'     \code{\link[multcomp]{glht}}.
+#'     \code{\link[multcomp]{glht}()}.
 #' @param focus a string with the name of the factor which levels are
 #'     being compared.
 #' @param test a p-value correction method. See
-#'     \code{\link[stats]{p.adjust.methods}}.
+#'     \code{\link[stats]{p.adjust.methods}()}.
 #' @param level the experimentwise significance level for the multiple
 #'     comparisons. The individual coverage of the confidence interval
 #'     is \code{1-level}. Default is 0.05.
-#' @param cld2 Logical, if \code{TRUE} uses the \code{\link{cld2}}
-#'     functions, otherwise uses the \code{\link[multcomp]{cld}}
+#' @param cld2 Logical, if \code{TRUE} uses the \code{\link{cld2}()}
+#'     functions, otherwise uses the \code{\link[multcomp]{cld}()}
 #'     function.
 #' @return a \code{data.frame} with interval estimates and compact
 #'     letter display for the means comparisons.
-#' @seealso \code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
-#'     \code{\link[multcomp]{glht}}.
+#' @seealso \code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+#'     \code{\link[multcomp]{glht}()}.
 #' @examples
 #'
 #' library(doBy)
@@ -194,15 +194,15 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05,
 #'     factorial designs and nested factorial designs. These models are
 #'     usually declared by a model matrix to have all effects
 #'     estimated. It is assumed that Tukey contrasts was used.
-#' @param object an object returned by \code{\link[multcomp]{glht}}. It
+#' @param object an object returned by \code{\link[multcomp]{glht}()}. It
 #'     is assumed that the matrix used as the \code{linfct} argument in
 #'     \code{glht} corresponds to a matrix to get Tukey contrasts of
 #'     least squares means.
 #' @param level the nominal significance level.
 #' @return an object of class \code{"cld"} with letters to resume mean
 #'     comparisons.
-#' @seealso \code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
-#'     \code{\link[multcomp]{glht}}.
+#' @seealso \code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+#'     \code{\link[multcomp]{glht}()}.
 #' @import multcomp
 #' @examples
 #'
@@ -271,7 +271,7 @@ cld2 <- function(object, level = 0.05) {
 #' @param means Numeric vector with the corresponding estimates in which
 #'     the highest value will have the letter \code{a}.
 #' @return A character vector with the letters rearranged.
-#' @seealso \code{\link{cld2}}.
+#' @seealso \code{\link{cld2}()}.
 #' @examples
 #'
 #' # Toy data.

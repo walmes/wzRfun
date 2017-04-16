@@ -12,8 +12,8 @@
 #' @return Open a window with sliders for \code{x}, \code{y} and
 #'     \code{z}. Print the \code{dput} of the last view angle using the
 #'     button.
-#' @seealso \code{\link[lattice]{wireframe}},
-#'     \code{\link[wzRfun]{panel.3d.contour}}.
+#' @seealso \code{\link[lattice]{wireframe}()},
+#'     \code{\link[wzRfun]{panel.3d.contour}()}.
 #' @import rpanel
 #' @keywords GUI
 #' @examples

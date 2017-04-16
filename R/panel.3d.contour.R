@@ -8,13 +8,13 @@
 #' @param type a string vector. The values allowed are \code{top},
 #'     \code{bottom} and/or \code{on}. Can be use more than one.
 #' @param levels the same argument defined in
-#'     \code{\link[lattice]{wireframe}}.
+#'     \code{\link[lattice]{wireframe}()}.
 #' @param nlevels the same argument defined in
-#'     \code{\link[lattice]{wireframe}}.
+#'     \code{\link[lattice]{wireframe}()}.
 #' @param col.contour color of the contour lines.
 #' @param x,y,z,rot.mat,distance,zlim.scaled,zlim,... arguments passed
 #'     to panel.3dwire, the core function of wireframe.
-#' @seealso \code{\link[lattice]{wireframe}}.
+#' @seealso \code{\link[lattice]{wireframe}()}.
 #' @import grDevices
 #' @examples
 #'

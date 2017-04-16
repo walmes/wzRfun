@@ -37,7 +37,7 @@ centfac <- function(group, space = NULL) {
 #'     argument.
 #'
 #' @param x,y,z,centers,data,subscripts,... Arguments passed to
-#'     \code{\link[latticeExtra]{segplot}}.
+#'     \code{\link[latticeExtra]{segplot}()}.
 #'
 #' @param groups The grouping variable (\code{factor}), with the same
 #'     length of \code{lwr} e \code{upr}.
@@ -47,7 +47,7 @@ centfac <- function(group, space = NULL) {
 #'     \textrm{gap} < 1/k}. A negative value for \code{gap} will put the
 #'     segments in a reversed order.
 #'
-#' @seealso \code{\link[latticeExtra]{segplot}}.
+#' @seealso \code{\link[latticeExtra]{segplot}()}.
 #' @import latticeExtra
 #' @examples
 #'

@@ -14,9 +14,9 @@
 #'     value. As an advice, always use a \code{x11()} before the plot
 #'     you want to guarantee a good look.
 #' @param x,y,subscripts,... arguments passed to
-#'     \code{\link[lattice]{panel.xyplot}}, the core function of
-#'     \code{\link[lattice]{xyplot}}.
-#' @seealso \code{\link[lattice]{xyplot}}.
+#'     \code{\link[lattice]{panel.xyplot}()}, the core function of
+#'     \code{\link[lattice]{xyplot}()}.
+#' @seealso \code{\link[lattice]{xyplot}()}.
 #' @examples
 #'
 #' est.ing <- c("vegetative", "flower bud", "blossom", "fig",

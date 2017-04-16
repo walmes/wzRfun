@@ -15,7 +15,7 @@
 #'     \code{init} and \code{to}) used to create the sliders with
 #'     \pkg{rpanel}.
 #' @param dots a named list with arguments passed to the
-#'     \code{\link[graphics]{curve}}.
+#'     \code{\link[graphics]{curve}()}.
 #' @return A GUI with one slider for each parameter in \code{model} to
 #'     manipulate the curve of the model.
 #' @importFrom rpanel rp.slider rp.control

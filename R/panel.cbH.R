@@ -26,7 +26,7 @@
 #' @param length is the length of the upper/lower error bars
 #'     whiskers. Default is 0.05. Not used when \code{cty = "bands"}.
 #' @param x,subscripts,col.line,lwd,... arguments passed to
-#'     \code{\link[lattice]{xyplot}}.
+#'     \code{\link[lattice]{xyplot}()}.
 #' @return None is returned.
 #' @examples
 #'
