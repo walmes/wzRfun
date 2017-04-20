@@ -51,12 +51,11 @@ rp.wire(p1)
 }
 
 }
+\seealso{
+\code{\link[lattice]{wireframe}()},
+    \code{\link[wzRfun]{panel.3d.contour}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link[lattice]{wireframe}},
-    \code{\link[wzRfun]{panel.3d.contour}}.
-}
 \keyword{GUI}
-

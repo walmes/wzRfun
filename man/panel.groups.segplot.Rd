@@ -10,7 +10,7 @@ panel.groups.segplot(x, y, z, centers, groups, gap = NULL, data, subscripts,
 }
 \arguments{
 \item{x, y, z, centers, data, subscripts, ...}{Arguments passed to
-\code{\link[latticeExtra]{segplot}}.}
+\code{\link[latticeExtra]{segplot}()}.}
 
 \item{groups}{The grouping variable (\code{factor}), with the same
 length of \code{lwr} e \code{upr}.}
@@ -48,10 +48,9 @@ segplot(wool ~ lwr + upr, centers = fit, data = pred,
         panel = panel.groups.segplot)
 
 }
+\seealso{
+\code{\link[latticeExtra]{segplot}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link[latticeExtra]{segplot}}.
-}
-

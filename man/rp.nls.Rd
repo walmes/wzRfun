@@ -10,7 +10,7 @@ rp.nls(model, data, start, subset = NULL, xlab = NULL, ylab = NULL, ...,
 }
 \arguments{
 \item{model}{a non linear model formula including variables and
-parameters to passed to \code{\link[stats]{nls}} function.}
+parameters to passed to \code{\link[stats]{nls}()} function.}
 
 \item{data}{a data frame with dependent and independent variables
 present in the model formula.}
@@ -20,7 +20,7 @@ must vector with 2 (from, to) or 3 values (from, to, init) for
 the \code{init}, \code{from} and \code{to}. When two values are
 provided, the third is the average of them. Values are sorted
 internally to match the initial, minimum and maximum to be used
-by \code{\link[rpanel]{rp.slider}}.}
+by \code{\link[rpanel]{rp.slider}()}.}
 
 \item{subset}{an optional string indicating a grouping variable to
 fit separeted curves for each level. It must be a factor.}
@@ -52,7 +52,7 @@ In fact none is returned by the function. There isn't a
 This function opens a interface, builted with
     \pkg{rpanel} elements, designed for non linear regression models
     fitting. Sliders allows the user control values used as start
-    values in the \code{\link[stats]{nls}} call, checkbox allows
+    values in the \code{\link[stats]{nls}()} call, checkbox allows
     select strata of the data to fit separed curves and more options
     are available.
 
@@ -149,12 +149,11 @@ sapply(Puro.fit, deviance)
 
 }
 }
+\seealso{
+\code{\link[stats]{nls}()}, \code{\link[graphics]{lines}()},
+    \code{\link[rpanel]{rp.slider}()}
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link[stats]{nls}}, \code{\link[graphics]{lines}},
-    \code{\link[rpanel]{rp.slider}}
-}
 \keyword{GUI}
-

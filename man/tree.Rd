@@ -43,10 +43,9 @@ tree(system.file(package = "lattice"))
 
 }
 }
+\seealso{
+\code{\link[base]{dir}()}, \code{\link[base]{list.files}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link[base]{dir}}, \code{\link[base]{list.files}}.
-}
-

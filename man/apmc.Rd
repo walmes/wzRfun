@@ -9,23 +9,23 @@ apmc(X, model, focus, test = "single-step", level = 0.05, cld2 = FALSE)
 \arguments{
 \item{X}{a matrix where each line is a linear function of the model
 parameters to estimate a least squares mean. In most pratical
-cases, it is an object from the \code{\link[doBy]{LSmatrix}}.}
+cases, it is an object from the \code{\link[doBy]{LSmatrix}()}.}
 
 \item{model}{a model with class recognized by
-\code{\link[multcomp]{glht}}.}
+\code{\link[multcomp]{glht}()}.}
 
 \item{focus}{a string with the name of the factor which levels are
 being compared.}
 
 \item{test}{a p-value correction method. See
-\code{\link[stats]{p.adjust.methods}}.}
+\code{\link[stats]{p.adjust.methods}()}.}
 
 \item{level}{the experimentwise significance level for the multiple
 comparisons. The individual coverage of the confidence interval
 is \code{1-level}. Default is 0.05.}
 
-\item{cld2}{Logical, if \code{TRUE} uses the \code{\link{cld2}}
-functions, otherwise uses the \code{\link[multcomp]{cld}}
+\item{cld2}{Logical, if \code{TRUE} uses the \code{\link{cld2}()}
+functions, otherwise uses the \code{\link[multcomp]{cld}()}
 function.}
 }
 \value{
@@ -36,7 +36,7 @@ a \code{data.frame} with interval estimates and compact
 This function performs all pairwise compararisons among
     means returning pontual and intervalar estimates followed by
     letters to easy discriminate values. It is in fact a wraper of
-    \code{\link[multcomp]{glht}}.
+    \code{\link[multcomp]{glht}()}.
 }
 \examples{
 
@@ -108,11 +108,10 @@ lapply(Ls, apmc, model = m3, focus = "tension",
 aggregate(breaks ~ tension + wool, data = warpbreaks, FUN = mean)
 
 }
+\seealso{
+\code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+    \code{\link[multcomp]{glht}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
-    \code{\link[multcomp]{glht}}.
-}
-

@@ -15,10 +15,10 @@ to panel.3dwire, the core function of wireframe.}
 \code{bottom} and/or \code{on}. Can be use more than one.}
 
 \item{nlevels}{the same argument defined in
-\code{\link[lattice]{wireframe}}.}
+\code{\link[lattice]{wireframe}()}.}
 
 \item{levels}{the same argument defined in
-\code{\link[lattice]{wireframe}}.}
+\code{\link[lattice]{wireframe}()}.}
 
 \item{col.contour}{color of the contour lines.}
 }
@@ -69,11 +69,10 @@ wireframe(z ~ x + y, data = grid,
           col.regions = colr(101), drape = TRUE)
 
 }
+\seealso{
+\code{\link[lattice]{wireframe}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}, based on the
     messages to the R-help mailing list.
 }
-\seealso{
-\code{\link[lattice]{wireframe}}.
-}
-

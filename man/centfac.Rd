@@ -28,4 +28,3 @@ centfac(warpbreaks$wool, space = 1)
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-

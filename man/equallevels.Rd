@@ -35,4 +35,3 @@ str(b)
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-

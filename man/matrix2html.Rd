@@ -92,10 +92,9 @@ m2h <- matrix2html(x = x, styles = sty, indexes = idx,
 cat(m2h)
 
 }
+\seealso{
+\code{\link{table_format}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link{table_format}}.
-}
-

@@ -44,4 +44,3 @@ cor(fitted(m0), da$density)^2
 \author{
 Walmes Zeviani, \email{walmes@ufr.br}
 }
-

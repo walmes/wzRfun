@@ -42,10 +42,9 @@ x
 str(x)
 
 }
+\seealso{
+\code{\link{matrix2html}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
 }
-\seealso{
-\code{\link{matrix2html}}.
-}
-

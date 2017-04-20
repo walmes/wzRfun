@@ -16,7 +16,7 @@ elements must be numeric vector of length 2 or 3 (\code{from},
 \pkg{rpanel}.}
 
 \item{dots}{a named list with arguments passed to the
-\code{\link[graphics]{curve}}.}
+\code{\link[graphics]{curve}()}.}
 }
 \value{
 A GUI with one slider for each parameter in \code{model} to
@@ -52,4 +52,3 @@ Walmes Zeviani, \email{walmes@ufpr.br}, based on suggestion
     transferir modelo da função nls para a função curve()
     automaticamente}}.
 }
-

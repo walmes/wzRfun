@@ -7,7 +7,7 @@
 cld2(object, level = 0.05)
 }
 \arguments{
-\item{object}{an object returned by \code{\link[multcomp]{glht}}. It
+\item{object}{an object returned by \code{\link[multcomp]{glht}()}. It
 is assumed that the matrix used as the \code{linfct} argument in
 \code{glht} corresponds to a matrix to get Tukey contrasts of
 least squares means.}
@@ -66,11 +66,10 @@ cld2(g)
 confint(glht(m1, linfct = Xs), calpha = univariate_calpha())
 
 }
+\seealso{
+\code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+    \code{\link[multcomp]{glht}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.r}.
 }
-\seealso{
-\code{\link{apc}}, \code{\link[doBy]{LSmatrix}},
-    \code{\link[multcomp]{glht}}.
-}
-

@@ -13,7 +13,7 @@ prepanel.cbH(y, ly, uy, subscripts)
 }
 \arguments{
 \item{x, subscripts, col.line, lwd, ...}{arguments passed to
-\code{\link[lattice]{xyplot}}.}
+\code{\link[lattice]{xyplot}()}.}
 
 \item{y}{central value (point estimate).}
 
@@ -117,4 +117,3 @@ xyplot(y ~ x, groups = trt, data = da) +
 Walmes Zeviani, \email{walmes@ufpr.br}, based on the R-help
     mail list.
 }
-

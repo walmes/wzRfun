@@ -8,8 +8,8 @@ panel.beeswarm(x, y, subscripts, spread, ...)
 }
 \arguments{
 \item{x, y, subscripts, ...}{arguments passed to
-\code{\link[lattice]{panel.xyplot}}, the core function of
-\code{\link[lattice]{xyplot}}.}
+\code{\link[lattice]{panel.xyplot}()}, the core function of
+\code{\link[lattice]{xyplot}()}.}
 
 \item{spread}{a numeric scalar indicating how much to spread the
 values. This value should be determined by try and error. If you
@@ -66,11 +66,10 @@ xyplot(nc ~ est | factor(des), data = cap,
        spread = 0.35, panel = panel.beeswarm)
 
 }
+\seealso{
+\code{\link[lattice]{xyplot}()}.
+}
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}, based on the package
     \code{beeswarm}.
 }
-\seealso{
-\code{\link[lattice]{xyplot}}.
-}
-
