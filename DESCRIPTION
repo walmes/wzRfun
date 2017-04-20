@@ -1,12 +1,13 @@
 Package: wzRfun
 Title: Walmes Zeviani functions
-Version: 0.75
-Date: 2017-01-26
+Version: 0.77
+Date: 2017-04-15
 Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
 Description: An R package with functions written for general
     purpose. Most of these are related to the analysis of experiments
-    and graphical representation with trellis based plots.
+    and graphical representation with trellis based plots (lattice
+    package).
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
@@ -26,5 +27,5 @@ Suggests:
     lme4,
     alr3,
     knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr
