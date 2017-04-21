@@ -173,7 +173,7 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05,
     if (cld2) {
         ci$cld <- cld2(h,
                        level = level)$mcletters$Letters
-        ci$cld <- ordered_cld(ci$cld, ci$fit)
+        # ci$cld <- ordered_cld(ci$cld, ci$fit)
     } else {
         ci$cld <- multcomp::cld(h, level = level,
                                 decreasing = TRUE)$mcletters$Letters
@@ -260,14 +260,15 @@ cld2 <- function(object, level = 0.05) {
     return(ret)
 }
 
-#' @name ordered_cld2
+#' @name ordered_cld
 #' @author Walmes Zeviani, \email{walmes@@ufpr.r}.
 #' @export
 #' @title Order Letters According to Numeric Vector
 #' @description This function order the letters in the compact letter
 #'     display to the highest estimate receive the letter \code{a}. This
 #'     is a convetion in most software for analysis of experiments.
-#' @param let Character vector with the letters returned by \code{cld2}.
+#' @param let Character vector with the letters returned by
+#'     \code{\link[multcomp]{cld}()} or \code{\link{cld2}()}.
 #' @param means Numeric vector with the corresponding estimates in which
 #'     the highest value will have the letter \code{a}.
 #' @return A character vector with the letters rearranged.
@@ -302,23 +303,200 @@ cld2 <- function(object, level = 0.05) {
 #'
 #' let <- cld2(g)
 #' res$cld2 <- let$mcletters$Letters
-#' res[order(res$mean), ]
+#' res[order(res$mean, decreasing = TRUE), ]
 #'
 #' res$let2 <- ordered_cld(res$cld2, res$mean)
-#' res[order(res$mean), ]
+#' res[order(res$mean, decreasing = TRUE), ]
+#'
+#' \dontrun{
+#'
+#' library(latticeExtra)
+#' library(grid)
+#'
+#' ci <- as.data.frame(
+#'     confint(glht(m0, linfct = X),
+#'             calpha = univariate_calpha())$confint)
+#' ci <- cbind(res, ci)
+#'
+#' segplot(reorder(trt, Estimate) ~ lwr + upr,
+#'         centers = Estimate,
+#'         data = ci,
+#'         draw = FALSE,
+#'         cld = ci$let2,
+#'         par.settings = list(layout.widths = list(right.padding = 7))) +
+#'     layer(panel.text(x = centers,
+#'                      y = z,
+#'                      labels = sprintf("%0.2f %s",
+#'                                       centers,
+#'                                       cld),
+#'                      pos = 3))
+#'
+#' ocld <- with(ci[order(ci$Estimate), ],
+#'      ordered_cld(cld2, Estimate))
+#' x <- attr(ocld, "ind")
+#' index <- which(x, arr.ind = TRUE)
+#' trellis.focus("panel", column = 1, row = 1, clip.off = TRUE)
+#' xcor <- 1.03 + (index[, 2] - 1)/50
+#' grid.segments(x0 = unit(xcor, "npc"),
+#'               x1 = unit(xcor, "npc"),
+#'               y0 = unit(index[, 1] + 0.5, units = "native"),
+#'               y1 = unit(index[, 1] - 0.5, units = "native"),
+#'               gp = gpar(lwd = 2, col = "blue"))
+#' trellis.unfocus()
+#'
+#' }
 #'
 ordered_cld <- function(let, means = let) {
-    or <- order(means)
+    or <- order(means, decreasing = TRUE)
     let <- as.character(let[or])
     s <- strsplit(let, "")
-    v <- rep(rank(means[or]), nchar(let))
     u <- unlist(s)
-    ul <- names(sort(tapply(v, u, mean)))
-    UL <- sort(ul, decreasing = TRUE)
-    l <- sapply(s,
-                FUN = function(i) {
-                    paste(sort(UL[match(i, table = ul)]),
-                          collapse = "")
-                })
-    return(l[order(or)])
+    ul <- unique(u)
+    UL <- LETTERS[seq_along(ul)]
+    l <- sapply(s, FUN = function(i) {
+        paste(sort(UL[match(i, table = ul)]), collapse = "")
+    })
+    x <- tolower(l[order(or)])
+    UL <- tolower(UL)
+    attr(x, "match") <- cbind("before" = ul,
+                              "after" = UL)
+    attr(x, "ind") <- sapply(UL, FUN = grepl, x = x)
+    return(x)
+}
+
+#' @name radial_cld
+#' @author Walmes Zeviani, \email{walmes@@ufpr.r}.
+#' @export
+#' @title Radial Plot for a Compact Letter Display Vector
+#' @description This function does a radial plot based on the vector of
+#'     letters resulted from pairwise comparisons.
+#' @param cld Character vector with strings of letters that indicates
+#'     which pair of treatment cells are not different.
+#' @param labels Vector of text to be annotated next each point.
+#' @param col Vector of colors to be used in the segments that joint
+#'     points.
+#' @param means Numeric vector with the estimated means of treatment
+#'     cells. It is used to place points at distances proportional to
+#'     the differences on means.
+#' @param perim Logical value (default is \code{FALSE}) that indicates
+#'     weather draw or not a circle in the perimeter passing by the
+#'     points.
+#' @param legend Logical value (default is \code{TRUE}) that indicates
+#'     weather daraw or not the legend.
+#' @return None is returned, only the plot is done.
+#' @seealso \code{\link{cld2}()}.
+#' @importFrom utils combn
+#' @examples
+#'
+#' set.seed(4321)
+#' td <- data.frame(trt = rep(sample(1:20), each = 5))
+#' td$y <- rnorm(nrow(td), mean = 0.15 * sort(td$trt), sd = 1)
+#'
+#' plot(y ~ trt, data = td)
+#'
+#' # Fit the model.
+#' td$trt <- factor(td$trt)
+#' m0 <- lm(y ~ trt, data = td)
+#' anova(m0)
+#' summary(m0)
+#'
+#' library(multcomp)
+#' library(doBy)
+#'
+#' X <- LSmatrix(m0, effect = "trt")
+#' rownames(X) <- levels(td$trt)
+#'
+#' ci <- apmc(X, m0, focus = "trt", test = "fdr")
+#' ci$cld <- with(ci, ordered_cld(cld, fit))
+#' ci <- ci[order(ci$fit, decreasing = TRUE), ]
+#'
+#' library(latticeExtra)
+#'
+#' segplot(reorder(trt, fit) ~ lwr + upr,
+#'         centers = fit,
+#'         data = ci,
+#'         draw = FALSE,
+#'         cld = ci$cld) +
+#'     layer(panel.text(x = centers,
+#'                      y = z,
+#'                      labels = sprintf("%0.2f %s",
+#'                                       centers,
+#'                                       cld),
+#'                      pos = 3))
+#'
+#' radial_cld(cld = ci$cld)
+#' radial_cld(cld = ci$cld, means = ci$fit, perim = TRUE)
+#' radial_cld(cld = ci$cld, col = 1:3)
+#' radial_cld(cld = ci$cld, col = 1:3)
+#' radial_cld(cld = ci$cld, labels = sprintf("%0.2f %s", ci$fit, ci$cld))
+#'
+radial_cld <- function(cld,
+                       labels = cld,
+                       col = NULL,
+                       means = NULL,
+                       perim = FALSE,
+                       legend = TRUE) {
+    if (is.null(means)) {
+        s <- seq(from = 0,
+                 to = 2 * pi,
+                 length.out = length(cld) + 1)[-1]
+    } else {
+        ext <- (2 * pi)/c(length(cld), 1)
+        m <- means - min(means)
+        m <- m/max(m)
+        s <- ext[1] + diff(ext) * m
+        s <- rev(s)
+    }
+    sincos <- cbind(sin = sin(s), cos = cos(s))
+    # Quais as letras únicas formadoras das strings?
+    u <- unique(unlist(strsplit(cld, split = "")))
+    if (is.null(col)) {
+        col <- palette()
+    }
+    if (length(col) != length(u)) {
+        warning(paste("Length of vector `col` is different",
+                      "of the number of unique letters.",
+                      "Colors will be recycled."))
+    }
+    col <- col[seq_along(u) %% length(col) + 1]
+    # Membros da mesma família compartilham a mesma letra.
+    fam <- sapply(u, grepl, x = cld)
+    plot(x = NULL,
+         y = NULL,
+         xlim = 1.2 * c(-1, 1),
+         ylim = 1.2 * c(-1, 1),
+         asp = 1,
+         axes = FALSE,
+         ann = FALSE)
+    if (perim) {
+        circ <- seq(0, 2 * pi, length.out = 60)
+        lines(x = sin(circ), y = cos(circ), col = "gray", lty = 3)
+    }
+    for (i in 1:ncol(fam)) {
+        cb <- combn(x = which(fam[, i]), m = 2)
+        apply(cb,
+              MARGIN = 2,
+              FUN = function(index) {
+                  segments(x0 = sincos[index[1], 1],
+                           x1 = sincos[index[2], 1],
+                           y0 = sincos[index[1], 2],
+                           y1 = sincos[index[2], 2],
+                           col = col[i],
+                           lwd = 2,
+                           lty = 2)
+              })
+    }
+    points(x = sincos[, 1], y = sincos[, 2])
+    if (legend) {
+        legend("topright",
+               legend = u,
+               col = col,
+               lty = 2,
+               lwd = 2,
+               bty = "n")
+    }
+    text(sincos[, 1],
+         sincos[, 2],
+         labels = labels,
+         pos = ifelse(sincos[, 1] > 0, 4, 2))
 }
