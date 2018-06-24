@@ -24,8 +24,8 @@ equallevels <- function(x, y) {
     if (is.data.frame(x) & is.data.frame(y)) {
         com <- intersect(x = names(x), y = names(y))
         for (i in com) {
-            if (!is.null(levels(y[, i]))) {
-                x[, i] <- factor(x[, i], levels = levels(y[, i]))
+            if (!is.null(levels(y[[i]]))) {
+                x[[i]] <- factor(x[[i]], levels = levels(y[[i]]))
             }
         }
         return(x)
