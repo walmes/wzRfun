@@ -11,7 +11,7 @@
 #'     in explicit matricial calculus.
 #' @param lfm a \eqn{k \times p} matrix where each line defines a linear
 #'     function to estimate a lsmean. In general, these matrices are
-#'     obtained by using \code{\link[doBy]{LSmatrix}()}.
+#'     obtained by using \code{\link[doBy]{LE_matrix}()}.
 #' @param lev a character vector with length equals to the numbers of
 #'     lines of \code{lfm} matrix, (\eqn{k}). Default is \code{NULL} and
 #'     the row names of code{lfm} is used. If row names is also
@@ -19,7 +19,7 @@
 #'     comparisons.
 #' @return a \eqn{K\times p} matrix with the linear functions that
 #'     define all pairwise contrasts. \eqn{K} is \eqn{{k}\choose{2}}.
-#' @seealso \code{\link{apmc}()}, \code{\link[doBy]{LSmatrix}()}.
+#' @seealso \code{\link{apmc}()}, \code{\link[doBy]{LE_matrix}()}.
 #' @examples
 #'
 #' X <- diag(3)
@@ -31,7 +31,7 @@
 #'
 #' apc(X, lev = LETTERS[1:nrow(X)])
 #'
-#' # Objects from doBy::LSmatrix() have an "grid" attribute.
+#' # Objects from doBy::LE_matrix() have an "grid" attribute.
 #' attr(X, "grid") <- data.frame(n = LETTERS[1:nrow(X)])
 #' rownames(X) <- NULL
 #' apc(X)
@@ -68,7 +68,7 @@ apc <- function(lfm, lev = NULL) {
 #'     \code{\link[multcomp]{glht}()}.
 #' @param X a matrix where each line is a linear function of the model
 #'     parameters to estimate a least squares mean. In most pratical
-#'     cases, it is an object from the \code{\link[doBy]{LSmatrix}()}.
+#'     cases, it is an object from the \code{\link[doBy]{LE_matrix}()}.
 #' @param model a model with class recognized by
 #'     \code{\link[multcomp]{glht}()}.
 #' @param focus a string with the name of the factor which levels are
@@ -83,7 +83,7 @@ apc <- function(lfm, lev = NULL) {
 #'     function.
 #' @return a \code{data.frame} with interval estimates and compact
 #'     letter display for the means comparisons.
-#' @seealso \code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+#' @seealso \code{\link{apc}()}, \code{\link[doBy]{LE_matrix}()},
 #'     \code{\link[multcomp]{glht}()}.
 #' @examples
 #'
@@ -95,7 +95,7 @@ apc <- function(lfm, lev = NULL) {
 #' anova(m0)
 #'
 #' # Prepare the matrix to estimate lsmeans.
-#' L <- LSmatrix(m0, effect = "feed")
+#' L <- LE_matrix(m0, effect = "feed")
 #' rownames(L) <- levels(chickwts$feed)
 #' apmc(L, model = m0, focus = "feed", test = "fdr")
 #'
@@ -105,7 +105,7 @@ apc <- function(lfm, lev = NULL) {
 #' m1 <- lm(breaks ~ wool * tension, data = warpbreaks)
 #' anova(m1)
 #'
-#' L <- LSmatrix(m1, effect = c("wool", "tension"))
+#' L <- LE_matrix(m1, effect = c("wool", "tension"))
 #' attributes(L)
 #'
 #' Ls <- by(L, INDICES = attr(L, "grid")$tension, FUN = as.matrix)
@@ -137,7 +137,7 @@ apc <- function(lfm, lev = NULL) {
 #' anova(m2, m3)
 #'
 #' # LS matrix has all cells.
-#' L <- LSmatrix(m2, effect = c("wool", "tension"))
+#' L <- LE_matrix(m2, effect = c("wool", "tension"))
 #' g <- attr(L, "grid")
 #' L <- L[, !is.na(b)]
 #' i <- 5
@@ -201,7 +201,7 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05,
 #' @param level the nominal significance level.
 #' @return an object of class \code{"cld"} with letters to resume mean
 #'     comparisons.
-#' @seealso \code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+#' @seealso \code{\link{apc}()}, \code{\link[doBy]{LE_matrix}()},
 #'     \code{\link[multcomp]{glht}()}.
 #' @import multcomp
 #' @examples
@@ -228,7 +228,7 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05,
 #'
 #' library(doBy)
 #'
-#' X <- LSmatrix(lm(nobars(formula(m1)), data = td1), effect = "loccult")
+#' X <- LE_matrix(lm(nobars(formula(m1)), data = td1), effect = "loccult")
 #' rownames(X) <- levels(td1$loccult)
 #' dim(X)
 #'
@@ -291,7 +291,7 @@ cld2 <- function(object, level = 0.05) {
 #' library(multcomp)
 #' library(doBy)
 #'
-#' X <- LSmatrix(m0, effect = "trt")
+#' X <- LE_matrix(m0, effect = "trt")
 #' rownames(X) <- levels(td$trt)
 #' Xc <- apc(X)
 #'
@@ -403,7 +403,7 @@ ordered_cld <- function(let, means = let) {
 #' library(multcomp)
 #' library(doBy)
 #'
-#' X <- LSmatrix(m0, effect = "trt")
+#' X <- LE_matrix(m0, effect = "trt")
 #' rownames(X) <- levels(td$trt)
 #'
 #' ci <- apmc(X, m0, focus = "trt", test = "fdr")
