@@ -5,7 +5,7 @@
 #' @description This function create a combined strip when two factor
 #'     are used after the conditional operator em lattice functions
 #'     (\code{y ~ x | A + B}).
-#' @param which.given,which.panel,factor.levels,... See
+#' @param which.given,which.panel,factor.levels,var.name,... See
 #'     \code{\link[lattice]{strip.custom}()}.
 #' @return A combined strip for trellis plot.
 #' @source This function entirely based on a message in the R-help
@@ -29,18 +29,20 @@
 strip_combined <- function(which.given,
                            which.panel,
                            factor.levels,
+                           var.name,
                            ...) {
+    print(var.name)
     if (which.given == 1) {
         panel.rect(0, 0, 1, 1, col = "grey90", border = 1)
         panel.text(x = 1,
                    y = 0.5,
                    pos = 2,
-                   lab = paste("família:",
-                               factor.levels[which.panel[which.given]]))
+                   lab = paste0(var.name[1], ": ",
+                                factor.levels[which.panel[which.given]]))
     }
     if (which.given == 2) {
         panel.text(x = 0, y = 0.5, pos = 4,
-                   lab = paste("agregado:",
-                               factor.levels[which.panel[which.given]]))
+                   lab = paste0(var.name[2], ": ",
+                                factor.levels[which.panel[which.given]]))
     }
 }
