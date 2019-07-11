@@ -24,7 +24,8 @@ A panel (gui) rotate a wireframe plot and choose the
 }
 \examples{
 
-\donttest{
+\dontrun{
+
 # A simple example.
 
 library(rpanel)

@@ -28,7 +28,7 @@ This function creates a GUI to manipulate parameters of
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(rpanel)
 

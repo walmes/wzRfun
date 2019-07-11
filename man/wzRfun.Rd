@@ -16,7 +16,7 @@ To not show the start up message, use
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 options(wzRfun_startup_message = FALSE)
 library(wzRfun)

@@ -61,7 +61,7 @@ This function opens a interface, builted with
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 #--------------------------------------------
 # A simple linear regression.
