@@ -1,11 +1,18 @@
+language: r
+r:
+  - release
+
 before_install:
   - sudo apt-get install r-cran-tkrplot bwidget
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-language: r
-cache: packages
-cran: http://cran-r.c3sl.ufpr.br/
-warnings_are_errors: false
+repos:
+  CRAN: https://cloud.r-project.org
+
 r_packages:
- - roxygen2
+  - devtools
+  - roxygen2
+
+cache: packages
+warnings_are_errors: false
