@@ -20,11 +20,21 @@ echo "Compressed files available."
 ls wzRfun_*
 
 # Upload.
-echo "Uploading files to server."
+echo "Uploading compressed files to server."
 rsync -avzp \
       wzRfun*.tar.gz \
       wzRfun*.zip \
       --progress \
       --rsh="ssh -p$PATAXOP" "$PATAXO:~/public_html/pacotes/"
+
+echo "Creates the package page: pkgdown::build_site(...)."
+echo "Creates the *.check/ directory."
+Rscript -e "library(devtools); load_all(); library(pkgdown); build_site()"
+
+echo "Uploading site to server."
+rsync -avzp \
+      ./docs/* \
+      --progress \
+      --rsh="ssh -p$PATAXOP" "$PATAXO:~/public_html/pacotes/wzRfun"
 
 exit 0
