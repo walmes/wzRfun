@@ -67,10 +67,11 @@ tree_files <- function(path = "./") {
 #'     it is available is Linux OS. The call is made with
 #'     \code{system()}. Otherwise, a (less sophisticated) R native
 #'     approach is used.
-#' @seealso \code{link{dir_tree}} for an implementation entirely based
-#'     on R and functional in all SO. Also, \code{\link[base]{dir}},
-#'     \code{\link[base]{list.files}} and \code{\link[base]{list.dirs}}
-#'     can be useful in many circumstances.
+#' @seealso \code{\link{dir_tree}()} for an implementation entirely
+#'     based on R and functional in all SO. Also,
+#'     \code{\link[base]{dir}()}, \code{\link[base]{list.files}()} and
+#'     \code{\link[base]{list.dirs}()} can be useful in many
+#'     circumstances.
 #' @examples
 #'
 #' \dontrun{

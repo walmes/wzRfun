@@ -14,3 +14,4 @@ _pkgdown.yml
 ^wzRfun_.*.tar.gz$
 ^wzRfun_.*.zip$
 ^_deploy.sh$
+^.#_deploy.sh#

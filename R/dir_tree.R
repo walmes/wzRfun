@@ -126,10 +126,11 @@ path2bigNestedList <- function(path,
 #' @param all.files logical[1] Using \code{TRUE}, hidden files and
 #'     directories are showed.
 #' @return Returns the directory list as invisible.
-#' @seealso \code{link{tree}} for an implementation that calls
-#'     \code{tree} on Linux. Also, \code{\link[base]{dir}},
-#'     \code{\link[base]{list.files}} and \code{\link[base]{list.dirs}}
-#'     can be useful in many circumstances.
+#' @seealso \code{\link{tree}()} for an implementation that calls
+#'     \code{tree} on Linux. Also, \code{\link[base]{dir}()},
+#'     \code{\link[base]{list.files}()} and
+#'     \code{\link[base]{list.dirs}()} can be useful in many
+#'     circumstances.
 #' @examples
 #'
 #' \dontrun{
