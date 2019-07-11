@@ -1,4 +1,3 @@
-#' @name R2nls
 #' @export
 #' @author Walmes Zeviani, \email{walmes@@ufr.br}
 #' @title Coeficient of Determination for Non Linear Regression Models
@@ -37,19 +36,19 @@ R2nls <- function(nls.obj) {
     da <- eval(nls.obj$data)
     resp.name <- all.vars(summary(nls.obj)$formula)[1]
     form <- paste(resp.name, "~1", sep = "")
-    m0 <- lm(form, da)
-    an <- anova(nls.obj, m0)
-    sqn <- deviance(nls.obj)
-    sqe <- deviance(m0)
+    m0 <- stats::lm(form, da)
+    an <- stats::anova(nls.obj, m0)
+    sqn <- stats::deviance(nls.obj)
+    sqe <- stats::deviance(m0)
     r2 <- 1 - (sqn/sqe)
     aov <- data.frame(fv = c("regression", "residuals"),
                       gl = c(-an$Df[2], an$Res.Df[1]),
                       sq = c(-an$Sum[2], an$Res.Sum[1]))
     aov$qm <- aov$sq/aov$gl
     aov$F <- c(aov$qm[1]/aov$qm[2], NA)
-    aov$"Pr(>F)" <- c(1 - pf(aov$F[1],
-                             df1 = aov$gl[1],
-                             df2 = aov$gl[2]),
+    aov$"Pr(>F)" <- c(1 - stats::pf(aov$F[1],
+                                    df1 = aov$gl[1],
+                                    df2 = aov$gl[2]),
                       NA)
     names(aov) <- c(" ", "Df", "Sum Sq", "Mean Sq",
                     "F value", "Pr(>F)")

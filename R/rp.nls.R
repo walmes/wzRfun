@@ -42,7 +42,6 @@
 #' @seealso \code{\link[stats]{nls}()}, \code{\link[graphics]{lines}()},
 #'     \code{\link[rpanel]{rp.slider}()}
 #' @keywords GUI
-#' @import rpanel graphics stats
 #' @examples
 #'
 #' \donttest{
@@ -211,15 +210,15 @@ rp.nls <- function(model, data, start,
             ylab <- vardep
         }
         if (is.null(panel$subset)) {
-            plot(panel$vdep ~ panel$vindep,
-                 xlab = xlab, ylab = ylab, ...)
+            graphics::plot(panel$vdep ~ panel$vindep,
+                           xlab = xlab, ylab = ylab, ...)
         } else {
             da <- data.frame(vindep = panel$vindep,
                              vdep = panel$vdep,
                              subset = panel$subset)
-            plot(vdep ~ vindep,
-                 data = subset(da, subset == panel$sbst),
-                 xlab = xlab, ylab = ylab, ...)
+            graphics::plot(vdep ~ vindep,
+                           data = subset(da, subset == panel$sbst),
+                           xlab = xlab, ylab = ylab, ...)
         }
 
         with(panel, {
@@ -243,22 +242,25 @@ rp.nls <- function(model, data, start,
         if (is.null(panel$subset)) {
             da <- data.frame(vindep = panel$vindep, vdep = panel$vdep)
             names(da) <- c(varindep, vardep)
-            n0 <- try(nls(panel$model, data = da, start = nlsstart))
+            n0 <- try(stats::nls(panel$model,
+                                 data = da,
+                                 start = nlsstart))
         } else {
             da <- data.frame(vindep = panel$vindep, vdep = panel$vdep,
                              subset = panel$subset)
             names(da) <- c(varindep, vardep, "subset")
-            n0 <- try(nls(panel$model, start = nlsstart,
-                          data = subset(da, subset == panel$sbst)))
+            n0 <- try(stats::nls(panel$model,
+                                 start = nlsstart,
+                                 data = subset(da, subset == panel$sbst)))
         }
         # If not converged, print error message, else superpose the
         # estimated curve.
         if (class(n0) == "try-error") {
-            par(usr = c(0, 1, 0, 1))
-            text(x = 0.5, y = 0.5, col = "red", cex = 2,
-                 labels = "Convergence not met!\nGet closer!")
+            graphics::par(usr = c(0, 1, 0, 1))
+            graphics::text(x = 0.5, y = 0.5, col = "red", cex = 2,
+                           labels = "Convergence not met!\nGet closer!")
         } else {
-            cn0 <- as.list(coef(n0))
+            cn0 <- as.list(stats::coef(n0))
             with(cn0, {
                 do.call("curve",
                         args = c(expr = model[[3]],
@@ -282,51 +284,54 @@ rp.nls <- function(model, data, start,
     #----------------------------------------
     # Building the controls.
 
-    nlr.panel <- rp.control(title = "rp.nls",
-                            size = c(300, 200),
-                            model = model,
-                            vdep = data[, vardep],
-                            vindep = data[, varindep],
-                            subset = if (is.null(subset)) {
-                                         NULL
-                                     } else {
-                                         data[, subset]
-                                     })
-    rp.text(panel = nlr.panel,
-            text = paste0("Don't quit closing the window.\n",
-                          "Click on `Save and Quit` button."))
-    rp.button(panel = nlr.panel,
-              title = "Save and Quit",
-              background = "yellow",
-              action = function(panel) {
-                  assign("finish", value = FALSE,
-                         envir = parent.env(environment()))
-                  rp.control.dispose(nlr.panel)
-              })
+    nlr.panel <- rpanel::rp.control(title = "rp.nls",
+                                    size = c(300, 200),
+                                    model = model,
+                                    vdep = data[, vardep],
+                                    vindep = data[, varindep],
+                                    subset = if (is.null(subset)) {
+                                                 NULL
+                                             } else {
+                                                 data[, subset]
+                                             })
+    rpanel::rp.text(panel = nlr.panel,
+                    text = paste0("Don't quit closing the window.\n",
+                                  "Click on `Save and Quit` button."))
+    rpanel::rp.button(panel = nlr.panel,
+                      title = "Save and Quit",
+                      background = "yellow",
+                      action = function(panel) {
+                          assign("finish", value = FALSE,
+                                 envir = parent.env(environment()))
+                          rpanel::rp.control.dispose(nlr.panel)
+                      })
     if (!is.null(subset)) {
-        rp.listbox(nlr.panel,
-                   variable = "sbst",
-                   vals = levels(data[, subset]),
-                   rows = min(c(10, nlevels(data[, subset]))),
-                   title = "subset",
-                   action = nlr.draw)
+        rpanel::rp.listbox(nlr.panel,
+                           variable = "sbst",
+                           vals = levels(data[, subset]),
+                           rows = min(c(10, nlevels(data[, subset]))),
+                           title = "subset",
+                           action = nlr.draw)
     }
     # Create the sliders for each parameter.
     for (i in parnames) {
-        callstr <- 'rp.slider(panel = nlr.panel,
-                              variable = "PAR",
-                              from = start[["PAR"]]["from"],
-                              to = start[["PAR"]]["to"],
-                              initval = start[["PAR"]]["init"],
-                              showvalue = TRUE,
-                              action = nlr.draw,
-                              title = "PAR")'
+        callstr <- 'rpanel::rp.slider(panel = nlr.panel,
+                                      variable = "PAR",
+                                      from = start[["PAR"]]["from"],
+                                      to = start[["PAR"]]["to"],
+                                      initval = start[["PAR"]]["init"],
+                                      showvalue = TRUE,
+                                      action = nlr.draw,
+                                      title = "PAR")'
         callstr <- gsub("PAR", i, callstr)
         source(textConnection(callstr), local = TRUE)
         closeAllConnections()
     }
-    rp.button(panel = nlr.panel, action = nlsajust, title = "Adjust")
-    rp.do(panel = nlr.panel, action = nlr.draw)
+    rpanel::rp.button(panel = nlr.panel,
+                      action = nlsajust,
+                      title = "Adjust")
+    rpanel::rp.do(panel = nlr.panel,
+                  action = nlr.draw)
     finish <- TRUE
     while (finish) { }
     if (exists("FIT")) {

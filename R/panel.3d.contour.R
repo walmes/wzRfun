@@ -1,5 +1,6 @@
 #' @name panel.3d.contour
 #' @export
+#' @importFrom lattice ltransform3dto3d panel.lines panel.3dwire
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}, based on the
 #'     messages to the R-help mailing list.
 #' @title Lattice Panel for Draw Contour Lines In Wireframe Plots
@@ -15,7 +16,6 @@
 #' @param x,y,z,rot.mat,distance,zlim.scaled,zlim,... arguments passed
 #'     to panel.3dwire, the core function of wireframe.
 #' @seealso \code{\link[lattice]{wireframe}()}.
-#' @import grDevices
 #' @examples
 #'
 #' library(lattice)
@@ -73,9 +73,12 @@ panel.3d.contour <- function(x, y, z, rot.mat, distance,
         levels.scaled <- (levels - zlim[1])/diff(range(zlim)) - 0.5
     }
     # Estimate the contour lines.
-    clines <- contourLines(x, y,
-                           matrix(z, nrow = length(x), byrow = TRUE),
-                           nlevels = nlevels, levels = levels.scaled)
+    clines <- grDevices::contourLines(x, y,
+                                      matrix(z,
+                                             nrow = length(x),
+                                             byrow = TRUE),
+                                      nlevels = nlevels,
+                                      levels = levels.scaled)
     # Draw contour lines on the floor (bottom).
     if (any(type %in% c("bottom"))) {
         for (ll in clines) {

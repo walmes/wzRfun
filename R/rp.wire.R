@@ -14,7 +14,6 @@
 #'     button.
 #' @seealso \code{\link[lattice]{wireframe}()},
 #'     \code{\link[wzRfun]{panel.3d.contour}()}.
-#' @import rpanel
 #' @keywords GUI
 #' @examples
 #'
@@ -52,7 +51,7 @@ rp.wire <- function(wire) {
     }
     draw.wire <- function(panel) {
         sc <- list(x = panel$x, z = panel$z, y = panel$y)
-        print(update(panel$wire, screen = sc))
+        print(stats::update(panel$wire, screen = sc))
         panel
     }
     print.deput <- function(panel) {
@@ -60,18 +59,19 @@ rp.wire <- function(wire) {
         dput(sc)
         panel
     }
-    panel <- rp.control(wire = wire)
-    rp.slider(panel, variable = "x",
-              from = -180, to = 180, initval = -60,
-              action = draw.wire, title = "x",
-              showvalue = TRUE, resolution = 5)
-    rp.slider(panel, variable = "y",
-              from = -180, to = 180, initval = -20,
-              action = draw.wire, title = "y",
-              showvalue = TRUE, resolution = 5)
-    rp.slider(panel, variable = "z",
-              from = -180, to = 180, initval = -10,
-              action = draw.wire, title = "z",
-              showvalue = TRUE, resolution = 5)
-    rp.button(panel, action = print.deput, title = "dput screen values")
+    panel <- rpanel::rp.control(wire = wire)
+    rpanel::rp.slider(panel, variable = "x",
+                      from = -180, to = 180, initval = -60,
+                      action = draw.wire, title = "x",
+                      showvalue = TRUE, resolution = 5)
+    rpanel::rp.slider(panel, variable = "y",
+                      from = -180, to = 180, initval = -20,
+                      action = draw.wire, title = "y",
+                      showvalue = TRUE, resolution = 5)
+    rpanel::rp.slider(panel, variable = "z",
+                      from = -180, to = 180, initval = -10,
+                      action = draw.wire, title = "z",
+                      showvalue = TRUE, resolution = 5)
+    rpanel::rp.button(panel, action = print.deput,
+                      title = "dput screen values")
 }

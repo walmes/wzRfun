@@ -18,7 +18,6 @@
 #'     \code{\link[graphics]{curve}()}.
 #' @return A GUI with one slider for each parameter in \code{model} to
 #'     manipulate the curve of the model.
-#' @importFrom rpanel rp.slider rp.control
 #' @examples
 #'
 #' \donttest{
@@ -95,24 +94,24 @@ eyefun <- function(model, start, dots = NULL) {
     }
     #----------------------------------------
     # Set GUI.
-    nlr.panel <- rp.control(title = "Ajuste",
-                            size = c(200, 200),
-                            model = model,
-                            varindep = varindep,
-                            dots = dots)
+    nlr.panel <- rpanel::rp.control(title = "Ajuste",
+                                    size = c(200, 200),
+                                    model = model,
+                                    varindep = varindep,
+                                    dots = dots)
     # Add sliders.
     for (i in parnames) {
-        callstr <- 'rp.slider(panel = nlr.panel,
-                              variable = "PAR",
-                              from = start[["PAR"]]["from"],
-                              to = start[["PAR"]]["to"],
-                              initval = start[["PAR"]]["init"],
-                              showvalue = TRUE,
-                              action = nlr.draw,
-                              title = "PAR")'
+        callstr <- 'rpanel::rp.slider(panel = nlr.panel,
+                                      variable = "PAR",
+                                      from = start[["PAR"]]["from"],
+                                      to = start[["PAR"]]["to"],
+                                      initval = start[["PAR"]]["init"],
+                                      showvalue = TRUE,
+                                      action = nlr.draw,
+                                      title = "PAR")'
         callstr <- gsub("PAR", i, callstr)
         source(textConnection(callstr), local = TRUE)
     }
-    rp.do(panel = nlr.panel, action = nlr.draw)
+    rpanel::rp.do(panel = nlr.panel, action = nlr.draw)
     invisible()
 }

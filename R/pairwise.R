@@ -1,4 +1,3 @@
-#' @name apc
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
 #' @export
 #' @title Generate Matrix of All Pairwise Comparisons (Tukey contrasts)
@@ -58,7 +57,6 @@ apc <- function(lfm, lev = NULL) {
     return(M)
 }
 
-#' @name apmc
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
 #' @export
 #' @title A Wraper of glht to Get All Pairwise Mean Comparisons
@@ -144,8 +142,8 @@ apc <- function(lfm, lev = NULL) {
 #' L <- L[-i, ]
 #' g <- g[-i, ]
 #'
-#' rownames(L) <- g$tension
-#' Ls <- by(L, INDICES = g$wool, FUN = as.matrix)
+#' rownames(L) <- make.names(g$tension, unique = FALSE)
+#' Ls <- split.data.frame(L, g$wool)
 #'
 #' # LSmeans with MCP test.
 #' lapply(Ls, apmc, model = m3, focus = "tension",
@@ -154,26 +152,29 @@ apc <- function(lfm, lev = NULL) {
 #' # Sample means.
 #' aggregate(breaks ~ tension + wool, data = warpbreaks, FUN = mean)
 #'
-apmc <- function(X, model, focus, test = "single-step", level = 0.05,
+apmc <- function(X,
+                 model,
+                 focus,
+                 test = "single-step",
+                 level = 0.05,
                  cld2 = FALSE) {
     if (is.null(rownames(X))) {
         stop("The X matrix must have row names.")
     }
     Xc <- apc(X)
     g <- multcomp::glht(model, linfct = X)
-    ci <- confint(g, level = 1 - level,
-                  calpha = multcomp::univariate_calpha())$confint
+    ci <- stats::confint(g,
+                         level = 1 - level,
+                         calpha = multcomp::univariate_calpha())$confint
     ci <- as.data.frame(ci)
     names(ci) <- tolower(names(ci))
     names(ci)[1] <- "fit"
     h <- summary(multcomp::glht(model, linfct = Xc),
-                 test = adjusted(type = test))
+                 test = multcomp::adjusted(type = test))
     h$type <- "Tukey"
     h$focus <- focus
     if (cld2) {
-        ci$cld <- cld2(h,
-                       level = level)$mcletters$Letters
-        # ci$cld <- ordered_cld(ci$cld, ci$fit)
+        ci$cld <- cld2(h, level = level)$mcletters$Letters
     } else {
         ci$cld <- multcomp::cld(h, level = level,
                                 decreasing = TRUE)$mcletters$Letters
@@ -203,7 +204,7 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05,
 #'     comparisons.
 #' @seealso \code{\link{apc}()}, \code{\link[doBy]{LE_matrix}()},
 #'     \code{\link[multcomp]{glht}()}.
-#' @import multcomp
+# @import multcomp
 #' @examples
 #'
 #' # Toy data 1: experiment with cultivars in several locations.
@@ -243,7 +244,8 @@ apmc <- function(X, model, focus, test = "single-step", level = 0.05,
 #'
 #' confint(glht(m1, linfct = Xs), calpha = univariate_calpha())
 #'
-cld2 <- function(object, level = 0.05) {
+cld2 <- function(object,
+                 level = 0.05) {
     lvl_order <- unique(unlist(
         strsplit(rownames(object$linfct), "-")))
     signif <- (object$test$pvalues < level)
@@ -365,6 +367,7 @@ ordered_cld <- function(let, means = let) {
 }
 
 #' @name radial_cld
+#' @importFrom graphics lines plot points segments text
 #' @author Walmes Zeviani, \email{walmes@@ufpr.r}.
 #' @export
 #' @title Radial Plot for a Compact Letter Display Vector
@@ -385,7 +388,6 @@ ordered_cld <- function(let, means = let) {
 #'     weather daraw or not the legend.
 #' @return None is returned, only the plot is done.
 #' @seealso \code{\link{cld2}()}.
-#' @importFrom utils combn
 #' @examples
 #'
 #' set.seed(4321)
@@ -451,7 +453,7 @@ radial_cld <- function(cld,
     # Quais as letras únicas formadoras das strings?
     u <- unique(unlist(strsplit(cld, split = "")))
     if (is.null(col)) {
-        col <- palette()
+        col <- grDevices::palette()
     }
     if (length(col) != length(u)) {
         warning(paste("Length of vector `col` is different",
@@ -473,7 +475,7 @@ radial_cld <- function(cld,
         lines(x = sin(circ), y = cos(circ), col = "gray", lty = 3)
     }
     for (i in 1:ncol(fam)) {
-        cb <- combn(x = which(fam[, i]), m = 2)
+        cb <- utils::combn(x = which(fam[, i]), m = 2)
         apply(cb,
               MARGIN = 2,
               FUN = function(index) {

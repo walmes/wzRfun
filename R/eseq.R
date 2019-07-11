@@ -20,7 +20,7 @@
 #' eseq(x = 0:1, length.out = 11, f = 0.05)
 #'
 eseq <- function(x, length.out = 25, f = 0.05) {
-    er <- extendrange(x, f = f[1])
+    er <- grDevices::extendrange(x, f = f[1])
     return(seq(from = er[1],
                to = er[2],
                length.out = length.out))

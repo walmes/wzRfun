@@ -1,6 +1,7 @@
 #' @name strip_combined
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
 #' @export
+#' @importFrom lattice panel.text panel.rect
 #' @title Generate a combined strip for lattice plots
 #' @description This function create a combined strip when two factor
 #'     are used after the conditional operator em lattice functions

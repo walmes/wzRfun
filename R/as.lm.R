@@ -63,10 +63,10 @@ as.lm.nls <- function(object, ...) {
         colnames(gradient) <- names(object$m$getPars())
     }
 
-    response.name <- if (length(formula(object)) == 2) {
+    response.name <- if (length(stats::formula(object)) == 2) {
                          "0"
                      } else {
-                         as.character(formula(object)[[2]])
+                         as.character(stats::formula(object)[[2]])
                      }
     lhs <- object$m$lhs()
 
@@ -76,7 +76,7 @@ as.lm.nls <- function(object, ...) {
     fo <- sprintf("%s ~ %s - 1",
                   response.name,
                   paste(colnames(gradient), collapse = " + "))
-    fo <- as.formula(fo)
+    fo <- stats::as.formula(fo)
 
     m <- do.call("lm",
                  list(fo,

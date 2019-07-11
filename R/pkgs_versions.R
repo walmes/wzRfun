@@ -1,5 +1,4 @@
 #' @export
-#' @importFrom utils installed.packages packageDescription
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
 #' @title Returns the fields with packages in DESCRIPTION with versions
 #' @description This function returns the packages mentioned in the
@@ -29,7 +28,7 @@
 #'
 #' }
 pkgs_versions <- function(pkg) {
-    ip <- installed.packages()
+    ip <- utils::installed.packages()
     append_version <- function(x) {
         sprintf("%s (>= %s)",
                 x,
@@ -46,7 +45,7 @@ pkgs_versions <- function(pkg) {
                 # packageVersion(x)
                 ip[x, "Version"])
     }
-    dcp <- packageDescription(pkg)
+    dcp <- utils::packageDescription(pkg)
     txt <- character()
     if (is.character(dcp$Depends)) {
         pkgs <- strsplit(dcp$Depends, ",[[:space:]]+")[[1]]

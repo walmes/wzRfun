@@ -48,7 +48,6 @@ centfac <- function(group, space = NULL) {
 #'     segments in a reversed order.
 #'
 #' @seealso \code{\link[latticeExtra]{segplot}()}.
-#' @import latticeExtra
 #' @examples
 #'
 #' library(latticeExtra)
@@ -81,6 +80,6 @@ panel.groups.segplot <- function(x, y, z, centers,
     stopifnot(is.factor(groups))
     stopifnot(length(groups) == length(z))
     z <- as.numeric(z) + centfac(groups, space = gap)
-    panel.segplot(x, y, z, centers = centers,
-                  subscripts = subscripts, ...)
+    latticeExtra::panel.segplot(x, y, z, centers = centers,
+                                subscripts = subscripts, ...)
 }

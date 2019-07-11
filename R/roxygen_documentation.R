@@ -199,7 +199,6 @@ roxy_fun <- function(object,
 #' @rdname roxy_obj
 #' @export
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
-#' @importFrom utils tail
 roxy_data <- function(object,
                       file,
                       source = NULL,
@@ -214,7 +213,7 @@ roxy_data <- function(object,
     name <- deparse(substitute(object))
     file <- where_save(name, file, append)
     # Determina a classe.
-    cld <- tail(class(object), n = 1)
+    cld <- utils::tail(class(object), n = 1)
     # Esqueleto do @format para cada classe.
     frmat <- switch(cld,
                     "data.frame" = {

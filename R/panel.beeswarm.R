@@ -76,5 +76,5 @@ panel.beeswarm <- function(x, y, subscripts, spread, ...) {
         cbind(x = xs, y = ys, subscripts[or])
     })
     aux <- do.call(rbind, aux)
-    panel.xyplot(aux[, 1], aux[, 2], subscripts = aux[, 3], ...)
+    lattice::panel.xyplot(aux[, 1], aux[, 2], subscripts = aux[, 3], ...)
 }

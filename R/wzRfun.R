@@ -1,7 +1,6 @@
 #' @name wzRfun
 #' @title Walmes Zeviani's collection of functions
 #' @docType package
-#' @import lattice latticeExtra doBy multcomp
 #' @description An R package with functions written for general
 #'     purpose. Most of these are related to the analysis of experiments
 #'     and graphical representation with trellis based plots.
@@ -56,4 +55,4 @@ NULL
 #' @format A data frame with data from an experiment that evaluated the
 #'     effect of water and potassium levels on soybean yield.
 #' @keywords datasets
-NULL
+"soybeanwp"

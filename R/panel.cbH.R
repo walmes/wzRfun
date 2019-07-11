@@ -1,5 +1,6 @@
 #' @name panel.cbH
 #' @export
+#' @importFrom lattice trellis.par.get panel.polygon panel.lines panel.arrows panel.xyplot
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}, based on the R-help
 #'     mail list.
 #' @title Lattice panels for error bars and envelop bands
