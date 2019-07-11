@@ -11,4 +11,6 @@ LICENSE
 ^docs$
 _build_pkg.R
 _pkgdown.yml
-wzRfun_*
+^wzRfun_.*.tar.gz$
+^wzRfun_.*.zip$
+^_deploy.sh$
