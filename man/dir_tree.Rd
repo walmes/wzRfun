@@ -52,10 +52,11 @@ str(m)
 }
 }
 \seealso{
-\code{link{tree}} for an implementation that calls
-    \code{tree} on Linux. Also, \code{\link[base]{dir}},
-    \code{\link[base]{list.files}} and \code{\link[base]{list.dirs}}
-    can be useful in many circumstances.
+\code{\link{tree}()} for an implementation that calls
+    \code{tree} on Linux. Also, \code{\link[base]{dir}()},
+    \code{\link[base]{list.files}()} and
+    \code{\link[base]{list.dirs}()} can be useful in many
+    circumstances.
 }
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.

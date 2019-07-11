@@ -98,8 +98,8 @@ i <- 5
 L <- L[-i, ]
 g <- g[-i, ]
 
-rownames(L) <- g$tension
-Ls <- by(L, INDICES = g$wool, FUN = as.matrix)
+rownames(L) <- make.names(g$tension, unique = FALSE)
+Ls <- split.data.frame(L, g$wool)
 
 # LSmeans with MCP test.
 lapply(Ls, apmc, model = m3, focus = "tension",

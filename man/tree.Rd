@@ -51,10 +51,11 @@ tree(system.file(package = "lattice"),
 
 }
 \seealso{
-\code{link{dir_tree}} for an implementation entirely based
-    on R and functional in all SO. Also, \code{\link[base]{dir}},
-    \code{\link[base]{list.files}} and \code{\link[base]{list.dirs}}
-    can be useful in many circumstances.
+\code{\link{dir_tree}()} for an implementation entirely
+    based on R and functional in all SO. Also,
+    \code{\link[base]{dir}()}, \code{\link[base]{list.files}()} and
+    \code{\link[base]{list.dirs}()} can be useful in many
+    circumstances.
 }
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.
