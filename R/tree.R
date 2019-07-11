@@ -1,151 +1,105 @@
-connectors <- function(x) {
-    # Função que retorna em "con" os conectores para cada nó, colocados
-    # na frente dos nomes de arquivos ou diretórios, sendo "`--"
-    # para os nós final e "|--" para os nós intermediários. Em "pre"
-    # são retornados aquilo que deve ser prefixo dos conectores para
-    # os descendentes do nó caso ele seja um diretório, sendo "   " para
-    # nó final e "|  " para nós intermediários.
-    tms <- c(length(x) - 1, 1)
-    list(con = rep(c("|-- ", "`-- "), tms),
-         pre = rep(c("|   ", "    "), tms))
+# @author Walmes Zeviani, \email{walmes@@ufpr.br}.
+# @details This function is based on
+#     \url{http://stackoverflow.com/questions/13365732/sorting-non-alphanumeric-characters-in-ascii-order-in-r}.
+#     Any modification done were to fit my needs.
+ascii_sort <- function(vec) {
+    x <- sapply(vec,
+                FUN = function(X) {
+                    paste0(strtoi(x = charToRaw(X),
+                                  base = 16),
+                           collapse = "")
+                })
+    vec[order(x)]
+}
+# ascii_sort(vec = c(" 23", "_23", "123", "abc", "ABC"))
+
+# @author Walmes Zeviani, \email{walmes@@ufpr.br}.
+tree_files <- function(path = "./") {
+    # Lista os arquivos e diretórios.
+    lf <- list.files(path = path,
+                     full.names = FALSE,
+                     recursive = TRUE,
+                     include.dirs = TRUE)
+    # Ordena de acordo com o valor ascii.
+    lf <- ascii_sort(lf)
+    # Lista dos diretórios.
+    ld <- list.dirs(path = path,
+                    full.names = FALSE,
+                    recursive = TRUE)
+    # Quais são os diretórios.
+    isdir <- lf %in% ld
+    lf <- paste0("/", lf)
+    # Quebra um caminho nas barras.
+    x <- strsplit(x = lf, split = "/")
+    # Substitui cada termo por dois espaços.
+    tr <- sapply(x,
+                 FUN = function(x) {
+                     n <- length(x)
+                     x <- paste0(paste(rep("    ", n - 1),
+                                       collapse = ""),
+                                 x[n])
+                     gsub(x = x,
+                          pattern = "^ {4}",
+                          replacement = "")
+                 })
+    # Adiciona um barra atrás do nome de diretórios.
+    tr[isdir] <- paste0(tr[isdir], "/")
+    # Visual sem traços e pipes. A indentação é a hierarquia.
+    cat(tr, sep = "\n")
+    invisible(tr)
 }
 
-path2bigNestedList <- function(path, type = "none", all.files = TRUE) {
-    # Tipos de ordenamento em que "none" é o que vem do list.files() e
-    # "dir_last" é para ordenar deixando os diretórios para o final.
-    type <- match.arg(type, choices = c("none", "dir_last"))
-    # Se all.files == TRUE então diretórios é arquivos ocultos serão
-    # exibidos.
-    all.files <- all.files[1]
-    # path: é um caminho de diretório.
-    if (length(path) == 1) {
-        # pre: o que antecede o contector para apropriada indentação e
-        # conexão dos arquivos.
-        # conn: conector que antecede o nome do arquivo/diretório.
-        # path: caminho do arquivo/diretório.
-        # child: o que é passado para dos descentes desse nó, caso ele
-        # seja um diretório, como "pre" para haver apropriada indentação
-        # e conexão entre arquivos/diretórios.
-        path <- c(pre = "", conn = "", path = path, child = "")
-    }
-    # É diretório?
-    isdir <- isTRUE(file.info(path["path"])$isdir)
-    # Tem conteúdo?
-    isnempty <- (length(dir(path["path"])) >= 1)
-    # Só entra no if diretórios não vazios.
-    if (isdir && isnempty) {
-        # Retina a possível barra no do nome de diretórios para previnir
-        # acidentes.
-        path["path"] <- sub(x = path["path"],
-                            pattern = "/$",
-                            replacement = "")
-        # Cria o texto do nó = pre + conn + path.
-        path["text"] <- paste(basename(path[1:3]), collapse = "")
-        # Lista arquivos e diretórios dentro do path informado.
-        lf <- list.files(path["path"],
-                         all.files = all.files,
-                         no.. = TRUE,
-                         include.dirs = TRUE,
-                         full.names = FALSE)
-        if (type == "dir_last") {
-            lf <- lf[order(file.info(
-                paste(path["path"], lf, sep = "/"))$isdir)]
-        }
-        # Diretórios vazios não retornarão nada do list.files, então
-        # não correr parte do código.
-        if (length(lf) >= 1) {
-            # Obtém os conectores e prefixos para cada
-            # arquivo/diretório.
-            aux <- connectors(lf)
-            # Cria matriz com os elementos necessários, em cada linha um
-            # arquivo/diretório, e nas colunas os elementos do nó.
-            paths <- cbind(pre = paste(path["child"], collapse = ""),
-                           conn = aux$con,
-                           path = paste(path["path"], lf, sep = "/"),
-                           child = paste(path["child"],
-                                         aux$pre,
-                                         sep = ""))
-            # No caso de ter apenas uma linha, que dá problema com
-            # apply() que precisa de nrow > 1, trabalha como vetor para
-            # obter o texto do nó = pre + conn + path.
-            if (nrow(paths) == 1) {
-                u <- paste(paths[1, 1:3], collapse = "")
-            } else {
-                u <- apply(paths[, 1:3], MARGIN = 1,
-                           FUN = function(x) {
-                               paste(basename(x), collapse = "")
-                           })
-            }
-            # Transforma o que eram linhas em elementos de lista.
-            paths <- split(cbind(paths, u), 1:nrow(paths))
-            # Garante os nomes corretos.
-            paths <- lapply(paths, "names<-", names(path))
-            # Chamada recursiva com os mesmo argumentos.
-            lf <- lapply(paths,
-                         FUN = path2bigNestedList,
-                         type = type,
-                         all.files = all.files)
-        }
-        # Adiciona o path inicial.
-        lf <- c(sprintf("%s/", path["text"]), lf)
-    } else {
-        # Quando não existirem mais diretórios, retorna só o texto do
-        # nó. A barra no final sinaliza os diretórios.
-        lf <- sprintf("%s%s",
-                      path["text"],
-                      ifelse(isdir, yes = "/", no = ""))
-    }
-    return(lf)
-}
-# path <- "./slave.Rcheck/slave/R"
-# path <- "./slave.Rcheck/slave/"
-# path <- "./slave.Rcheck/"
-# path <- "./"
-# path <- "~/repos/labestData"
-#
-# a <- path2bigNestedList(path)
-# b <- unlist(a, recursive = TRUE)
-# cat(b, sep = "\n")
-
-#' @name tree
 #' @export
 #' @author Walmes Zeviani, \email{walmes@@ufpr.br}.
-#' @title Show a Directory as an ASCII Tree
-#' @description This function returns an ascii art of the directory
-#'     tree, like the command
-#'     \href{http://mama.indstate.edu/users/ice/tree/}{\code{tree}} in
-#'     Linux.
-#' @param path a string indicating the path where the tree starts.
-#' @param type a string that is type of display. Default is
-#'     \code{"dir_last"} to show the directories at the end of the
-#'     tree. The alphanumeric order is returned using \code{"none"}.
-#' @param all.files a logical, if \code{TRUE} hidden files and
-#'     directories will be printed.
-#' @return Prints on the console the tree of the directory.
-#' @seealso \code{\link[base]{dir}()}, \code{\link[base]{list.files}()}.
+#' @title Show directories as indented names
+#' @param path character[1] Is the root directory. Default is the value
+#'     of \code{getwd()}.
+#' @param options character[1] String of options to be passed to
+#'     \code{tree} shell command. Default is
+#'     \code{"-F --charset=ascii"}. See the available options with
+#'     \code{system("tree --help")}.
+#' @param linux logical[1] Default is \code{TRUE} and indicates that
+#'     \code{tree} of the Linux SO is to be used. Otherwise, the R
+#'     native approach will be used.
+#' @return Prints an ASCII art of the directory tree.
+#' @details This function calls
+#'     \href{http://mama.indstate.edu/users/ice/tree/}{\code{tree}} if
+#'     it is available is Linux OS. The call is made with
+#'     \code{system()}. Otherwise, a (less sophisticated) R native
+#'     approach is used.
+#' @seealso \code{link{dir_tree}} for an implementation entirely based
+#'     on R and functional in all SO. Also, \code{\link[base]{dir}},
+#'     \code{\link[base]{list.files}} and \code{\link[base]{list.dirs}}
+#'     can be useful in many circumstances.
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
-#' # Tree of your currend directory.
-#' getwd()
 #' tree()
-#' tree(type = "none")
-#' tree(all.files = TRUE)
+#' tree("../")
+#' tree("../", linux = FALSE)
 #'
-#' # Tree of home folder.
-#' tree("~/")
+#' system("tree --help")
 #'
-#' # Tree of a installed package.
-#' tree(system.file(package = "lattice"))
+#' tree(system.file(package = "lattice"),
+#'      options = "-F --charset=ascii -L 1")
+#' tree(system.file(package = "lattice"),
+#'      options = "-F --charset=ascii -L 2")
 #'
 #' }
-tree <- function(path = "./",
-                 type = "dir_last",
-                 all.files = FALSE) {
-    cat(unlist(path2bigNestedList(path = path,
-                                  type = type,
-                                  all.files = all.files),
-               recursive = TRUE),
-        sep = "\n")
+#'
+tree <- function(path = ".",
+                 options = "-F --charset=ascii",
+                 linux = TRUE) {
+    if (Sys.info()["sysname"] == "Linux" && linux) {
+        wis <- system("whereis tree", intern = TRUE)
+        wis <- length(unlist(strsplit(wis, split = " "))) > 1
+        if (wis) {
+            system(sprintf("tree %s %s", path, options))
+        } else {
+            tree_files(path = path)
+        }
+    } else {
+        tree_files(path = path)
+    }
 }
