@@ -17,7 +17,8 @@
 #' @keywords GUI
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
+#'
 #' # A simple example.
 #'
 #' library(rpanel)

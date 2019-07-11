@@ -8,7 +8,7 @@
 #'     \code{options(wzRfun_startup_message = FALSE)}.
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' options(wzRfun_startup_message = FALSE)
 #' library(wzRfun)

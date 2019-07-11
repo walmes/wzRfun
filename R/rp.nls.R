@@ -44,7 +44,7 @@
 #' @keywords GUI
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' #--------------------------------------------
 #' # A simple linear regression.

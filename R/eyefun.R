@@ -20,7 +20,7 @@
 #'     manipulate the curve of the model.
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' library(rpanel)
 #'
