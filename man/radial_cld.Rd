@@ -4,8 +4,8 @@
 \alias{radial_cld}
 \title{Radial Plot for a Compact Letter Display Vector}
 \usage{
-radial_cld(cld, labels = cld, col = NULL, means = NULL, perim = FALSE,
-  legend = TRUE)
+radial_cld(cld, labels = cld, col = NULL, means = NULL,
+  perim = FALSE, legend = TRUE)
 }
 \arguments{
 \item{cld}{Character vector with strings of letters that indicates
@@ -51,7 +51,7 @@ summary(m0)
 library(multcomp)
 library(doBy)
 
-X <- LSmatrix(m0, effect = "trt")
+X <- LE_matrix(m0, effect = "trt")
 rownames(X) <- levels(td$trt)
 
 ci <- apmc(X, m0, focus = "trt", test = "fdr")

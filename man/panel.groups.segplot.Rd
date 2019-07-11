@@ -5,8 +5,8 @@
 \title{Panel to Plot Confidence Intervals by Groups in
     \code{segplot()}}
 \usage{
-panel.groups.segplot(x, y, z, centers, groups, gap = NULL, data, subscripts,
-  ...)
+panel.groups.segplot(x, y, z, centers, groups, gap = NULL, data,
+  subscripts, ...)
 }
 \arguments{
 \item{x, y, z, centers, data, subscripts, ...}{Arguments passed to

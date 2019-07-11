@@ -50,7 +50,7 @@ logLik(m1)
 
 library(doBy)
 
-X <- LSmatrix(lm(nobars(formula(m1)), data = td1), effect = "loccult")
+X <- LE_matrix(lm(nobars(formula(m1)), data = td1), effect = "loccult")
 rownames(X) <- levels(td1$loccult)
 dim(X)
 
@@ -67,7 +67,7 @@ confint(glht(m1, linfct = Xs), calpha = univariate_calpha())
 
 }
 \seealso{
-\code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+\code{\link{apc}()}, \code{\link[doBy]{LE_matrix}()},
     \code{\link[multcomp]{glht}()}.
 }
 \author{

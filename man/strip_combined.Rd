@@ -9,10 +9,10 @@ This function entirely based on a message in the R-help
     \url{http://r.789695.n4.nabble.com/merging-plot-labels-in-a-lattice-plot-td2276609.html}.
 }
 \usage{
-strip_combined(which.given, which.panel, factor.levels, ...)
+strip_combined(which.given, which.panel, factor.levels, var.name, ...)
 }
 \arguments{
-\item{which.given, which.panel, factor.levels, ...}{See
+\item{which.given, which.panel, factor.levels, var.name, ...}{See
 \code{\link[lattice]{strip.custom}()}.}
 }
 \value{

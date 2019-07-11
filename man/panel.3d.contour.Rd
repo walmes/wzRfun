@@ -4,8 +4,9 @@
 \alias{panel.3d.contour}
 \title{Lattice Panel for Draw Contour Lines In Wireframe Plots}
 \usage{
-panel.3d.contour(x, y, z, rot.mat, distance, type = c("on", "top", "bottom"),
-  nlevels = 20, levels = NULL, zlim.scaled, zlim, col.contour = 1, ...)
+panel.3d.contour(x, y, z, rot.mat, distance, type = c("on", "top",
+  "bottom"), nlevels = 20, levels = NULL, zlim.scaled, zlim,
+  col.contour = 1, ...)
 }
 \arguments{
 \item{x, y, z, rot.mat, distance, zlim.scaled, zlim, ...}{arguments passed

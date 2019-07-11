@@ -9,7 +9,7 @@ apc(lfm, lev = NULL)
 \arguments{
 \item{lfm}{a \eqn{k \times p} matrix where each line defines a linear
 function to estimate a lsmean. In general, these matrices are
-obtained by using \code{\link[doBy]{LSmatrix}()}.}
+obtained by using \code{\link[doBy]{LE_matrix}()}.}
 
 \item{lev}{a character vector with length equals to the numbers of
 lines of \code{lfm} matrix, (\eqn{k}). Default is \code{NULL} and
@@ -41,14 +41,14 @@ apc(X)
 
 apc(X, lev = LETTERS[1:nrow(X)])
 
-# Objects from doBy::LSmatrix() have an "grid" attribute.
+# Objects from doBy::LE_matrix() have an "grid" attribute.
 attr(X, "grid") <- data.frame(n = LETTERS[1:nrow(X)])
 rownames(X) <- NULL
 apc(X)
 
 }
 \seealso{
-\code{\link{apmc}()}, \code{\link[doBy]{LSmatrix}()}.
+\code{\link{apmc}()}, \code{\link[doBy]{LE_matrix}()}.
 }
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.

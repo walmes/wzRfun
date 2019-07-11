@@ -6,7 +6,25 @@
 \alias{wzRfun-package}
 \title{Walmes Zeviani's collection of functions}
 \description{
-An R package with functions writen for general
-    purpose. Most of these are related to the analisys of experiments
+An R package with functions written for general
+    purpose. Most of these are related to the analysis of experiments
     and graphical representation with trellis based plots.
+}
+\details{
+To not show the start up message, use
+    \code{options(wzRfun_startup_message = FALSE)}.
+}
+\examples{
+
+\donttest{
+
+options(wzRfun_startup_message = FALSE)
+library(wzRfun)
+
+detach(package:wzRfun)
+
+options(wzRfun_startup_message = NULL)
+library(wzRfun)
+
+}
 }

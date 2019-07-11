@@ -2,49 +2,59 @@
 % Please edit documentation in R/tree.R
 \name{tree}
 \alias{tree}
-\title{Show a Directory as an ASCII Tree}
+\title{Show directories as indented names}
 \usage{
-tree(path = "./", type = "dir_last", all.files = FALSE)
+tree(path = ".", options = "-F --charset=ascii", linux = TRUE)
 }
 \arguments{
-\item{path}{a string indicating the path where the tree starts.}
+\item{path}{character[1] Is the root directory. Default is the value
+of \code{getwd()}.}
 
-\item{type}{a string that is type of display. Default is
-\code{"dir_last"} to show the directories at the end of the
-tree. The alphanumeric order is returned using \code{"none"}.}
+\item{options}{character[1] String of options to be passed to
+\code{tree} shell command. Default is
+\code{"-F --charset=ascii"}. See the available options with
+\code{system("tree --help")}.}
 
-\item{all.files}{a logical, if \code{TRUE} hidden files and
-directories will be printed.}
+\item{linux}{logical[1] Default is \code{TRUE} and indicates that
+\code{tree} of the Linux SO is to be used. Otherwise, the R
+native approach will be used.}
 }
 \value{
-Prints on the console the tree of the directory.
+Prints an ASCII art of the directory tree.
 }
 \description{
-This function returns an ascii art of the directory
-    tree, like the command
-    \href{http://mama.indstate.edu/users/ice/tree/}{\code{tree}} in
-    Linux.
+Show directories as indented names
+}
+\details{
+This function calls
+    \href{http://mama.indstate.edu/users/ice/tree/}{\code{tree}} if
+    it is available is Linux OS. The call is made with
+    \code{system()}. Otherwise, a (less sophisticated) R native
+    approach is used.
 }
 \examples{
 
-\donttest{
+\dontrun{
 
-# Tree of your currend directory.
-getwd()
 tree()
-tree(type = "none")
-tree(all.files = TRUE)
+tree("../")
+tree("../", linux = FALSE)
 
-# Tree of home folder.
-tree("~/")
+system("tree --help")
 
-# Tree of a installed package.
-tree(system.file(package = "lattice"))
+tree(system.file(package = "lattice"),
+     options = "-F --charset=ascii -L 1")
+tree(system.file(package = "lattice"),
+     options = "-F --charset=ascii -L 2")
 
 }
+
 }
 \seealso{
-\code{\link[base]{dir}()}, \code{\link[base]{list.files}()}.
+\code{link{dir_tree}} for an implementation entirely based
+    on R and functional in all SO. Also, \code{\link[base]{dir}},
+    \code{\link[base]{list.files}} and \code{\link[base]{list.dirs}}
+    can be useful in many circumstances.
 }
 \author{
 Walmes Zeviani, \email{walmes@ufpr.br}.

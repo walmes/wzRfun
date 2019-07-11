@@ -2,7 +2,6 @@
 % Please edit documentation in R/as.lm.R
 \name{as.lm}
 \alias{as.lm}
-\alias{as.lm}
 \alias{as.lm.nls}
 \title{Converts nls class objects to lm class}
 \usage{

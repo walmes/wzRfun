@@ -39,7 +39,7 @@ summary(m0)
 library(multcomp)
 library(doBy)
 
-X <- LSmatrix(m0, effect = "trt")
+X <- LE_matrix(m0, effect = "trt")
 rownames(X) <- levels(td$trt)
 Xc <- apc(X)
 

@@ -4,12 +4,13 @@
 \alias{apmc}
 \title{A Wraper of glht to Get All Pairwise Mean Comparisons}
 \usage{
-apmc(X, model, focus, test = "single-step", level = 0.05, cld2 = FALSE)
+apmc(X, model, focus, test = "single-step", level = 0.05,
+  cld2 = FALSE)
 }
 \arguments{
 \item{X}{a matrix where each line is a linear function of the model
 parameters to estimate a least squares mean. In most pratical
-cases, it is an object from the \code{\link[doBy]{LSmatrix}()}.}
+cases, it is an object from the \code{\link[doBy]{LE_matrix}()}.}
 
 \item{model}{a model with class recognized by
 \code{\link[multcomp]{glht}()}.}
@@ -48,7 +49,7 @@ m0 <- lm(weight ~ feed, data = chickwts)
 anova(m0)
 
 # Prepare the matrix to estimate lsmeans.
-L <- LSmatrix(m0, effect = "feed")
+L <- LE_matrix(m0, effect = "feed")
 rownames(L) <- levels(chickwts$feed)
 apmc(L, model = m0, focus = "feed", test = "fdr")
 
@@ -58,7 +59,7 @@ data(warpbreaks)
 m1 <- lm(breaks ~ wool * tension, data = warpbreaks)
 anova(m1)
 
-L <- LSmatrix(m1, effect = c("wool", "tension"))
+L <- LE_matrix(m1, effect = c("wool", "tension"))
 attributes(L)
 
 Ls <- by(L, INDICES = attr(L, "grid")$tension, FUN = as.matrix)
@@ -90,7 +91,7 @@ m3 <- update(m2, . ~ 0 + X)
 anova(m2, m3)
 
 # LS matrix has all cells.
-L <- LSmatrix(m2, effect = c("wool", "tension"))
+L <- LE_matrix(m2, effect = c("wool", "tension"))
 g <- attr(L, "grid")
 L <- L[, !is.na(b)]
 i <- 5
@@ -109,7 +110,7 @@ aggregate(breaks ~ tension + wool, data = warpbreaks, FUN = mean)
 
 }
 \seealso{
-\code{\link{apc}()}, \code{\link[doBy]{LSmatrix}()},
+\code{\link{apc}()}, \code{\link[doBy]{LE_matrix}()},
     \code{\link[multcomp]{glht}()}.
 }
 \author{
