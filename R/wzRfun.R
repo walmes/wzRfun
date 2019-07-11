@@ -2,9 +2,24 @@
 #' @title Walmes Zeviani's collection of functions
 #' @docType package
 #' @import lattice latticeExtra doBy multcomp
-#' @description An R package with functions writen for general
-#'     purpose. Most of these are related to the analisys of experiments
+#' @description An R package with functions written for general
+#'     purpose. Most of these are related to the analysis of experiments
 #'     and graphical representation with trellis based plots.
+#' @details To not show the start up message, use
+#'     \code{options(wzRfun_startup_message = FALSE)}.
+#' @examples
+#'
+#' \donttest{
+#'
+#' options(wzRfun_startup_message = FALSE)
+#' library(wzRfun)
+#'
+#' detach(package:wzRfun)
+#'
+#' options(wzRfun_startup_message = NULL)
+#' library(wzRfun)
+#'
+#' }
 NULL
 
 #' @name soybeanwp
@@ -24,19 +39,19 @@ NULL
 #'     porosity (represented as the midpoint). The characteristics
 #'     appraised were: grain yield (\code{yield}, grams per plot),
 #'     weight of a hundred grains (\code{w100}, grams), total number of
-#'     grains per plot (\code{tg}), K concetration in the grain
-#'     (\code{Kgrain}, g kg\eqn{^{-1}}), number of viable and inviable
+#'     grains per plot (\code{tg}), K concentration in the grain
+#'     (\code{Kgrain}, g kg\eqn{^{-1}}), number of viable and not viable
 #'     pods (\code{nvp, nip}). Observation number 74 can be considered
-#'     atipical and removed to do statistical analisys. although the
+#'     atypical and removed to do statistical analysis. although the
 #'     experiment had been installed in blocks, the greenhouse had
 #'     constant conditions for all plots and the management, like
-#'     irrigation, during the experimental cicle was carried out with
+#'     irrigation, during the experimental cycle was carried out with
 #'     much care, so, the block effect can be considered null.
 #' @details This experiment was done at Universidade Federal da Grande
 #'     Dourados in Dourados, Mato Grosso do Sul, Brazil. The article
-#'     based on this experiment can be acessed by the link
+#'     based on this experiment can be accessed by the link
 #'     \url{http://ccarevista.ufc.br/seer/index.php/ccarevista/article/view/1454}.
-#'     Thanks for the authors by their colaboration and permition to use
+#'     Thanks for the authors by their collaboration and permission to use
 #'     this data.
 #' @format A data frame with data from an experiment that evaluated the
 #'     effect of water and potassium levels on soybean yield.
