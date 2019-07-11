@@ -1,7 +1,7 @@
 Package: wzRfun
-Title: Walmes Zeviani functions
-Version: 0.90
-Date: 2019-07-10
+Title: Walmes Zeviani's collection of functions
+Version: 0.91
+Date: 2019-07-11
 Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
 Description: An R package with functions written for general
@@ -20,7 +20,9 @@ Imports:
     multcomp (>= 1.4-8),
     lattice (>= 0.20-38),
     latticeExtra (>= 0.6-28),
-    rpanel (>= 1.1-4)
+    rpanel (>= 1.1-4),
+    proto,
+    gsubfn
 Suggests:
     plyr,
     RColorBrewer,
