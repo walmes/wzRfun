@@ -6,11 +6,8 @@
 ## General
 README.html
 CONTRIBUTING.html
-STYLEGUIDE.html
-plano.Rmd
-playground.R
-**/playground/*
 *.Rcheck/
+wzRfun_*
 docs/
 
 ## R backup files
