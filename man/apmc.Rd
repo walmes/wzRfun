@@ -4,8 +4,7 @@
 \alias{apmc}
 \title{A Wraper of glht to Get All Pairwise Mean Comparisons}
 \usage{
-apmc(X, model, focus, test = "single-step", level = 0.05,
-  cld2 = FALSE)
+apmc(X, model, focus, test = "single-step", level = 0.05, cld2 = FALSE)
 }
 \arguments{
 \item{X}{a matrix where each line is a linear function of the model

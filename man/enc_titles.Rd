@@ -41,7 +41,7 @@ Non ASCII words (commom in portuguese) trigers warnings
 library(proto)
 library(gsubfn)
 
-cat(use_enc("Um título com conteúdo acenturado para testar a função"), "\\n")
+cat(use_enc("Um título com conteúdo acenturado para testar a função"), "\n")
 
 }
 \author{

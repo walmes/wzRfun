@@ -5,8 +5,10 @@
 \alias{soybeanwp}
 \title{Factorial experiment to evaluate the effect of potassium and
     water on the soybean yield}
-\format{A data frame with data from an experiment that evaluated the
-    effect of water and potassium levels on soybean yield.}
+\format{
+A data frame with data from an experiment that evaluated the
+    effect of water and potassium levels on soybean yield.
+}
 \usage{
 soybeanwp
 }

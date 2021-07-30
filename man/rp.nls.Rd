@@ -4,9 +4,17 @@
 \alias{rp.nls}
 \title{Interactive Fitting for Non Linear Regression Models}
 \usage{
-rp.nls(model, data, start, subset = NULL, xlab = NULL, ylab = NULL,
-  ..., gpar = list(try = list(col = 2, lty = 2), fit = list(col = 2, lwd
-  = 1.5)), extra = NULL)
+rp.nls(
+  model,
+  data,
+  start,
+  subset = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  ...,
+  gpar = list(try = list(col = 2, lty = 2), fit = list(col = 2, lwd = 1.5)),
+  extra = NULL
+)
 }
 \arguments{
 \item{model}{a non linear model formula including variables and

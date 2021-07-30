@@ -3,7 +3,6 @@
 \docType{package}
 \name{wzRfun}
 \alias{wzRfun}
-\alias{wzRfun-package}
 \title{Walmes Zeviani's collection of functions}
 \description{
 An R package with functions written for general

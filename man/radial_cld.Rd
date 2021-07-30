@@ -4,8 +4,14 @@
 \alias{radial_cld}
 \title{Radial Plot for a Compact Letter Display Vector}
 \usage{
-radial_cld(cld, labels = cld, col = NULL, means = NULL,
-  perim = FALSE, legend = TRUE)
+radial_cld(
+  cld,
+  labels = cld,
+  col = NULL,
+  means = NULL,
+  perim = FALSE,
+  legend = TRUE
+)
 }
 \arguments{
 \item{cld}{Character vector with strings of letters that indicates

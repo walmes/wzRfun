@@ -7,11 +7,31 @@
 \title{Builds the documentation in \code{roxygen2} based on object
     properties}
 \usage{
-roxy_fun(object, file, export = TRUE, author, keywords, extra, editor,
-  print = FALSE, append = FALSE, find_file = FALSE)
+roxy_fun(
+  object,
+  file,
+  export = TRUE,
+  author,
+  keywords,
+  extra,
+  editor,
+  print = FALSE,
+  append = FALSE,
+  find_file = FALSE
+)
 
-roxy_data(object, file, source = NULL, keywords, author, extra, editor,
-  print = FALSE, append = FALSE, find_file = FALSE)
+roxy_data(
+  object,
+  file,
+  source = NULL,
+  keywords,
+  author,
+  extra,
+  editor,
+  print = FALSE,
+  append = FALSE,
+  find_file = FALSE
+)
 }
 \arguments{
 \item{object}{An object that is a function.}

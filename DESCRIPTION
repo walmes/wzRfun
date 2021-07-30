@@ -1,7 +1,7 @@
 Package: wzRfun
 Title: Walmes Zeviani's collection of functions
-Version: 0.91
-Date: 2019-07-11
+Version: 0.95
+Date: 2021-07-30
 Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [cre, aut]"))
 Description: An R package with functions written for general
@@ -16,7 +16,6 @@ BugReports: https://github.com/walmes/wzRfun/issues
 Depends:
     R (>= 3.4.4)
 Imports:
-    doBy (>= 4.6-2),
     multcomp (>= 1.4-8),
     lattice (>= 0.20-38),
     latticeExtra (>= 0.6-28),
@@ -24,10 +23,11 @@ Imports:
     proto,
     gsubfn
 Suggests:
+    doBy,
     plyr,
     RColorBrewer,
     lme4,
-    alr3,
+    alr4,
     knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

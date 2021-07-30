@@ -4,8 +4,7 @@
 \alias{matrix2html}
 \title{Convert a character matrix to HTML table}
 \usage{
-matrix2html(x, caption = NULL, styles = NULL, indexes = NULL,
-  class = NULL)
+matrix2html(x, caption = NULL, styles = NULL, indexes = NULL, class = NULL)
 }
 \arguments{
 \item{x}{a character matrix. Is most of the cases it is the object
@@ -67,14 +66,14 @@ cat(m2h)
 # td.bold { font-weight: bold; }
 # td.italic { font-style: italic; }
 
-sty <- c("<th align=\\"center\\">\%s</th>", "<tr>\\n\%s\\n</tr>\\n",
-         "<td align=\\"center\\">\%s</td>",
-         "<td align=\\"center\\" class=\\"red\\">\%s</td>",
-         "<td align=\\"center\\" class=\\"blue line\\">\%s</td>",
-         "<td align=\\"center\\" class=\\"shade\\">\%s</td>",
-         "<td align=\\"center\\" class=\\"line\\">\%s</td>",
-         "<td align=\\"center\\" class=\\"bold shade\\">\%s</td>",
-         "<td align=\\"center\\" class=\\"italic blue\\">\%s</td>")
+sty <- c("<th align=\"center\">\%s</th>", "<tr>\n\%s\n</tr>\n",
+         "<td align=\"center\">\%s</td>",
+         "<td align=\"center\" class=\"red\">\%s</td>",
+         "<td align=\"center\" class=\"blue line\">\%s</td>",
+         "<td align=\"center\" class=\"shade\">\%s</td>",
+         "<td align=\"center\" class=\"line\">\%s</td>",
+         "<td align=\"center\" class=\"bold shade\">\%s</td>",
+         "<td align=\"center\" class=\"italic blue\">\%s</td>")
 
 # Which style for which cell table.
 idx <- 0L * row(x) + 3L

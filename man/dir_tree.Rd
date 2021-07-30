@@ -4,8 +4,7 @@
 \alias{dir_tree}
 \title{Shows directories content as an ASCII tree graph}
 \usage{
-dir_tree(path = "./", level = 3, type = "dir_last",
-  all.files = FALSE)
+dir_tree(path = "./", level = 3, type = "dir_last", all.files = FALSE)
 }
 \arguments{
 \item{path}{character[1] Root path for the construction of the ASCII

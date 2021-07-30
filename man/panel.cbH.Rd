@@ -5,9 +5,21 @@
 \alias{prepanel.cbH}
 \title{Lattice panels for error bars and envelop bands}
 \usage{
-panel.cbH(x, y, ly, uy, subscripts, cty, col.line = plot.line$col,
-  lwd = plot.line$lwd, desloc = NULL, fill = 1, alpha = 0.1,
-  length = 0.05, ...)
+panel.cbH(
+  x,
+  y,
+  ly,
+  uy,
+  subscripts,
+  cty,
+  col.line = plot.line$col,
+  lwd = plot.line$lwd,
+  desloc = NULL,
+  fill = 1,
+  alpha = 0.1,
+  length = 0.05,
+  ...
+)
 
 prepanel.cbH(y, ly, uy, subscripts)
 }
